@@ -19,12 +19,50 @@
     body {
       font: 400 15px Lato, sans-serif;
       line-height: 1.8;
-      color: #818181;
+      color: white;
+    }
+
+    .bgimg {
+      background-image: url("static/img/bg.svg");
+      background-repeat: no-repeat;
+      background-position: 0 0 0 0;
+      background-size: 100% auto;
+    }
+
+    .pad {
+      padding-top: 120px;
+      padding-bottom: 120px;
+    }
+
+    .flex-container {
+      display: flex;
+      justify-content: center;
     }
   </style>
 </head>
-<body>
-  Moving
+
+<body style="background-color: #228888">
+  <div class="container-fluid bgimg pad flex-container">
+    <div class="row pad">
+      <div class="col-sm-7">
+        <h1>Moving Demo</h1>
+
+        <p>This is a moving demo program. It will provide you a shared moving fast experiences</p>
+
+      </div>
+      <div class="col-sm-5">
+        <form class="form-group">
+          <label class="form-control-static">User Name</label>
+          <input type="text" class="form-control" placeholder="Input a username" />
+          <label class="form-control-static">Password</label>
+          <input type="text" class="form-control" placeholder="Input a password" />
+          <br />
+          <input type="submit" class="btn btn-success form-control" />
+        </form>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>
