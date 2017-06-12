@@ -11,6 +11,8 @@
  */
 package com.shijin.learn.movingdemo.config;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -18,7 +20,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  *
  */
 public class WebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
+  private static final Logger LOGGER = LogManager.getLogger(WebApplicationInitializer.class);
   /*
    * Service/Repositories configuration class
    * 
@@ -28,7 +30,8 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
    */
   @Override
   protected Class<?>[] getRootConfigClasses() {
-    return new Class[] {RootConfig.class};
+    LOGGER.trace("getRootConfigClasses...");
+    return new Class[] {RootConfig.class, SecurityConfig.class};
   }
 
   /*
@@ -40,7 +43,7 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
    */
   @Override
   protected Class<?>[] getServletConfigClasses() {
-    
+    LOGGER.trace("getServletConfigClasses...");
     return new Class[] {WebConfig.class};
   }
 
@@ -53,6 +56,7 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
    */
   @Override
   protected String[] getServletMappings() {
+    LOGGER.trace("getServletMappings...");
     return new String[] {"/"};
   }
 
