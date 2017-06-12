@@ -17,7 +17,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  * @author shijin
  *
  */
-public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class WebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
   /*
    * Service/Repositories configuration class
