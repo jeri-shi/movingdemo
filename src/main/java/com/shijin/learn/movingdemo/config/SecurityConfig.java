@@ -13,6 +13,7 @@
 package com.shijin.learn.movingdemo.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
@@ -34,4 +35,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return manager;
   }
 
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    
+//    http.authorizeRequests().anyRequest().permitAll();
+    
+    http.authorizeRequests()
+      .antMatchers("/static/**").permitAll()
+      .antMatchers("/").permitAll()
+      .antMatchers("/hello").hasAnyRole("USER")
+      .anyRequest().authenticated()
+      .and()
+      .formLogin()
+        .loginPage("/login")
+        .permitAll()
+        .successForwardUrl("/home");
+  }
 }

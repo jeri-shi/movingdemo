@@ -19,7 +19,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     registry.addResourceHandler("/static/**").addResourceLocations("/static/");
-    registry.addResourceHandler("/index.html").addResourceLocations("/");
+//    registry.addResourceHandler("/index.html").addResourceLocations("/");
     LOGGER.trace("addResourceHandlers...");
     //the code below enable accessing to /home.html and /index.html although they are not in same folders.
     //registry.addResourceHandler("/**.html").addResourceLocations("/", "/static/");
@@ -32,7 +32,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
   
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
-    registry.addViewController("/home").setViewName("home");
+    registry.addViewController("/").setViewName("index");
     LOGGER.trace("addViewControllers...");
   }
   
