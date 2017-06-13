@@ -86,18 +86,23 @@
             <button type="submit" class="btn btn-default">Search</button>
           </div>
         </form-->
+        <c:url value="${request.contextPath}/logout" var="theAction"/>
         <ul class="nav navbar-nav navbar-right">
-          <li class="navbar-text">
-             <span class="glyphicon glyphicon-user"></span> Shijin
+          <li>
+            <a href="#"><span class="glyphicon glyphicon-user"></span> Shijin</a>
           </li>
-          <li class="navbar-text">
-             <span class="glyphicon glyphicon-share"></span> Sign out
+          <li>
+              <form:form action="${theAction}" class="navbar-form">
+                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-share"></span> Sign out</button>
+              </form:form>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+
+  Home
+
 </body>
 
 </html>
-home
