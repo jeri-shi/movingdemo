@@ -35,13 +35,13 @@ import com.shijin.learn.movingdemo.adapter.LoginUser;
 public class HomeController {
   private static final Logger LOGGER = LogManager.getLogger(HomeController.class);
 
-  @RequestMapping("/home")
+  @RequestMapping({"/home", "/"}) //Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
   public String helloWorld() {
     LOGGER.trace("helloWorld...");
     return "home";
   }
   
-  @RequestMapping(value="/login")  //Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
+  @RequestMapping("/login")  
   public String homePage(@ModelAttribute("loginUser") LoginUser loginUser, BindingResult result, @RequestParam(required=false) String error) {
 //    @ModelAttribute("loginUser") LoginUser loginUser
 //    if (result.hasErrors()) {
