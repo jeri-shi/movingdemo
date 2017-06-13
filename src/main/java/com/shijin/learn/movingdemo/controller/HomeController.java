@@ -19,10 +19,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.shijin.learn.movingdemo.adapter.LoginUser;
 
@@ -40,24 +41,29 @@ public class HomeController {
     return "home";
   }
   
-  @GetMapping({"/login", "/"})  //Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
-  public String homePage(Model model, HttpServletRequest request) {
+  @RequestMapping(value="/login")  //Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
+  public String homePage(@ModelAttribute("loginUser") LoginUser loginUser, BindingResult result, @RequestParam(required=false) String error) {
 //    @ModelAttribute("loginUser") LoginUser loginUser
 //    if (result.hasErrors()) {
 //      return "index";
 //    }
-    LOGGER.trace("homePage and LoginForm..."+ request.getServletPath());
-    model.addAttribute("loginUser", new LoginUser());
-    return "index";
-  }
-  
-  @PostMapping("/login")
-  public String login(@ModelAttribute LoginUser loginUser, BindingResult result) {
-    LOGGER.trace("/login ...");
-    if (result.hasErrors()) {
-      return "index";
+//    LOGGER.trace("homePage and LoginForm..."+ request.getServletPath());
+    LOGGER.trace("/login with parameter=" + error );
+    if (error != null) {
+        result.addError(new ObjectError("username", "User Name or Password is not right."));
+        result.addError(new ObjectError("password", ""));
     }
-    LOGGER.trace("/login ... username=" + loginUser.getUsername());
-    return "home";
+
+    return "index" ;
   }
+//  
+//  @PostMapping("/login33")
+//  public String login(@ModelAttribute LoginUser loginUser) {
+//    LOGGER.trace("/login ... ");
+////    if (result.hasErrors()) {
+////      return "index";
+////    }
+//    LOGGER.trace("/login ... username=" + loginUser.getUsername());
+//    return "home";
+//  }
 }

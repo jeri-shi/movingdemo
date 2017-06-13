@@ -42,13 +42,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     http.authorizeRequests()
       .antMatchers("/static/**").permitAll()
-      .antMatchers("/").permitAll()
-      .antMatchers("/hello").hasAnyRole("USER")
       .anyRequest().authenticated()
       .and()
       .formLogin()
         .loginPage("/login")
         .permitAll()
-        .successForwardUrl("/home");
+        .failureUrl("/login?error")
+        .permitAll()
+        .defaultSuccessUrl("/home");
+        
   }
 }

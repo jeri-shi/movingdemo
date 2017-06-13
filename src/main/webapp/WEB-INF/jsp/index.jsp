@@ -56,11 +56,11 @@
         <div class="col-sm-5 has-error">
           <c:url value="${request.contextPath}/login" var="theAction"/>
           <form:form action="${theAction}" method="POST" modelAttribute="loginUser" class="form-group">
-            <form:errors path="*" cssClass="text-warning"></form:errors>
-            <div class="text-warning">
-              User Name or Password is not right.
-            </div>
-
+            <form:errors path="*" cssClass="text-warning">
+              <div class="text-warning">
+                User Name or Password is not right.
+              </div>
+            </form:errors>
             <label class="form-control-static">User Name</label>
             <form:input type="text" path="username" cssClass="form-control" placeholder="Input a username"/>
 
