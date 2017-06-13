@@ -19,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * @author shijin
@@ -39,7 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     
 //    http.authorizeRequests().anyRequest().permitAll();
-    
     http.authorizeRequests()
       .antMatchers("/static/**").permitAll()
       .anyRequest().authenticated()
@@ -50,6 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .failureUrl("/login?error")
         .permitAll()
         .defaultSuccessUrl("/home");
-        
+
+    http.logout()
+    .logoutUrl("/logout")
+    .logoutSuccessUrl("/login?logout");
+//    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));  // /logout is post method by default.
+  
+
   }
 }
