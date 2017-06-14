@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     http.logout()
     .logoutUrl("/logout")
-    .logoutSuccessUrl("/login?logout");
+    .logoutSuccessUrl("/login?logout").permitAll();
 //    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));  // /logout is post method by default.
   
 
