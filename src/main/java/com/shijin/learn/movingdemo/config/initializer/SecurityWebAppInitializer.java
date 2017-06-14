@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.shijin.learn.movingdemo.config;
+package com.shijin.learn.movingdemo.config.initializer;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

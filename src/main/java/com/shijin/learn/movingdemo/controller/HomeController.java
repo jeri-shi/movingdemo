@@ -12,6 +12,8 @@
 
 package com.shijin.learn.movingdemo.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ public class HomeController {
   }
   
   @RequestMapping("/login")  
-  public String homePage(@ModelAttribute("loginUser") LoginUser loginUser, BindingResult result, @RequestParam(required=false) String error) {
+  public String homePage(@ModelAttribute("loginUser") LoginUser loginUser, BindingResult result, @RequestParam(required=false) String error, HttpServletRequest request) {
 //    @ModelAttribute("loginUser") LoginUser loginUser
 //    if (result.hasErrors()) {
 //      return "index";
