@@ -35,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private DaoAuthenticationProvider daoInMemoryProvider;
   
+  @Autowired
+  private DaoAuthenticationProvider myBatisProvider;
   // When implement a customized UserDetailsService, below method must be comments to make
   // customized one to work
   //
@@ -56,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // http.authorizeRequests().anyRequest().permitAll();
 
     http.authenticationProvider(daoInMemoryProvider);
+    http.authenticationProvider(myBatisProvider);
 
     http.authorizeRequests().antMatchers("/static/**").permitAll().anyRequest().authenticated()
         .and().formLogin().loginPage("/login").permitAll().failureUrl("/login?error").permitAll()

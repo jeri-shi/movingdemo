@@ -75,4 +75,11 @@ public class RootConfig {
     daoInMemoryProvider.setUserDetailsService(inMemoryUserDetailsService);
     return daoInMemoryProvider;
   }
+  
+  @Bean
+  public DaoAuthenticationProvider myBatisProvider(UserDetailsService appUserDetailsService) {
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+    provider.setUserDetailsService(appUserDetailsService);
+    return provider;
+  }
 }
