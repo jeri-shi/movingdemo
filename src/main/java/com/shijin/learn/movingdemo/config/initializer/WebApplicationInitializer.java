@@ -9,11 +9,20 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.shijin.learn.movingdemo.config;
+package com.shijin.learn.movingdemo.config.initializer;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import com.shijin.learn.movingdemo.config.HttpSessionConfig;
+import com.shijin.learn.movingdemo.config.RootConfig;
+import com.shijin.learn.movingdemo.config.SecurityConfig;
+import com.shijin.learn.movingdemo.config.WebConfig;
 
 /**
  * @author shijin
@@ -31,7 +40,7 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
   @Override
   protected Class<?>[] getRootConfigClasses() {
     LOGGER.trace("getRootConfigClasses...");
-    return new Class[] {RootConfig.class, SecurityConfig.class};
+    return new Class[] {RootConfig.class, SecurityConfig.class, HttpSessionConfig.class};
   }
 
   /*
@@ -60,4 +69,10 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
     return new String[] {"/"};
   }
 
+  @Override
+  public void onStartup(ServletContext servletContext) throws ServletException {
+    super.onStartup(servletContext);
+    servletContext.addListener(HttpSessionEventPublisher.class);
+    
+  }
 }

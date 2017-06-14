@@ -13,14 +13,40 @@
  * limitations under the License.
  */
 
-package com.shijin.learn.movingdemo.config;
-
-import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+package com.shijin.learn.movingdemo.adapter;
 
 /**
  * @author shijin
  *
  */
-public class SecurityWebAppInitializer extends AbstractSecurityWebApplicationInitializer {
+public class LoginUser {
+  private String username;
+  private String password;
+  
+  /**
+   * @return the name
+   */
+  public String getUsername() {
+    return username;
+  }
+  /**
+   * @param name the name to set
+   */
+  public void setUsername(String name) {
+    this.username = name;
+  }
+  /**
+   * @return the password
+   */
+  public String getPassword() {
+    return password;
+  }
+  /**
+   * @param password the password to set
+   */
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
+  
 }
