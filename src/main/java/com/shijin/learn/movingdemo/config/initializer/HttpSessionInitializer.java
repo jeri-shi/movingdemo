@@ -24,7 +24,5 @@ import com.shijin.learn.movingdemo.config.HttpSessionConfig;
  *
  */
 public class HttpSessionInitializer extends AbstractHttpSessionApplicationInitializer {
-  public HttpSessionInitializer() {
-    super(HttpSessionConfig.class);
-  }
+
 }

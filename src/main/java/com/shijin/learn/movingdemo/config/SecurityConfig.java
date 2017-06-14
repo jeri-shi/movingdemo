@@ -55,10 +55,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.authenticationProvider(daoInMemoryProvider);
     http.authenticationProvider(myBatisProvider);
 
-    http.authorizeRequests().antMatchers("/static/**").permitAll().anyRequest().authenticated()
-        .and().formLogin().loginPage("/login").permitAll().failureUrl("/login?error").permitAll()
-        .defaultSuccessUrl("/home").and().logout().logoutUrl("/logout")
-        .logoutSuccessUrl("/login?logout").permitAll();
+    http.authorizeRequests()
+          .antMatchers("/static/**").permitAll()
+          .antMatchers("/home2").permitAll()
+          .anyRequest().authenticated()
+        .and()
+          .formLogin()
+            .loginPage("/login").permitAll()
+            .failureUrl("/login?error").permitAll()
+            .defaultSuccessUrl("/home")
+        .and()
+          .logout()
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/login?logout").permitAll();
+
     // .logoutRequestMatcher(new AntPathRequestMatcher("/logout")); // /logout is post method by
     // default.
 

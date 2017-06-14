@@ -18,9 +18,8 @@ package com.shijin.learn.movingdemo.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
-import org.springframework.session.web.http.HeaderHttpSessionStrategy;
-import org.springframework.session.web.http.HttpSessionStrategy;
 
 /**
  * @author shijin
@@ -36,11 +35,34 @@ public class HttpSessionConfig {
   }
   
   /**
-   * Used for Restful, use http header instead of cookie
+   * httpSessionEventPublisher convert Http Event to Spring application event
    * @return
    */
   @Bean
-  public HttpSessionStrategy httpSessionStrategy() {
-    return new HeaderHttpSessionStrategy();
+  public HttpSessionEventPublisher httpSessionEventPublisher() {
+    return new HttpSessionEventPublisher();
   }
+  
+  /**
+   * Once create ApplicationEvent listener implementation, it will automatically monitor spring event.
+   * @return
+   */
+  @Bean
+  public SessionCreatedListener sessionCreatedListener() {
+    return new SessionCreatedListener();
+  }
+
+  @Bean
+  public SessionDestroyedListener sessionDestroyedListener() {
+    return new SessionDestroyedListener();
+  }
+
+  /**
+   * Used for Restful, use http header instead of cookie
+   * @return
+   */
+//  @Bean
+//  public HttpSessionStrategy httpSessionStrategy() {
+//    return new HeaderHttpSessionStrategy();
+//  }
 }
