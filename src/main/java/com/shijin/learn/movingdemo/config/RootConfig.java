@@ -15,7 +15,16 @@
 
 package com.shijin.learn.movingdemo.config;
 
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
 /**
  * @author shijin
@@ -23,5 +32,16 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class RootConfig {
+  private static final Logger LOGGER = LogManager.getLogger(RootConfig.class);
+  
+  @Bean
+  @Resource(name="jdbc/datasource")
+  public DataSource dataSource() {
+    LOGGER.debug("init dataSource");
+    final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
+    dsLookup.setResourceRef(true);
+    return dsLookup.getDataSource("jdbc/datasource");
+  }
+
 
 }
