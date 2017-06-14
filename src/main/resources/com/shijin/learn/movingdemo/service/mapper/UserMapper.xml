@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shijin.learn.movingdemo.service.mapper.UserMapper">
+	<select id="loadAppUserByUserName" parameterType="String" resultMap="appUserResultMap">
+		select u.username, u.password, a.authority from users u
+		inner join authorities a on u.username = a.username 
+		where u.username = #{name}
+	</select>
+	<resultMap type="com.shijin.learn.movingdemo.service.dao.AppUser" id="appUserResultMap">
+		<id column="username" property="name"/>
+		<result column="password" property="pwd"/>
+		<collection property="authorities" ofType="com.shijin.learn.movingdemo.service.dao.Authority">
+			<result column="authority" property="role"/>
+		</collection>
+	</resultMap>
+</mapper>

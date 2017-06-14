@@ -101,7 +101,7 @@
     </div>
   </nav>
 
-  Home
+  Home + <c:out value="${user}"/>
 
 </body>
 

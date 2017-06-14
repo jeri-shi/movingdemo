@@ -12,10 +12,10 @@
 
 package com.shijin.learn.movingdemo.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,9 +23,10 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.shijin.learn.movingdemo.adapter.LoginUser;
+import com.shijin.learn.movingdemo.service.AppUserDetailsService;
+import com.shijin.learn.movingdemo.service.dao.AppUser;
 
 /**
  * @author shijin
@@ -34,10 +35,20 @@ import com.shijin.learn.movingdemo.adapter.LoginUser;
 @Controller
 public class HomeController {
   private static final Logger LOGGER = LogManager.getLogger(HomeController.class);
+  
+  @Autowired
+  private AppUserDetailsService appUserDetailsService;
 
   @RequestMapping({"/home", "/"}) //Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
-  public String helloWorld() {
+  public String helloWorld(Model model) {
     LOGGER.trace("helloWorld...");
+    
+    AppUser user = appUserDetailsService.loadAppUserByUserName("shijin");
+    model.addAttribute("user", user);
+    LOGGER.debug("get AppUser " + user);
+    
+    UserDetails shijin = appUserDetailsService.loadUserByUsername("shijin");
+    LOGGER.debug("get shijin's info" + shijin);
     return "home";
   }
   
