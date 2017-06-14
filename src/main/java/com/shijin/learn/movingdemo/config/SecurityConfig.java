@@ -49,11 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .failureUrl("/login?error")
         .permitAll()
-        .defaultSuccessUrl("/home");
-
-    http.logout()
-    .logoutUrl("/logout")
-    .logoutSuccessUrl("/login?logout").permitAll();
+        .defaultSuccessUrl("/home")
+      .and()
+        .logout()
+        .logoutUrl("/logout")
+        .logoutSuccessUrl("/login?logout").permitAll();
 //    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));  // /logout is post method by default.
   
 
