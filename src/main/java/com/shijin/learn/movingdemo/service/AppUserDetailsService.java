@@ -16,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ import com.shijin.learn.movingdemo.service.mapper.UserMapper;
  *
  */
 @Service
-public class AppUserDetailsService {
+public class AppUserDetailsService implements UserDetailsService{
   private static final Logger LOGGER = LogManager.getLogger(AppUserDetailsService.class);
   
   @Autowired
@@ -40,10 +41,13 @@ public class AppUserDetailsService {
    * org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.
    * String)
    */
-
+  @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     AppUser appUser = userMapper.loadAppUserByUserName(username);
     LOGGER.debug("retrive AppUser from service layer: " + appUser);
+    if (appUser == null) {
+      throw new UsernameNotFoundException(username);
+    }
     return ConvertAppUserBetweenUserDetails.convert(appUser);
   }
 

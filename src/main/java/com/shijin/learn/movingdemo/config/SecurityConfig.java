@@ -29,12 +29,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Bean
-  public UserDetailsService userDetailsService() {
-    InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-    manager.createUser(User.withUsername("ShiJin").password("111111").roles("USER").build());
-    return manager;
-  }
+// When implement a customized UserDetailsService, below method must be comments to make customized one to work
+//
+//  @Bean
+//  public UserDetailsService userDetailsService() {
+//    InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//    manager.createUser(User.withUsername("ShiJin").password("111111").roles("USER").build());
+//    return manager;
+//  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
