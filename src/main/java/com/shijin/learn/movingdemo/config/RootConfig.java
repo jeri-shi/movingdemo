@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,6 +37,7 @@ import org.springframework.security.core.GrantedAuthority;
  *
  */
 @Configuration
+@ComponentScan("com.shijin.learn.movingdemo.service")
 public class RootConfig {
   private static final Logger LOGGER = LogManager.getLogger(RootConfig.class);
   
