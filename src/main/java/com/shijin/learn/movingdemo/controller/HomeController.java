@@ -15,6 +15,7 @@ package com.shijin.learn.movingdemo.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +43,15 @@ public class HomeController {
   @RequestMapping({"/home", "/"}) //Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
   public String helloWorld(Model model) {
     LOGGER.trace("helloWorld...");
+    
+    String userName = null;
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal instanceof UserDetails) {
+      userName = ((UserDetails)principal).getUsername();
+    } else {
+      userName = principal.toString();
+    }
+    model.addAttribute("userName", userName);
     
     AppUser user = appUserDetailsService.loadAppUserByUserName("shijin");
     model.addAttribute("user", user);
