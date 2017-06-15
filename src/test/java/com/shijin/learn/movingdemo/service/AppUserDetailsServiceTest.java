@@ -14,17 +14,20 @@ package com.shijin.learn.movingdemo.service;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.shijin.learn.movingdemo.config.DebugConfig;
 import com.shijin.learn.movingdemo.config.RootConfig;
-import com.shijin.learn.movingdemo.service.dao.AppUser;
 import com.shijin.learn.movingdemo.service.mapper.UserMapper;
 
 /**
@@ -41,6 +44,9 @@ public class AppUserDetailsServiceTest {
 
   @Autowired
   AppUserDetailsService appUserDetailsService;
+  
+  @Rule
+  public ExpectedException thrown = ExpectedException.none();
 
   @Test
   public void testLoadUserByUsername() {
@@ -48,11 +54,31 @@ public class AppUserDetailsServiceTest {
     String name = "Sunny";
 
     // When
-    AppUser appUser = appUserDetailsService.loadAppUserByUserName(name);
+    UserDetails user = appUserDetailsService.loadUserByUsername(name);
 
     // Then
-    assertEquals(name, appUser.getName());
-    assertEquals("USER", appUser.getAuthorities().iterator().next().getRole());
-
+    assertEquals(name, user.getUsername());
+    assertEquals("ROLE_USER", user.getAuthorities().iterator().next().getAuthority());
+  }
+    
+  @Test
+  public void testLoadUserByUsername_nobody() {
+    //Given nobody
+    String username = "nobody";
+    thrown.expect(UsernameNotFoundException.class);
+    
+    //When
+    appUserDetailsService.loadUserByUsername(username);
+    
+  }
+  
+  @Test
+  public void testLoadUserByUsername_null() {
+    //Given nobody
+    String username = null;
+    thrown.expect(IllegalArgumentException.class);
+    
+    //When
+    appUserDetailsService.loadUserByUsername(username);
   }
 }

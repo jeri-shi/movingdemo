@@ -17,8 +17,6 @@ package com.shijin.learn.movingdemo.config.initializer;
 
 import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
 
-import com.shijin.learn.movingdemo.config.HttpSessionConfig;
-
 /**
  * @author shijin
  *

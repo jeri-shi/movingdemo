@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -26,13 +25,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shijin.learn.movingdemo.adapter.LoginUser;
-import com.shijin.learn.movingdemo.service.AppUserDetailsService;
-import com.shijin.learn.movingdemo.service.dao.AppUser;
 
 /**
  * @author shijin
@@ -41,9 +37,6 @@ import com.shijin.learn.movingdemo.service.dao.AppUser;
 @Controller
 public class HomeController {
   private static final Logger LOGGER = LogManager.getLogger(HomeController.class);
-
-  @Autowired
-  private AppUserDetailsService appUserDetailsService;
 
   @RequestMapping("/home2")
   public String hello2() {
@@ -55,7 +48,6 @@ public class HomeController {
     LOGGER.trace("helloWorld...");
     
     HttpSession session = request.getSession();
-    session.setMaxInactiveInterval(50);
     session.setAttribute("radio", "On The Air");
     session.setAttribute("sessionUserName", getLoginUserName());
 
