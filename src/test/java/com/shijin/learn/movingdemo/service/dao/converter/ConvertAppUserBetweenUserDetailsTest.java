@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.shijin.learn.movingdemo.service.dao.AppUser;
@@ -86,17 +87,7 @@ public class ConvertAppUserBetweenUserDetailsTest {
     String name = "ShiJin";
     String password = "123456";
     String userRole = "USER";
-    AppUser appUser = getAppUser(name, password, userRole);
-    
-    //When 
-    UserDetails userDetails = ConvertAppUserBetweenUserDetails.convert(appUser);
-
-    //Then
-    assertEquals(name, userDetails.getUsername());
-    assertEquals(password, userDetails.getPassword());
-    assertEquals(1, userDetails.getAuthorities().size());
-    assertEquals("ROLE_" + userRole, userDetails.getAuthorities().iterator().next().getAuthority());
-    LOGGER.debug("testConvert_AppUser_One_Role is passed.");
+    convert_AppUser_Roles(name, password, userRole);
   }
 
   @Test
@@ -106,7 +97,11 @@ public class ConvertAppUserBetweenUserDetailsTest {
     String password = "123456";
     String userRole = "USER";
     String adminRole = "ADMIN";
-    AppUser appUser = getAppUser(name, password, userRole, adminRole);
+    convert_AppUser_Roles(name, password, userRole, adminRole);
+  }
+
+  private void convert_AppUser_Roles(String name, String password, String... roles) {
+    AppUser appUser = getAppUser(name, password, roles);
     
     //When 
     UserDetails userDetails = ConvertAppUserBetweenUserDetails.convert(appUser);
@@ -114,8 +109,20 @@ public class ConvertAppUserBetweenUserDetailsTest {
     //Then
     assertEquals(name, userDetails.getUsername());
     assertEquals(password, userDetails.getPassword());
-    assertEquals(2, userDetails.getAuthorities().size());
-    assertEquals("ROLE_" + adminRole, userDetails.getAuthorities().iterator().next().getAuthority());
+    assertEquals(roles.length, userDetails.getAuthorities().size());
+    
+    String strRole = "";
+    String strParaRole = "";
+    String[] paraRoles = roles.clone();
+    int i = paraRoles.length;
+    for(GrantedAuthority auth: userDetails.getAuthorities()) {
+      strRole += auth.getAuthority();
+      strParaRole += ("ROLE_" + paraRoles[--i]);
+    }
+    
+    assertEquals(strParaRole, strRole);
+    
+    
     LOGGER.debug("testConvert_AppUser_Two_Roles is passed.");
   }
 
