@@ -23,6 +23,7 @@ import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.User;
@@ -40,6 +41,7 @@ public class RootConfig {
 
   @Bean
   @Resource(name = "jdbc/datasource")
+  @Profile("default")
   public DataSource dataSource() {
     LOGGER.debug("init dataSource");
     final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
