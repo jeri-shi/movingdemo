@@ -24,6 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Locale;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,9 +75,9 @@ public class HomeControllerTest {
   @Test
   @WithMockUser(username = "Jeri", roles = "USER")
   public void testHelloWorld() throws Exception {
-    this.mockMvc.perform(get("/home")).andDo(print())
+    this.mockMvc.perform(get("/home").locale(Locale.ENGLISH)).andDo(print())
         .andExpect(forwardedUrl("/WEB-INF/jsp/home.jsp"))
-        .andExpect(request().sessionAttribute("radio", "On The Air"))
+        .andExpect(request().sessionAttribute("radio", "On The Air!"))
         .andExpect(request().sessionAttribute("sessionUserName", "Jeri"));
   }
 

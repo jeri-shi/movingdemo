@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
@@ -62,7 +63,7 @@
                 User Name or Password is not right.
               </div>
             </form:errors>
-            <label class="form-control-static">User Name</label>
+            <label class="form-control-static"><spring:message code="jsp.index.username"/></label>
             <form:input type="text" path="username" cssClass="form-control" placeholder="Input a username"/>
 
             <label class="form-control-static">Password</label>

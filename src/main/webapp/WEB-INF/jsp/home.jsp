@@ -4,6 +4,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 
@@ -93,7 +94,7 @@
           </li>
           <li>
               <form:form action="${theAction}" class="navbar-form">
-                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-share"></span> Sign out</button>
+                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-share"></span> <spring:message code="jsp.home.signout" /></button>
               </form:form>
           </li>
         </ul>
@@ -106,6 +107,7 @@
   <br/>
   <p>SecurityContext: <sec:authentication property="principal"/> </p>
   <p>Session Context: <c:out value="${sessionUserName}"/></p>
+  <p>Radio : <c:out value="${radio}" /> </p>
 </body>
 
 </html>

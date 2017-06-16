@@ -12,11 +12,16 @@
 
 package com.shijin.learn.movingdemo.controller;
 
+import java.util.Enumeration;
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -27,8 +32,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.LocaleResolver;
 
 import com.shijin.learn.movingdemo.adapter.LoginUser;
+
+
 
 /**
  * @author shijin
@@ -38,6 +46,12 @@ import com.shijin.learn.movingdemo.adapter.LoginUser;
 public class HomeController {
   private static final Logger LOGGER = LogManager.getLogger(HomeController.class);
 
+  @Autowired
+  private MessageSource message;
+  
+  @Autowired
+  private LocaleResolver localResolver;
+  
   @RequestMapping("/home2")
   public String hello2() {
     return "home2";
@@ -45,27 +59,37 @@ public class HomeController {
   
   @RequestMapping({"/home", "/"}) // Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
   public String helloWorld(Model model, HttpServletRequest request) {
-    LOGGER.trace("helloWorld...");
+    LOGGER.trace("helloWorld..." + request.getLocale()); //$NON-NLS-1$
     
     HttpSession session = request.getSession();
-    session.setAttribute("radio", "On The Air");
-    session.setAttribute("sessionUserName", getLoginUserName());
+    Enumeration<String> en = session.getAttributeNames();
+    String item = null;
+    while(en.hasMoreElements()) {
+      item = en.nextElement();
+      LOGGER.debug("key=" + item + ", value=" + session.getAttribute(item));
+    }
+    
+    LOGGER.debug("session Locale:" + session.getAttribute("org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE"));
+    LOGGER.debug("request Locale:" + request.getLocale());
+    LOGGER.debug("localeResolver:" + localResolver.resolveLocale(request));
+    session.setAttribute("radio", message.getMessage("HomeController.radio", null, localResolver.resolveLocale(request))); //$NON-NLS-2$
+    session.setAttribute("sessionUserName", getLoginUserName()); //$NON-NLS-1$
 
-    LOGGER.debug("Login with " + session.getAttribute("sessionUserName") + ", session=" + session.getId());
+    LOGGER.debug("Login with " + session.getAttribute("sessionUserName") + ", session=" + session.getId()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-    return "home";
+    return "home"; //$NON-NLS-1$
   }
 
   @GetMapping("/login")
   public String homePage(@ModelAttribute("loginUser") LoginUser loginUser, BindingResult result,
       @RequestParam(required = false) String error) {
-    LOGGER.trace("/login with parameter=" + error);
+    LOGGER.trace("/login with parameter=" + error); //$NON-NLS-1$
     if (error != null) {
-      result.addError(new ObjectError("username", "User Name or Password is not right."));
-      result.addError(new ObjectError("password", ""));
+      result.addError(new ObjectError("username", message.getMessage("HomeController.login.error", null, Locale.CHINESE))); //$NON-NLS-1$ //$NON-NLS-2$
+      result.addError(new ObjectError("password", "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    return "index";
+    return "index"; //$NON-NLS-1$
   }
 
   private String getLoginUserName() {
