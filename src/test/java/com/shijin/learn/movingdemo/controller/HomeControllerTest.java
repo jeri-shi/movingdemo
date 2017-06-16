@@ -12,15 +12,23 @@
 
 package com.shijin.learn.movingdemo.controller;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.logout;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -30,7 +38,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.shijin.learn.movingdemo.config.DebugConfig;
+import com.shijin.learn.movingdemo.config.HttpSessionConfig;
 import com.shijin.learn.movingdemo.config.RootConfig;
+import com.shijin.learn.movingdemo.config.SecurityConfig;
 import com.shijin.learn.movingdemo.config.WebConfig;
 
 /**
@@ -39,7 +49,8 @@ import com.shijin.learn.movingdemo.config.WebConfig;
  */
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {RootConfig.class, DebugConfig.class, WebConfig.class})
+@ContextConfiguration(classes = {RootConfig.class, DebugConfig.class, WebConfig.class,
+    SecurityConfig.class, HttpSessionConfig.class})
 @ActiveProfiles("dev")
 public class HomeControllerTest {
 
@@ -50,7 +61,7 @@ public class HomeControllerTest {
 
   @Before
   public void setup() {
-    this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+    this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).apply(springSecurity()).build();
   }
 
   @Test
@@ -59,20 +70,46 @@ public class HomeControllerTest {
         .andExpect(forwardedUrl("/WEB-INF/jsp/home2.jsp"));
   }
 
-//  @Test
-//  public void testHelloWorld() throws Exception {
-//    this.mockMvc.perform(get("/home")).andDo(print())
-//        .andExpect(MockMvcResultMatchers.forwardedUrl("/WEB-INF/jsp/home.jsp"))
-//        .andExpect(request().sessionAttribute("radio", "?"))
-//        .andExpect(request().sessionAttribute("sessionName", "?"));
-//  }
+  @Test
+  @WithMockUser(username = "Jeri", roles = "USER")
+  public void testHelloWorld() throws Exception {
+    this.mockMvc.perform(get("/home")).andDo(print())
+        .andExpect(forwardedUrl("/WEB-INF/jsp/home.jsp"))
+        .andExpect(request().sessionAttribute("radio", "On The Air"))
+        .andExpect(request().sessionAttribute("sessionUserName", "Jeri"));
+  }
 
+  @Test
+  public void testLoginFormSuccess() throws Exception{
+      //Given an Account in InMemoryAuthentication
+      mockMvc.perform(formLogin().user("ShiJin").password("111111"))
+        .andDo(print())
+        .andExpect(redirectedUrl("/home"));
+
+      //Given an Account in InMemoryDB
+      mockMvc.perform(formLogin().user("Jeri").password("111111"))
+      .andDo(print())
+      .andExpect(authenticated().withUsername("Jeri").withRoles("USER","ADMIN"));
+  }
+
+  @Test
+  public void testLoginFormFailure() throws Exception {
+    mockMvc.perform(formLogin().user("Jeri Shi").password("111111"))
+    .andDo(print())
+    .andExpect(unauthenticated());
+     
+  }
+  
   @Test
   public void testHomePage() throws Exception {
     this.mockMvc.perform(get("/login")).andDo(print())
         .andExpect(forwardedUrl("/WEB-INF/jsp/index.jsp"));
-    
+
     this.mockMvc.perform(get("/login").param("error", "")).andDo(print());
   }
 
+  @Test
+  public void testLogOut() throws Exception {
+    this.mockMvc.perform(logout()).andDo(print()).andExpect(unauthenticated());
+  }
 }

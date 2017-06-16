@@ -14,11 +14,12 @@ package com.shijin.learn.movingdemo.service;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,7 +29,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.shijin.learn.movingdemo.config.DebugConfig;
 import com.shijin.learn.movingdemo.config.RootConfig;
-import com.shijin.learn.movingdemo.service.mapper.UserMapper;
 
 /**
  * @author shijin
@@ -37,10 +37,7 @@ import com.shijin.learn.movingdemo.service.mapper.UserMapper;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {RootConfig.class, DebugConfig.class})
 @ActiveProfiles("dev")
-public class AppUserDetailsServiceTest {
-
-  @Mock
-  UserMapper userMapper;
+public class AppUserDetailsServiceIntegrationTest {
 
   @Autowired
   AppUserDetailsService appUserDetailsService;
@@ -48,6 +45,11 @@ public class AppUserDetailsServiceTest {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
+  @Before
+  public void setup() {
+    MockitoAnnotations.initMocks(this);
+  }
+  
   @Test
   public void testLoadUserByUsername() {
     // Given
