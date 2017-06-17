@@ -77,7 +77,7 @@ public class HomeControllerTest {
   public void testHelloWorld() throws Exception {
     this.mockMvc.perform(get("/home").locale(Locale.ENGLISH)).andDo(print())
         .andExpect(forwardedUrl("/WEB-INF/jsp/home.jsp"))
-        .andExpect(request().sessionAttribute("radio", "On The Air!"))
+        .andExpect(request().sessionAttribute("radio", "On The Air"))
         .andExpect(request().sessionAttribute("sessionUserName", "Jeri"));
   }
 

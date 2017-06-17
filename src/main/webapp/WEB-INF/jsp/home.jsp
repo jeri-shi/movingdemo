@@ -94,7 +94,7 @@
           </li>
           <li>
               <form:form action="${theAction}" class="navbar-form">
-                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-share"></span> <spring:message code="jsp.home.signout" /></button>
+                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-log-out"></span> <spring:message code="jsp.home.signout" /></button>
               </form:form>
           </li>
         </ul>
@@ -103,7 +103,7 @@
   </nav>
 
   Home + <sec:authentication property="principal"/>
-  
+
   <br/>
   <p>SecurityContext: <sec:authentication property="principal"/> </p>
   <p>Session Context: <c:out value="${sessionUserName}"/></p>
