@@ -20,99 +20,28 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <c:url value="${request.contextPath}/static" var="spath"/>
     <title><spring:message code="jsp.index.title"/></title>
-
-    <style>
-      body {
-        font: 400 15px Lato, sans-serif;
-        line-height: 1.8;
-        color: white;
-      }
-      .bgimg {
-        background-image: url("static/img/bg.svg");
-        background-repeat: no-repeat;
-        background-position: 0 0 0 0;
-        background-size: 100% auto;
-      }
-      .pad {
-        padding-top: 120px;
-        padding-bottom: 80px;
-      }
-      .flex-container {
-        display: flex;
-        justify-content: center;
-      }
-      .bg-grey {
-        background-color: grey;
-      }
-      
-      .flags-group {
-      	display:inline-flex !important;
-      }
-      .flags {
-        display: block;
-        margin: 5px;
-        padding: 10px;
-        width: 48px;
-        height: 32px;
-        background: url("static/img/flags.png");
-        box-shadow: 2px 2px 5px #403f3f;
-      }
-      .small-flags {
-        display: block;
-        margin: 5px;
-        padding: 10px;
-        width: 33px;
-        height: 22px;
-        background: url("static/img/flags.png");
-        background-size: 350px 210px;
-        box-shadow: 1px 1px 3px #403f3f;
-      }
-      .flags-group > a >span:hover {
-        box-shadow: 3px 3px 5px #301f1f;
-      }
-      .iceland-flag {
-        background-position: -1px -1px;
-      }
-      .china-flag {
-        background-position: -151px -172px;
-      }
-      .us-flag {
-        background-position: -351px -87px;
-      }
-
-      .iceland-flag-small {
-        background-position: -1px -1px;
-      }
-      .china-flag-small {
-        background-position: -106px -121px;
-      }
-      .us-flag-small {
-        background-position: -246px -61px;
-      }
-      .franch-flag-small {
-        background-position: -281px -31px;
-      }
-
-    </style>
+    <link rel="stylesheet" href="${spath}<spring:theme code='styleSheet'/>" type="text/css"/>
+    <style></style>
   </head>
 
-  <body style="background-color: #338055">
+  <body style="background-color:<spring:theme code="bgColor"/>">
     <div class="container-fluid bgimg pad flex-container">
       <div class="row pad">
         <div class="col-sm-7">
           <h1><spring:message code="jsp.index.title"/></h1>
 
-          <p><spring:message code="jsp.index.description"/></p>
+          <p><spring:message code="jsp.index.description"/>
+          </p>
 
         </div>
         <div class="col-sm-5 has-error">
-          <c:url value="${request.contextPath}/login" var="theAction"/>
-          <form:form action="${theAction}" method="POST" modelAttribute="loginUser" class="form-group">
+          <form:form servletRelativeAction="/login" method="POST" modelAttribute="loginUser" class="form-group">
             <form:errors path="*" cssClass="text-warning"></form:errors>
             <label class="form-control-static"><spring:message code="jsp.index.username"/></label>
             <spring:message code='jsp.index.username.hint' var="username_hint"/>
-            <form:input type="text" path="username" cssClass="form-control" placeholder="${username_hint}" />
+            <form:input type="text" path="username" cssClass="form-control" placeholder="${username_hint}"/>
 
             <label class="form-control-static"><spring:message code="jsp.index.password"/></label>
             <spring:message code='jsp.index.password.hint' var="password_hint"/>
@@ -120,14 +49,23 @@
 
             <br/>
             <spring:message code='jsp.index.button.submit' var="button_sumit"/>
-            <input type="submit" class="btn btn-success form-control" value="${button_sumit}" />
+            <input type="submit" class="btn btn-success form-control" value="${button_sumit}"/>
           </form:form>
         </div>
       </div>
     </div>
     <div class="container-fluid flex-container">
       <div class="row">
-        <div class="col-sm-12 flags-group">
+        <div class="col-sm-7 theme-flags-group">
+          <a href="${theAction}?theme=green">
+            <span class="theme-flags green-theme"></span>
+          </a>
+          <a href="${theAction}?theme=dark">
+            <span class="theme-flags dark-theme"></span>
+          </a>
+        </div>
+        <c:url value="${request.contextPath}/login" var="theAction"/>
+        <div class="col-sm-5 flags-group">
           <a href="${theAction}?lang=en">
             <span class="small-flags us-flag-small"></span>
           </a>

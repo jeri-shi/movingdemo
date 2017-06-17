@@ -82,10 +82,10 @@ public class HomeController {
 
   @GetMapping("/login")
   public String homePage(@ModelAttribute("loginUser") LoginUser loginUser, BindingResult result,
-      @RequestParam(required = false) String error) {
+      @RequestParam(required = false) String error, HttpServletRequest request) {
     LOGGER.trace("/login with parameter=" + error); //$NON-NLS-1$
     if (error != null) {
-      result.addError(new ObjectError("username", message.getMessage("HomeController.login.error", null, Locale.CHINESE))); //$NON-NLS-1$ //$NON-NLS-2$
+      result.addError(new ObjectError("username", message.getMessage("HomeController.login.error", null, localResolver.resolveLocale(request)))); //$NON-NLS-1$ //$NON-NLS-2$
       result.addError(new ObjectError("password", "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 

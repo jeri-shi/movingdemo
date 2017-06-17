@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.ui.context.support.ResourceBundleThemeSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.theme.SessionThemeResolver;
+import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
 
 @Configuration
 @EnableWebMvc
@@ -81,5 +84,26 @@ public class WebConfig extends WebMvcConfigurerAdapter{
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(localeChangeInterceptor());
+    registry.addInterceptor(themeChangeInterceptor());
+  }
+  
+  @Bean
+  public ResourceBundleThemeSource themeSource() {
+    ResourceBundleThemeSource themeSource = new ResourceBundleThemeSource();
+    return themeSource;
+  }
+  
+  @Bean
+  public SessionThemeResolver themeResolver() {
+    SessionThemeResolver themeResolver = new SessionThemeResolver();
+    themeResolver.setDefaultThemeName("green");
+    return themeResolver;
+  }
+  
+  @Bean
+  public ThemeChangeInterceptor themeChangeInterceptor() {
+    ThemeChangeInterceptor themeChangeInterceptor = new ThemeChangeInterceptor();
+    themeChangeInterceptor.setParamName("theme");
+    return themeChangeInterceptor;
   }
 }
