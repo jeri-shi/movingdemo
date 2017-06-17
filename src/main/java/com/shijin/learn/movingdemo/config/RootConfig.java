@@ -19,10 +19,11 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.User;
@@ -35,11 +36,13 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
  */
 @Configuration
 @ComponentScan("com.shijin.learn.movingdemo.service")
+@MapperScan("com.shijin.learn.movingdemo.service.mapper")
 public class RootConfig {
   private static final Logger LOGGER = LogManager.getLogger(RootConfig.class);
 
   @Bean
   @Resource(name = "jdbc/datasource")
+  @Profile("default")
   public DataSource dataSource() {
     LOGGER.debug("init dataSource");
     final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
@@ -50,17 +53,18 @@ public class RootConfig {
   @Bean
   public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
     SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
-    factory.setDataSource(dataSource);
+    factory.setDataSource(dataSource); 
     return factory.getObject();
   }
 
-  @Bean
-  public MapperScannerConfigurer mapperScannerConfigurer() {
-    MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-    mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
-    mapperScannerConfigurer.setBasePackage("com.shijin.learn.movingdemo.service.mapper");
-    return mapperScannerConfigurer;
-  }
+//  @Bean
+//  @Profile("default")
+//  public MapperScannerConfigurer mapperScannerConfigurer() {
+//    MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
+//    mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
+//    mapperScannerConfigurer.setBasePackage("com.shijin.learn.movingdemo.service.mapper");
+//    return mapperScannerConfigurer;
+//  }
 
   @Bean
   public UserDetailsService inMemoryUserDetailsService() {
@@ -82,4 +86,5 @@ public class RootConfig {
     provider.setUserDetailsService(appUserDetailsService);
     return provider;
   }
+  
 }

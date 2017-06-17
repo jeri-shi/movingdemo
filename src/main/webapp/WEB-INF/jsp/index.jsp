@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
@@ -8,7 +9,7 @@
 
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <sec:csrfMetaTags />
+    <sec:csrfMetaTags/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
     <!-- Latest compiled and minified CSS -->
@@ -19,62 +20,67 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <title>Moving Demo</title>
-
-    <style>
-      body {
-        font: 400 15px Lato, sans-serif;
-        line-height: 1.8;
-        color: white;
-      }
-      .bgimg {
-        background-image: url("static/img/bg.svg");
-        background-repeat: no-repeat;
-        background-position: 0 0 0 0;
-        background-size: 100% auto;
-      }
-      .pad {
-        padding-top: 120px;
-        padding-bottom: 120px;
-      }
-      .flex-container {
-        display: flex;
-        justify-content: center;
-      }
-
-    </style>
+    <c:url value="${request.contextPath}/static" var="spath"/>
+    <title><spring:message code="jsp.index.title"/></title>
+    <link rel="stylesheet" href="${spath}<spring:theme code='styleSheet'/>" type="text/css"/>
+    <style></style>
   </head>
 
-  <body style="background-color: #338055">
+  <body style="background-color:<spring:theme code="bgColor"/>">
     <div class="container-fluid bgimg pad flex-container">
       <div class="row pad">
         <div class="col-sm-7">
-          <h1>Moving Demo</h1>
+          <h1><spring:message code="jsp.index.title"/></h1>
 
-          <p>This is a moving demo program. It will provide you a shared moving fast experiences</p>
+          <p><spring:message code="jsp.index.description"/>
+          </p>
 
         </div>
         <div class="col-sm-5 has-error">
-          <c:url value="${request.contextPath}/login" var="theAction"/>
-          <form:form action="${theAction}" method="POST" modelAttribute="loginUser" class="form-group">
-            <form:errors path="*" cssClass="text-warning">
-              <div class="text-warning">
-                User Name or Password is not right.
-              </div>
-            </form:errors>
-            <label class="form-control-static">User Name</label>
-            <form:input type="text" path="username" cssClass="form-control" placeholder="Input a username"/>
+          <form:form servletRelativeAction="/login" method="POST" modelAttribute="loginUser" class="form-group">
+            <form:errors path="*" cssClass="text-warning"></form:errors>
+            <label class="form-control-static"><spring:message code="jsp.index.username"/></label>
+            <spring:message code='jsp.index.username.hint' var="username_hint"/>
+            <form:input type="text" path="username" cssClass="form-control" placeholder="${username_hint}"/>
 
-            <label class="form-control-static">Password</label>
-            <form:password path="password" class="form-control" placeholder="Input a password"/>
+            <label class="form-control-static"><spring:message code="jsp.index.password"/></label>
+            <spring:message code='jsp.index.password.hint' var="password_hint"/>
+            <form:password path="password" class="form-control" placeholder="${password_hint}"/>
 
             <br/>
-            <input type="submit" class="btn btn-success form-control" value="Sign In"/>
+            <spring:message code='jsp.index.button.submit' var="button_sumit"/>
+            <input type="submit" class="btn btn-success form-control" value="${button_sumit}"/>
           </form:form>
         </div>
       </div>
     </div>
-
+    <div class="container-fluid flex-container">
+      <div class="row">
+        <div class="col-sm-7 theme-flags-group">
+          <a href="${theAction}?theme=green">
+            <span class="theme-flags green-theme"></span>
+          </a>
+          <a href="${theAction}?theme=dark">
+            <span class="theme-flags dark-theme"></span>
+          </a>
+        </div>
+        <c:url value="${request.contextPath}/login" var="theAction"/>
+        <div class="col-sm-5 flags-group">
+          <a href="${theAction}?lang=en">
+            <span class="small-flags us-flag-small"></span>
+          </a>
+          <a href="${theAction}?lang=zh" class="flag">
+            <span class="small-flags china-flag-small"></span>
+          </a>
+          <a href="${theAction}?lang=is">
+            <span class="small-flags iceland-flag-small"></span>
+          </a>
+          <a href="${theAction}?lang=fr">
+            <span class="small-flags franch-flag-small"></span>
+          </a>
+        </div>
+      </div>
+    </div>
   </body>
 
 </html>

@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.shijin.learn.movingdemo.service.dao.AppUser;
 import com.shijin.learn.movingdemo.service.dao.converter.ConvertAppUserBetweenUserDetails;
@@ -43,16 +44,14 @@ public class AppUserDetailsService implements UserDetailsService{
    */
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    Assert.notNull(username, "username cannot be null.");
+
     AppUser appUser = userMapper.loadAppUserByUserName(username);
     LOGGER.debug("retrive AppUser from service layer: " + appUser);
     if (appUser == null) {
       throw new UsernameNotFoundException(username);
     }
     return ConvertAppUserBetweenUserDetails.convert(appUser);
-  }
-
-  public AppUser loadAppUserByUserName(String name) {
-    return userMapper.loadAppUserByUserName(name);
   }
 
 }

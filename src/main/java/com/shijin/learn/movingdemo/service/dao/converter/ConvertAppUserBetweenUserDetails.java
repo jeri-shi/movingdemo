@@ -32,14 +32,14 @@ import com.shijin.learn.movingdemo.service.dao.Authority;
 public class ConvertAppUserBetweenUserDetails {
 
   public static UserDetails convert(AppUser appUser) {
-
+    Assert.notNull(appUser, "appUser cannot be null.");
     return User.withUsername(appUser.getName()).password(appUser.getPwd())
         .authorities(roles(appUser.getAuthorities())).build();
 
   }
 
   private static List<GrantedAuthority> roles(Collection<Authority> roles) {
-    Assert.notNull(roles, "roles cannot be null");
+    Assert.notNull(roles, "appUser.roles cannot be null.");
     List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(roles.size());
     for (Authority role : roles) {
       Assert.isTrue(!role.getRole().startsWith("ROLE_"),
