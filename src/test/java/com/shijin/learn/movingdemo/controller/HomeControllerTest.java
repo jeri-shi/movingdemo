@@ -14,13 +14,14 @@ package com.shijin.learn.movingdemo.controller;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.logout;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -110,6 +111,33 @@ public class HomeControllerTest {
     this.mockMvc.perform(get("/login").param("error", "")).andDo(print());
   }
 
+  @Test
+  public void testLoginWithoutRightPwd() throws Exception {
+    mockMvc.perform(
+        post("/login").with(csrf())
+          .param("company", "Learn")
+          .param("username", "Jin")
+          .param("password", "wrong")
+        )
+        .andDo(print())
+        .andExpect(unauthenticated());
+
+  }
+  
+
+  @Test
+  public void testLoginWithRightPwd() throws Exception {
+    mockMvc.perform(
+        post("/login").with(csrf())
+          .param("company", "Learn")
+          .param("username", "Jin")
+          .param("password", "111")
+        )
+        .andDo(print())
+        .andExpect(authenticated());
+
+  }
+  
   @Test
   public void testLogOut() throws Exception {
     this.mockMvc.perform(logout()).andDo(print()).andExpect(unauthenticated());

@@ -4,6 +4,7 @@
 package com.shijin.learn.movingdemo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.ProviderNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,7 +39,6 @@ public class CompanyUserAuthenticationProvider extends AbstractUserDetailsAuthen
   @Override
   protected void additionalAuthenticationChecks(UserDetails userDetails,
       UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-
   }
 
   /*
@@ -65,6 +65,10 @@ public class CompanyUserAuthenticationProvider extends AbstractUserDetailsAuthen
     if (user == null) {
       throw new InternalAuthenticationServiceException(
           "UserDetailsService returned null, which is an interface contract violation");
+    }
+    
+    if (!user.getPwd().equals(authentication.getCredentials())) {
+      throw new BadCredentialsException("Authentication is failed");
     }
     
     return ConvertAppUser.convert(user);

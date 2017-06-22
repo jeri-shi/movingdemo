@@ -62,7 +62,7 @@ public class CompanyUserAuthenticationProviderTest {
     String username = "ShiJin";
     String company = "Learn";
     CompanyUserPrincipal principal = new CompanyUserPrincipal(company, username);
-    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "111111");
+    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "111");
     AppCompanyUser userDetails = new AppCompanyUser();
     userDetails.setCompany(company);
     userDetails.setName(username);

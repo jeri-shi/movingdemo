@@ -43,8 +43,7 @@ public class CompanyUserPwdProcessingFilterTest {
   
   @Test
   public void testFilter() throws Exception {
-    CompanyUserPrincipal expected = new CompanyUserPrincipal("testCompany", "testUser");
-    
+   
     mockMvc.perform(post("/login").with(csrf())
                     .param("company", "testCompany")
                     .param("username", "testUser")

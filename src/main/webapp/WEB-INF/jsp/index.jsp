@@ -39,6 +39,11 @@
         <div class="col-sm-5 has-error">
           <form:form servletRelativeAction="/login" method="POST" modelAttribute="loginUser" class="form-group">
             <form:errors path="*" cssClass="text-warning"></form:errors>
+
+            <label class="form-control-static"><spring:message code="jsp.index.company"/></label>
+            <spring:message code='jsp.index.company.hint' var="company_hint"/>
+            <form:input type="text" path="company" cssClass="form-control" placeholder="${company_hint}"/>
+
             <label class="form-control-static"><spring:message code="jsp.index.username"/></label>
             <spring:message code='jsp.index.username.hint' var="username_hint"/>
             <form:input type="text" path="username" cssClass="form-control" placeholder="${username_hint}"/>

@@ -21,6 +21,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.shijin.learn.movingdemo.controller.CompanyUserPwdProcessingFilter;
@@ -66,7 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
 
     // http.authorizeRequests().anyRequest().permitAll();
-
+    http
+      .authenticationProvider(daoInMemoryProvider)
+      .authenticationProvider(myBatisProvider)
+      .authenticationProvider(companyUserAuthenticationProvider);
 
     http.authorizeRequests()
           .antMatchers("/static/**").permitAll()
@@ -84,9 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutSuccessUrl("/login?logout").permitAll()
         .and()
           .addFilterBefore(companyUserPwdProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
-          .authenticationProvider(daoInMemoryProvider)
-          .authenticationProvider(myBatisProvider)
-          .authenticationProvider(companyUserAuthenticationProvider);
+          ;
         
 
     // .logoutRequestMatcher(new AntPathRequestMatcher("/logout")); // /logout is post method by
@@ -105,6 +108,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   public CompanyUserPwdProcessingFilter companyUserPwdProcessingFilter() throws Exception {
     CompanyUserPwdProcessingFilter filter = new CompanyUserPwdProcessingFilter();
     filter.setAuthenticationManager(myAuthenticationManager);
+    filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(
+                "/login?error"));
+    SavedRequestAwareAuthenticationSuccessHandler handler = new SavedRequestAwareAuthenticationSuccessHandler();
+    handler.setDefaultTargetUrl("/home");
+    filter.setAuthenticationSuccessHandler(handler);
     return filter;
   }
 }
