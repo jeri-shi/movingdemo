@@ -66,10 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/login**").permitAll().anyRequest().authenticated().and().formLogin()
         .loginPage("/login").permitAll().failureUrl("/login?error").permitAll()
         .defaultSuccessUrl("/home").and().logout().logoutUrl("/logout")
-        .logoutSuccessUrl("/login?logout").permitAll();
-        
-//        .and().addFilterBefore(
-//            companyUserPwdProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
+        .logoutSuccessUrl("/login?logout").permitAll()        
+        .and()
+          .addFilterBefore(
+            companyUserPwdProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
 
 
     // .logoutRequestMatcher(new AntPathRequestMatcher("/logout")); // /logout is post method by
