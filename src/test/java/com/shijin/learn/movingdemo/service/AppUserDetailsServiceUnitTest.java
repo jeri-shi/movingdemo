@@ -35,6 +35,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.shijin.learn.movingdemo.config.DebugConfig;
 import com.shijin.learn.movingdemo.config.RootConfig;
+import com.shijin.learn.movingdemo.service.dao.AppCompanyUser;
 import com.shijin.learn.movingdemo.service.dao.AppUser;
 import com.shijin.learn.movingdemo.service.dao.Authority;
 import com.shijin.learn.movingdemo.service.mapper.UserMapper;
@@ -83,6 +84,39 @@ public class AppUserDetailsServiceUnitTest {
     
     //then
     assertEquals("Jeri Shi", userDetails.getUsername());
+  }
+  
+  @Test
+  public void testLoadUserByCompanyUsername() {
+    //given
+    AppCompanyUser returnUser = new AppCompanyUser();
+    String company = "company";
+    String username = "usernmae";
+    returnUser.setCompany(company);
+    returnUser.setName(username);
+    given(userMapper.loadAppUserByCompanyUserName(company, username)).willReturn(returnUser);
+    
+    //when
+    AppCompanyUser user = appUserDetailsService.loadUserByCompanyUsername(company, username);
+    
+    //then
+    assertEquals(returnUser, user);
+  }
+   
+  @Test
+  public void testLoadUserByCompanyUsername_isNull() {
+    //given
+    AppCompanyUser returnUser = new AppCompanyUser();
+    String company = "company";
+    String username = "usernmae";
+    returnUser.setCompany(company);
+    returnUser.setName(username);
+    given(userMapper.loadAppUserByCompanyUserName(company, username)).willReturn(null);
+    thrown.expect(UsernameNotFoundException.class);
+    
+    //when
+    appUserDetailsService.loadUserByCompanyUsername(company, username);
+
   }
   
 }

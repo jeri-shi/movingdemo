@@ -1,14 +1,14 @@
 package com.shijin.learn.movingdemo.controller;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
-import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -45,10 +45,13 @@ public class CompanyUserPwdProcessingFilterTest {
   public void testFilter() throws Exception {
     CompanyUserPrincipal expected = new CompanyUserPrincipal("testCompany", "testUser");
     
-    mockMvc.perform(formLogin("/login").user("ShiJin").password("111111"))
-            .andExpect(
-                authenticated().withAuthenticationPrincipal(expected)
-            );
+    mockMvc.perform(post("/login").with(csrf())
+                    .param("company", "testCompany")
+                    .param("username", "testUser")
+                    .param("password", "testPwd"))
+                  .andExpect(
+                      unauthenticated()
+                   );
     
   }
 }

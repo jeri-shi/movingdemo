@@ -15,4 +15,19 @@
 			<result column="authority" property="role"/>
 		</collection>
 	</resultMap>
+	
+	<select id="loadAppUserByCompanyUserName" parameterType="String" resultMap="appCompanyUserResultMap">
+		select u.id, u.company, u.username, u.password, u.enabled, a.authority 
+		from companyusers u inner join companyauthorities a on u.id = a.userId
+		where u.company = #{company} and u.username = #{name}
+	</select>
+	<resultMap type="com.shijin.learn.movingdemo.service.dao.AppCompanyUser" id="appCompanyUserResultMap">
+		<result column="company" property="company"/>
+		<result column="username" property="name" />
+		<result column="password" property="pwd" />
+		<result column="enabled" property="enabled" />
+		<collection property="authorities" ofType="com.shijin.learn.movingdemo.service.dao.Authority">
+			<result column="authority" property="role"/>
+		</collection>
+	</resultMap>
 </mapper>

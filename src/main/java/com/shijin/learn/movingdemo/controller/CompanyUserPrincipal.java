@@ -38,6 +38,9 @@ public class CompanyUserPrincipal implements Serializable {
 
   @Override
   public String toString() {
+    if (company == null || "".equals(company)) {
+      return username;
+    }
     return "<" + company + ", " + username + ">";
   }
 

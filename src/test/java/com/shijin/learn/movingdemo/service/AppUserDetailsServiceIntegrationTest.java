@@ -13,6 +13,8 @@
 package com.shijin.learn.movingdemo.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.springframework.util.Assert.notEmpty;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -29,6 +31,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.shijin.learn.movingdemo.config.DebugConfig;
 import com.shijin.learn.movingdemo.config.RootConfig;
+import com.shijin.learn.movingdemo.service.dao.AppCompanyUser;
 
 /**
  * @author shijin
@@ -50,6 +53,19 @@ public class AppUserDetailsServiceIntegrationTest {
     MockitoAnnotations.initMocks(this);
   }
   
+  @Test
+  public void testLoadUserByCompanyUsername() {
+    String company = "Learn";
+    String username = "Jin";
+    
+    AppCompanyUser user = appUserDetailsService.loadUserByCompanyUsername(company, username);
+    
+    assertEquals(company, user.getCompany());
+    assertEquals(username, user.getName());
+    assertEquals("111", user.getPwd());
+    assertTrue(user.isEnabled());
+    notEmpty(user.getAuthorities(), "user role should not be empty.");
+  }
   @Test
   public void testLoadUserByUsername() {
     // Given

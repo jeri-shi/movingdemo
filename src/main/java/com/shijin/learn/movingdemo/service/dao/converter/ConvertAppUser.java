@@ -16,12 +16,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
+import com.shijin.learn.movingdemo.controller.CompanyUserPrincipal;
+import com.shijin.learn.movingdemo.service.dao.AppCompanyUser;
 import com.shijin.learn.movingdemo.service.dao.AppUser;
 import com.shijin.learn.movingdemo.service.dao.Authority;
 
@@ -29,16 +32,23 @@ import com.shijin.learn.movingdemo.service.dao.Authority;
  * @author shijin
  *
  */
-public class ConvertAppUserBetweenUserDetails {
+public class ConvertAppUser {
+
+  public static UsernamePasswordAuthenticationToken convert(AppCompanyUser appCompanyUser) {
+    Assert.notNull(appCompanyUser, "AppCompanyUser cannot be null");
+    CompanyUserPrincipal principal = new CompanyUserPrincipal(appCompanyUser.getCompany(), appCompanyUser.getName());
+    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal,
+        appCompanyUser.getPwd(), roles(appCompanyUser.getAuthorities()));
+    return token;
+  }
 
   public static UserDetails convert(AppUser appUser) {
     Assert.notNull(appUser, "appUser cannot be null.");
     return User.withUsername(appUser.getName()).password(appUser.getPwd())
         .authorities(roles(appUser.getAuthorities())).build();
-
   }
 
-  private static List<GrantedAuthority> roles(Collection<Authority> roles) {
+  public static List<GrantedAuthority> roles(Collection<Authority> roles) {
     Assert.notNull(roles, "appUser.roles cannot be null.");
     List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(roles.size());
     for (Authority role : roles) {

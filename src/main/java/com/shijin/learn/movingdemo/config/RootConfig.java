@@ -30,6 +30,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import com.shijin.learn.movingdemo.service.CompanyUserAuthenticationProvider;
+
 /**
  * @author shijin
  *
@@ -84,6 +86,12 @@ public class RootConfig {
   public DaoAuthenticationProvider myBatisProvider(UserDetailsService appUserDetailsService) {
     DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
     provider.setUserDetailsService(appUserDetailsService);
+    return provider;
+  }
+  
+  @Bean
+  public CompanyUserAuthenticationProvider companyUserAuthenticationProvider(){
+    CompanyUserAuthenticationProvider provider = new CompanyUserAuthenticationProvider();
     return provider;
   }
   

@@ -15,6 +15,9 @@
 
 package com.shijin.learn.movingdemo.service.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.shijin.learn.movingdemo.service.dao.AppCompanyUser;
 import com.shijin.learn.movingdemo.service.dao.AppUser;
 
 /**
@@ -24,5 +27,5 @@ import com.shijin.learn.movingdemo.service.dao.AppUser;
 public interface UserMapper {
 
   AppUser loadAppUserByUserName(String name);
-  
+  AppCompanyUser loadAppUserByCompanyUserName(@Param("company") String company, @Param("name") String name);
 }

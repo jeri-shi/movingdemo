@@ -17,12 +17,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.shijin.learn.movingdemo.controller.CompanyUserPwdProcessingFilter;
+import com.shijin.learn.movingdemo.service.CompanyUserAuthenticationProvider;
 
 /**
  * @author shijin
@@ -30,6 +32,7 @@ import com.shijin.learn.movingdemo.controller.CompanyUserPwdProcessingFilter;
  */
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
@@ -40,6 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private DaoAuthenticationProvider myBatisProvider;
+  
+  @Autowired
+  CompanyUserAuthenticationProvider companyUserAuthenticationProvider;
 
   // When implement a customized UserDetailsService, below method must be comments to make
   // customized one to work
@@ -52,7 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   // }
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    super.configure(auth);
+//    super.configure(auth);
+//    auth.
   }
 
   @Override
@@ -61,16 +68,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // http.authorizeRequests().anyRequest().permitAll();
 
 
-    http.authenticationProvider(daoInMemoryProvider).authenticationProvider(myBatisProvider)
-        .authorizeRequests().antMatchers("/static/**").permitAll().antMatchers("/home2").permitAll()
-        .antMatchers("/login**").permitAll().anyRequest().authenticated().and().formLogin()
-        .loginPage("/login").permitAll().failureUrl("/login?error").permitAll()
-        .defaultSuccessUrl("/home").and().logout().logoutUrl("/logout")
-        .logoutSuccessUrl("/login?logout").permitAll()        
+    http.authorizeRequests()
+          .antMatchers("/static/**").permitAll()
+          .antMatchers("/home2").permitAll()
+          .antMatchers("/login**").permitAll()
+          .anyRequest().authenticated()
         .and()
-          .addFilterBefore(
-            companyUserPwdProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
-
+          .formLogin()
+            .loginPage("/login").permitAll()
+            .failureUrl("/login?error").permitAll()
+            .defaultSuccessUrl("/home")
+        .and()
+          .logout()
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/login?logout").permitAll()
+        .and()
+          .addFilterBefore(companyUserPwdProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
+          .authenticationProvider(daoInMemoryProvider)
+          .authenticationProvider(myBatisProvider)
+          .authenticationProvider(companyUserAuthenticationProvider);
+        
 
     // .logoutRequestMatcher(new AntPathRequestMatcher("/logout")); // /logout is post method by
     // default.

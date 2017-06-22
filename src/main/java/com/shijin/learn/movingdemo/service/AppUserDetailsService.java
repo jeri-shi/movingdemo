@@ -21,8 +21,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import com.shijin.learn.movingdemo.service.dao.AppCompanyUser;
 import com.shijin.learn.movingdemo.service.dao.AppUser;
-import com.shijin.learn.movingdemo.service.dao.converter.ConvertAppUserBetweenUserDetails;
+import com.shijin.learn.movingdemo.service.dao.converter.ConvertAppUser;
 import com.shijin.learn.movingdemo.service.mapper.UserMapper;
 
 /**
@@ -51,7 +52,18 @@ public class AppUserDetailsService implements UserDetailsService{
     if (appUser == null) {
       throw new UsernameNotFoundException(username);
     }
-    return ConvertAppUserBetweenUserDetails.convert(appUser);
+    return ConvertAppUser.convert(appUser);
   }
 
+  public AppCompanyUser loadUserByCompanyUsername(String company, String username) throws UsernameNotFoundException {
+    Assert.notNull(company, "company cannot be null");
+    Assert.notNull(username, "username cannot be null");
+    
+    AppCompanyUser user = userMapper.loadAppUserByCompanyUserName(company, username);
+    if (user == null) {
+      throw new UsernameNotFoundException(username);
+    }
+
+    return user;
+  }
 }

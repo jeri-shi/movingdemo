@@ -86,7 +86,7 @@ public class HomeControllerTest {
       //Given an Account in InMemoryAuthentication
       mockMvc.perform(formLogin().user("ShiJin").password("111111"))
         .andDo(print())
-        .andExpect(redirectedUrl("/home"));
+        .andExpect(authenticated().withRoles("USER"));
 
       //Given an Account in InMemoryDB
       mockMvc.perform(formLogin().user("Jeri").password("111111"))
