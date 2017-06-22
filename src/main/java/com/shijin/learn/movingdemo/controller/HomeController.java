@@ -13,7 +13,6 @@
 package com.shijin.learn.movingdemo.controller;
 
 import java.util.Enumeration;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
