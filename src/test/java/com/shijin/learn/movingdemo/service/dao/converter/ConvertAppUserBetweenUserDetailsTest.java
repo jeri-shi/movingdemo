@@ -20,7 +20,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
@@ -34,7 +34,7 @@ import com.shijin.learn.movingdemo.service.dao.AppUser;
  *
  */
 
-@RunWith(MockitoJUnitRunner.StrictStubs.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ConvertAppUserBetweenUserDetailsTest {
   private static final Logger LOGGER =
       LogManager.getLogger(ConvertAppUserBetweenUserDetailsTest.class);

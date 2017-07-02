@@ -42,16 +42,22 @@ import com.shijin.learn.movingdemo.service.CompanyUserAuthenticationProvider;
 public class RootConfig {
   private static final Logger LOGGER = LogManager.getLogger(RootConfig.class);
 
-  @Bean
-  @Resource(name = "jdbc/datasource")
-  @Profile("default")
-  public DataSource dataSource() {
-    LOGGER.debug("init dataSource");
-    final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
-    dsLookup.setResourceRef(true);
-    return dsLookup.getDataSource("jdbc/datasource");
-  }
+//  @Bean
+//  @Resource(name = "jdbc/datasource")
+//  @Profile("default")
+//  public DataSource dataSource() {
+//    LOGGER.debug("init dataSource");
+//    final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
+//    dsLookup.setResourceRef(true);
+//    return dsLookup.getDataSource("jdbc/datasource");
+//  }
 
+  /**
+   * Used by Mybatis for mapper interface
+   * @param dataSource
+   * @return
+   * @throws Exception
+   */
   @Bean
   public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
     SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
