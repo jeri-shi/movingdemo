@@ -9,11 +9,11 @@
 		</Console>
 		<Console name="AppConsole" target="SYSTEM_OUT">
 			<PatternLayout
-				pattern="%d{DEFAULT} %highlight{%5level}{TRACE=Magenta} [%21t] %-50c{1}: %highlight{%msg}{TRACE=Magenta}%n" />
+				pattern="%d{DEFAULT} %highlight{%5level}{TRACE=Magenta} [%21t] %-56c{1}: %highlight{%msg}{TRACE=Magenta}%n" />
 		</Console>
 		<Console name="SpringConsole" target="SYSTEM_OUT">
 			<PatternLayout
-				pattern="%highlight{%d{DEFAULT} %5level}{TRACE=Magenta} [%21t] %highlight{%-50c{1}: %msg}{TRACE=Magenta}%n" />
+				pattern="%highlight{%d{DEFAULT} %5level}{TRACE=Magenta} [%21t] %highlight{%-56c{1}: %msg}{TRACE=Magenta}%n" />
 		</Console>
 	</Appenders>
 	<Loggers>
