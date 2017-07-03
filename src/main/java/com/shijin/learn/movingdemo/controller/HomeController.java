@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.shijin.learn.movingdemo.adapter.LoginUser;
@@ -50,6 +51,9 @@ public class HomeController {
   
   @Autowired
   private LocaleResolver localResolver;
+  
+  @Autowired
+  private RestTemplate restTemplate;
   
   @RequestMapping("/home2")
   public String hello2() {
@@ -73,7 +77,12 @@ public class HomeController {
     LOGGER.debug("localeResolver:" + localResolver.resolveLocale(request));
     session.setAttribute("radio", message.getMessage("HomeController.radio", null, localResolver.resolveLocale(request))); //$NON-NLS-2$
     session.setAttribute("sessionUserName", getLoginUserName()); //$NON-NLS-1$
-
+    
+    
+    String userString = restTemplate.getForEntity("http://MOVINGDEMO-USERS/user/{1}", String.class, 33).getBody();
+    LOGGER.debug("USER_SERVICE.getUser()={}", userString);
+    
+    
     LOGGER.debug("Login with " + session.getAttribute("sessionUserName") + ", session=" + session.getId()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     return "home"; //$NON-NLS-1$
