@@ -79,9 +79,8 @@ public class HomeController {
     session.setAttribute("sessionUserName", getLoginUserName()); //$NON-NLS-1$
     
     
-    String userString = restTemplate.getForEntity("http://MOVINGDEMO-USERS/user/{1}", String.class, 33).getBody();
+    String userString = restTemplate.getForEntity("http://MOVINGDEMO-USERS/user/{1}", String.class, 2).getBody();
     LOGGER.debug("USER_SERVICE.getUser()={}", userString);
-    
     
     LOGGER.debug("Login with " + session.getAttribute("sessionUserName") + ", session=" + session.getId()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
