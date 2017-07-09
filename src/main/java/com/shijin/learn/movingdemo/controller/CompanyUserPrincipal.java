@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 public class CompanyUserPrincipal implements Serializable {
   private static final long serialVersionUID = 5448575809346946875L;
-
+  private Integer id;
   private String username;
   private String company;
 
@@ -41,7 +41,15 @@ public class CompanyUserPrincipal implements Serializable {
     if (company == null || "".equals(company)) {
       return username;
     }
-    return "<" + company + ", " + username + ">";
+    return "<" + company + ", " + username + (id==null?"":"["+ id + "]") + ">";
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   @Override

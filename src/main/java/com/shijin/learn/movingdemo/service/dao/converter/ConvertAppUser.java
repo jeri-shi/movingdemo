@@ -37,6 +37,7 @@ public class ConvertAppUser {
   public static UsernamePasswordAuthenticationToken convert(AppCompanyUser appCompanyUser) {
     Assert.notNull(appCompanyUser, "AppCompanyUser cannot be null");
     CompanyUserPrincipal principal = new CompanyUserPrincipal(appCompanyUser.getCompany(), appCompanyUser.getName());
+    principal.setId(appCompanyUser.getId());
     UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal,
         appCompanyUser.getPwd(), roles(appCompanyUser.getAuthorities()));
     return token;

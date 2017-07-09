@@ -1,8 +1,18 @@
 package com.shijin.learn.movingdemo.service.dao;
 
 public class AppCompanyUser extends AppUser {
+  private Integer id;
   private String company;
   private boolean enabled;
+
+  
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
   public boolean isEnabled() {
     return enabled;

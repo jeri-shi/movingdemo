@@ -22,6 +22,7 @@
 		where u.company = #{company} and u.username = #{name}
 	</select>
 	<resultMap type="com.shijin.learn.movingdemo.service.dao.AppCompanyUser" id="appCompanyUserResultMap">
+		<result column="id" property="id"/>
 		<result column="company" property="company"/>
 		<result column="username" property="name" />
 		<result column="password" property="pwd" />

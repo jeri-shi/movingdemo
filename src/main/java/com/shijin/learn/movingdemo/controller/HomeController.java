@@ -85,7 +85,7 @@ public class HomeController {
     session.setAttribute("sessionUserName", getLoginUserName()); //$NON-NLS-1$
     
     
-    String userString = restTemplate.getForEntity("http://MOVINGDEMO-USERS/client/user/{1}", String.class, 2).getBody();
+    String userString = restTemplate.getForEntity("http://MOVINGDEMO-USERS/client/user/{1}", String.class, getLoginUserId()).getBody();
     LOGGER.debug("USER_SERVICE.getUser()={}", userString);
     session.setAttribute("userString", userString);
 
@@ -120,6 +120,14 @@ public class HomeController {
     return map;
   }
 
+  private Integer getLoginUserId() {
+      Integer id = 0;
+      Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      if (principal instanceof CompanyUserPrincipal) {
+        id = ((CompanyUserPrincipal)principal).getId();
+      }
+      return id;
+  }
   
   private String getLoginUserName() {
     String userName = null;

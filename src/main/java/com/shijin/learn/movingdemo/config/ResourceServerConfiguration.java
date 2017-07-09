@@ -22,7 +22,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @Configuration
 @EnableResourceServer
 @EnableOAuth2Client
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
   private static final Logger LOGGER = LogManager.getLogger(ResourceServerConfiguration.class);
   @Override
