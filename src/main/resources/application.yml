@@ -21,3 +21,7 @@ security:
       client-secret: users-secret
       scope: read,write
       auto-approve-scopes: '.*'
+      access-token-uri: http://localhost:8888/oauth/token
+      user-authorization-uri: http://localhost:8888/oauth/authorize
+    resource:
+      user-info-uri: http://localhost:8888/me

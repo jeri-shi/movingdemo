@@ -108,6 +108,7 @@
   <p>SecurityContext: <sec:authentication property="principal"/> </p>
   <p>Session Context: <c:out value="${sessionUserName}"/></p>
   <p>Radio : <c:out value="${radio}" /> </p>
+  <p>User from userService : <c:out value="${userString}" /> </p>
 </body>
 
 </html>

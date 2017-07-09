@@ -68,7 +68,7 @@ public class HomeController {
   
   @RequestMapping({"/home", "/"}) // Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
   public String helloWorld(Model model, HttpServletRequest request) {
-    LOGGER.trace("helloWorld..." + request.getLocale()); //$NON-NLS-1$
+    LOGGER.trace("/home or / -> helloWorld..." + request.getLocale()); //$NON-NLS-1$
     
     HttpSession session = request.getSession();
     Enumeration<String> en = session.getAttributeNames();
@@ -87,7 +87,8 @@ public class HomeController {
     
     String userString = restTemplate.getForEntity("http://MOVINGDEMO-USERS/client/user/{1}", String.class, 2).getBody();
     LOGGER.debug("USER_SERVICE.getUser()={}", userString);
-    
+    session.setAttribute("userString", userString);
+
     LOGGER.debug("Login with " + session.getAttribute("sessionUserName") + ", session=" + session.getId()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     return "home"; //$NON-NLS-1$
@@ -108,7 +109,7 @@ public class HomeController {
   @RequestMapping(path = "/me")
   @ResponseBody
   public Map<String, String> user(Principal principal) {
-    LOGGER.info(principal instanceof OAuth2Authentication);
+    LOGGER.info("/me -> " + (principal instanceof OAuth2Authentication));
     if (principal instanceof OAuth2Authentication) {
        LOGGER.info("username=" + ((OAuth2Authentication)principal).getName());
     }
