@@ -46,6 +46,12 @@ create table if not exists companyauthorities  (
     foreign key (userId) references companyusers (id)
 );
 
-insert into companyauthorities (authority, userId) values ('USER', 1);
+insert into companyauthorities (authority,companyusers userId) values ('USER', 1);
 insert into companyauthorities (authority, userId) values ('USER', 2);
 insert into companyauthorities (authority, userId) values ('ADMIN', 2);
+
+select * from companyusers u inner join companyauthorities a on u.id = a.userId
+where u.company = 'Learn' and u.username = 'jin';
+
+select u.company, u.username, u.password, u.enabled, a.authority from companyusers u inner join companyauthorities a on u.id = a.userId
+where u.company = 'Learn' and u.username = 'jin'

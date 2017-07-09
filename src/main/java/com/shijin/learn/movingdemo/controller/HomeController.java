@@ -12,7 +12,10 @@
 
 package com.shijin.learn.movingdemo.controller;
 
+import java.security.Principal;
 import java.util.Enumeration;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,8 +24,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +36,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.LocaleResolver;
 
@@ -79,7 +85,7 @@ public class HomeController {
     session.setAttribute("sessionUserName", getLoginUserName()); //$NON-NLS-1$
     
     
-    String userString = restTemplate.getForEntity("http://MOVINGDEMO-USERS/user/{1}", String.class, 2).getBody();
+    String userString = restTemplate.getForEntity("http://MOVINGDEMO-USERS/client/user/{1}", String.class, 2).getBody();
     LOGGER.debug("USER_SERVICE.getUser()={}", userString);
     
     LOGGER.debug("Login with " + session.getAttribute("sessionUserName") + ", session=" + session.getId()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -99,6 +105,21 @@ public class HomeController {
     return "index"; //$NON-NLS-1$
   }
 
+  @RequestMapping(path = "/me")
+  @ResponseBody
+  public Map<String, String> user(Principal principal) {
+    LOGGER.info(principal instanceof OAuth2Authentication);
+    if (principal instanceof OAuth2Authentication) {
+       LOGGER.info("username=" + ((OAuth2Authentication)principal).getName());
+    }
+    LOGGER.info(principal);
+    
+    Map<String, String> map = new LinkedHashMap<>();
+    map.put("name", getLoginUserName());
+    return map;
+  }
+
+  
   private String getLoginUserName() {
     String userName = null;
     Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -107,6 +128,7 @@ public class HomeController {
     } else {
       userName = principal.toString();
     }
+    LOGGER.debug("principal's userName = " +  userName);
     return userName;
   }
 

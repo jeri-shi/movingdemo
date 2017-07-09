@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: movingDemoOpenAPI
+  output:
+    ansi:
+      enabled: always
+  session:
+    store-type: redis
+  datasource:
+    jndi-name: jdbc/dataSource
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://peer1:11111/eureka
+      
+security:
+  oauth2:
+    client:
+      client-id: movingdemo-users
+      client-secret: users-secret
+      scope: read,write
+      auto-approve-scopes: '.*'

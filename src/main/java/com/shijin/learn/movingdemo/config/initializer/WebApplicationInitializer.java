@@ -20,6 +20,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.shijin.learn.movingdemo.config.HttpSessionConfig;
+import com.shijin.learn.movingdemo.config.ResourceServerConfiguration;
 import com.shijin.learn.movingdemo.config.RootConfig;
 import com.shijin.learn.movingdemo.config.SecurityConfig;
 import com.shijin.learn.movingdemo.config.WebConfig;
@@ -40,7 +41,7 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
   @Override
   protected Class<?>[] getRootConfigClasses() {
     LOGGER.trace("getRootConfigClasses...");
-    return new Class[] {RootConfig.class, SecurityConfig.class, HttpSessionConfig.class};
+    return new Class[] {RootConfig.class, SecurityConfig.class, HttpSessionConfig.class, ResourceServerConfiguration.class};
   }
 
   /*

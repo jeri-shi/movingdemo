@@ -24,6 +24,14 @@
 			additivity="false">
 			<AppenderRef ref="SpringConsole" />
 		</Logger>
+		<Logger name="org.springframework.security.oauth2" level="debug"
+			additivity="false">
+			<AppenderRef ref="SpringConsole" />
+		</Logger>
+		<Logger name="org.springframework.web.client" level="debug"
+			additivity="false">
+			<AppenderRef ref="SpringConsole" />
+		</Logger>
 		<Root level="error">
 			<AppenderRef ref="Console" />
 		</Root>
