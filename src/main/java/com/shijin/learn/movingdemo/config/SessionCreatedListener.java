@@ -29,7 +29,7 @@ public class SessionCreatedListener implements ApplicationListener<HttpSessionCr
     LOGGER.info("new Session [" + event.getSession().getId() + "] is created...");
 
     // set session invalid time to 50 seconds
-    event.getSession().setMaxInactiveInterval(50);
+    event.getSession().setMaxInactiveInterval(600);
 
   }
 

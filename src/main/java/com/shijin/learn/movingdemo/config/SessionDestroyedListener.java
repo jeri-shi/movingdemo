@@ -26,8 +26,7 @@ public class SessionDestroyedListener implements ApplicationListener<HttpSession
 
   @Override
   public void onApplicationEvent(HttpSessionDestroyedEvent event) {
-    LOGGER.info("Session [" + event.getSession().getId() + "] was destroyed...");
-
+    LOGGER.info("Session [" + event.getSession().getId() + "] was destroyed..., last for " + (System.currentTimeMillis() - event.getSession().getCreationTime())/1000/60 + " minites");
   }
 
 }
