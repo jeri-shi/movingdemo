@@ -90,7 +90,7 @@
         <c:url value="${request.contextPath}/logout" var="theAction"/>
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a href="#"><span class="glyphicon glyphicon-user"></span> ${sessionUserName}</a>
+            <a href="#"><span class="glyphicon glyphicon-user"></span> <c:out value="${sessionUserName}" /></a>
           </li>
           <li>
               <form:form action="${theAction}" class="navbar-form">
