@@ -130,7 +130,7 @@ public class RootConfig {
   @Bean
   public UserDetailsService inMemoryUserDetailsService() {
     InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-    manager.createUser(User.withUsername("ShiJin").password("111111").roles("USER").build());
+    manager.createUser(User.withUsername("ShiJin").password("111111").roles("USER","ACTUATOR").build());
     return manager;
   }
 
