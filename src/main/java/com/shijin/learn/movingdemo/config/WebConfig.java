@@ -2,14 +2,21 @@ package com.shijin.learn.movingdemo.config;
 
 import java.util.Locale;
 
+import javax.servlet.Filter;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.session.web.http.SessionRepositoryFilter;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
+import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -29,6 +36,8 @@ import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
 @ComponentScan(basePackages="com.shijin.learn.movingdemo.controller")
 public class WebConfig extends WebMvcConfigurerAdapter{
   private static final Logger LOGGER = LogManager.getLogger(WebConfig.class);
+  
+
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     registry.addResourceHandler("/static/**").addResourceLocations("/static/");

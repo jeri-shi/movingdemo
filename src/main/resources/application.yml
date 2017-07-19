@@ -1,6 +1,15 @@
 server:
   context-path: /uaa
 
+hystrix:
+  #shareSecurityContext: true
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 500000
+
 spring:
   application:
     name: movingDemoOpenAPI
@@ -18,6 +27,8 @@ eureka:
       defaultZone: http://peer1:11111/eureka
       
 security:
+  user:
+    password: password
   oauth2:
     client:
       client-id: movingdemo-users
@@ -28,3 +39,10 @@ security:
       user-authorization-uri: http://localhost:8888/uaa/oauth/authorize
     resource:
       user-info-uri: http://localhost:8888/uaa/me
+      
+logging:
+  level:
+    org.springframework.security.web.util: info
+    
+      
+      

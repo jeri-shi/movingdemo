@@ -27,6 +27,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,9 +39,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.shijin.learn.movingdemo.adapter.LoginUser;
+import com.shijin.learn.movingdemo.service.UsersService;
 
 
 
@@ -59,7 +63,7 @@ public class HomeController {
   private LocaleResolver localResolver;
   
   @Autowired
-  private RestTemplate restTemplate;
+  private UsersService usersService;
   
   @RequestMapping("/home2")
   public String hello2() {
@@ -78,6 +82,20 @@ public class HomeController {
       LOGGER.debug("key=" + item + ", value=" + session.getAttribute(item));
     }
     
+    RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+    LOGGER.trace("RequestContextHolder.getRequestAttributes() = " + requestAttributes);
+    if (requestAttributes != null) {
+      DefaultOAuth2ClientContext context = (DefaultOAuth2ClientContext) requestAttributes
+          .getAttribute("scopedTarget.oauth2ClientContext", RequestAttributes.SCOPE_SESSION);
+      if (context == null) {
+        LOGGER.trace("scopedTarget.oauth2ClientContext = " + context);
+      } else {
+        LOGGER.trace("Current accessToken = " + context.getAccessToken());
+        LOGGER.trace("Current accessTokenRequest = " + context.getAccessTokenRequest());
+      }
+    }
+
+    
     LOGGER.debug("session Locale:" + session.getAttribute("org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE"));
     LOGGER.debug("request Locale:" + request.getLocale());
     LOGGER.debug("localeResolver:" + localResolver.resolveLocale(request));
@@ -85,7 +103,8 @@ public class HomeController {
     session.setAttribute("sessionUserName", getLoginUserName()); //$NON-NLS-1$
     
     
-    String userString = restTemplate.getForEntity("http://MOVINGDEMO-USERS/client/user/{1}", String.class, getLoginUserId()).getBody();
+//    String userString = restTemplate.getForEntity("http://MOVINGDEMO-USERS/client/user/{1}", String.class, getLoginUserId()).getBody();
+    String userString = usersService.getUser(getLoginUserId());
     LOGGER.debug("USER_SERVICE.getUser()={}", userString);
     session.setAttribute("userString", userString);
 

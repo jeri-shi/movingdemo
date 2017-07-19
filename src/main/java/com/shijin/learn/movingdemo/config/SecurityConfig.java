@@ -12,8 +12,15 @@
 
 package com.shijin.learn.movingdemo.config;
 
+import javax.servlet.Filter;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +34,9 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.session.web.http.SessionRepositoryFilter;
+import org.springframework.web.filter.RequestContextFilter;
 
 import com.shijin.learn.movingdemo.controller.CompanyUserPwdProcessingFilter;
 import com.shijin.learn.movingdemo.service.CompanyUserAuthenticationProvider;
@@ -39,7 +49,9 @@ import com.shijin.learn.movingdemo.service.CompanyUserAuthenticationProvider;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+//@Order(-20)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+  private final static Logger LOGGER = LogManager.getLogger(SecurityConfig.class);
 
   @Autowired
   private DaoAuthenticationProvider daoInMemoryProvider;
@@ -96,6 +108,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutSuccessUrl("/login?logout").permitAll()
         .and()
           .addFilterBefore(companyUserPwdProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
+//          .addFilterBefore(requestContextFilter(), BasicAuthenticationFilter.class);
           ;
         
 
@@ -104,6 +117,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
   }
+  
+//  @Bean
+//  @ConditionalOnMissingBean(RequestContextFilter.class)
+//  public RequestContextFilter requestContextFilter() {
+//      return new RequestContextFilter();
+//  }
+//
+//  @Bean
+//  public FilterRegistrationBean requestContextFilterChainRegistration(
+//          @Qualifier("requestContextFilter") Filter securityFilter) {
+//      LOGGER.debug("requestContextFilterChainRegistration...");
+//      FilterRegistrationBean registration = new FilterRegistrationBean(securityFilter);
+//      registration.setOrder(SessionRepositoryFilter.DEFAULT_ORDER + 1);
+//      registration.setName("requestContextFilter");
+//      return registration;
+//  }
 
   @Bean(name = "myAuthenticationManager")
   @Override
