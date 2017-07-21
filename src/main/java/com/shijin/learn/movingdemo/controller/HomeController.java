@@ -70,6 +70,11 @@ public class HomeController {
     return "home2";
   }
   
+  @RequestMapping("/angular")
+  public String angularIndex() {
+    return "redirect:static/angular/index.html";
+  }
+  
   @RequestMapping({"/home", "/"}) // Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
   public String helloWorld(Model model, HttpServletRequest request) {
     LOGGER.trace("/home or / -> helloWorld..." + request.getLocale()); //$NON-NLS-1$
