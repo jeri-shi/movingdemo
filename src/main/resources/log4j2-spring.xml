@@ -35,7 +35,7 @@
 			<AppenderRef ref="SpringConsole" />
 			<AppenderRef ref="FileOutput" />
 		</Logger>
-		<Logger name="com.netflix.hystrix" level="debug"
+		<Logger name="com.netflix.hystrix" level="info"
 			additivity="false">
 			<AppenderRef ref="SpringConsole" />
 			<AppenderRef ref="FileOutput" />

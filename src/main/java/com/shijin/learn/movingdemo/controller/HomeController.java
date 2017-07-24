@@ -13,6 +13,8 @@
 package com.shijin.learn.movingdemo.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -24,7 +26,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
@@ -38,7 +39,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.LocaleResolver;
@@ -70,12 +70,19 @@ public class HomeController {
     return "home2";
   }
   
-  @RequestMapping("/angular")
+  @RequestMapping("/")
   public String angularIndex() {
-    return "redirect:static/angular/index.html";
+    return "redirect:index.html";
   }
   
-  @RequestMapping({"/home", "/"}) // Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
+  @RequestMapping("/userlist") 
+  @ResponseBody
+  public Collection<LoginUser> getUsersList() {
+    
+    return usersService.getUserList();
+  }
+  
+  @RequestMapping({"/home"}) // Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
   public String helloWorld(Model model, HttpServletRequest request) {
     LOGGER.trace("/home or / -> helloWorld..." + request.getLocale()); //$NON-NLS-1$
     

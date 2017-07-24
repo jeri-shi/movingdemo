@@ -17,9 +17,28 @@ package com.shijin.learn.movingdemo.adapter;
  *
  */
 public class LoginUser {
+  private Long id;
   private String company;
   private String username;
   private String password;
+  private String roles;
+
+  
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getRoles() {
+    return roles;
+  }
+
+  public void setRoles(String roles) {
+    this.roles = roles;
+  }
 
   /**
    * @return the name

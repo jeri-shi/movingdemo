@@ -36,6 +36,16 @@ create table if not exists companyusers (
 
 insert into companyusers (company, username, password, enabled) values ('Learn', 'Wenddy', '111', true);
 insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin', '111', true);
+insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin1', '111', true);
+insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin2', '111', true);
+insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin3', '111', true);
+insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin4', '111', true);
+insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin5', '111', true);
+insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin6', '111', true);
+insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin7', '111', true);
+insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin8', '111', true);
+insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin9', '111', true);
+insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin10', '111', true);
 
 select * from companyusers;
 
@@ -46,9 +56,17 @@ create table if not exists companyauthorities  (
     foreign key (userId) references companyusers (id)
 );
 
-insert into companyauthorities (authority,companyusers userId) values ('USER', 1);
+insert into companyauthorities (authority, userId) values ('USER', 1);
 insert into companyauthorities (authority, userId) values ('USER', 2);
 insert into companyauthorities (authority, userId) values ('ADMIN', 2);
+insert into companyauthorities (authority, userId) values ('USER', 3);
+insert into companyauthorities (authority, userId) values ('USER', 4);
+insert into companyauthorities (authority, userId) values ('USER', 5);
+insert into companyauthorities (authority, userId) values ('USER', 6);
+insert into companyauthorities (authority, userId) values ('USER', 7);
+insert into companyauthorities (authority, userId) values ('USER', 8);
+insert into companyauthorities (authority, userId) values ('USER', 9);
+insert into companyauthorities (authority, userId) values ('USER', 10);
 
 select * from companyusers u inner join companyauthorities a on u.id = a.userId
 where u.company = 'Learn' and u.username = 'jin';
