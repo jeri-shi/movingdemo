@@ -9,16 +9,17 @@ import java.util.Collection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.annotation.RequestScope;
-import org.springframework.web.context.annotation.SessionScope;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.shijin.learn.movingdemo.adapter.LoginUser;
+import com.shijin.learn.movingdemo.adapter.UserListQueryParameters;
 
 /**
  * @author shijin
@@ -49,7 +50,19 @@ public class UsersService {
     return "Default User:" + id;
   }
   
-  public Collection<LoginUser> getUserList() {
+  public Collection<LoginUser> getUserList(UserListQueryParameters queryParameters) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<String> request = new HttpEntity<String>(queryParameters==null?"":queryParameters.toString(), headers);
+    ResponseEntity<Collection<LoginUser>> response =
+        restTemplate.exchange("http://MOVINGDEMO-USERS/client/userslist", HttpMethod.POST,
+            request, new ParameterizedTypeReference<Collection<LoginUser>>() {});
+ 
+    Collection<LoginUser> collection = response.getBody();
+    return collection;
+  }
+  
+  public Collection<LoginUser> getUserListFake() {
     Collection<LoginUser> collection = new ArrayList<>();
     LoginUser user = new LoginUser();
     user.setId(1l);

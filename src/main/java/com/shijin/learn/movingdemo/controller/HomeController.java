@@ -13,7 +13,6 @@
 package com.shijin.learn.movingdemo.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
@@ -36,7 +35,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestAttributes;
@@ -44,6 +45,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.shijin.learn.movingdemo.adapter.LoginUser;
+import com.shijin.learn.movingdemo.adapter.UserListQueryParameters;
 import com.shijin.learn.movingdemo.service.UsersService;
 
 
@@ -75,11 +77,11 @@ public class HomeController {
     return "redirect:index.html";
   }
   
-  @RequestMapping("/userlist") 
+  @RequestMapping(value="/userslist", method=RequestMethod.POST) 
   @ResponseBody
-  public Collection<LoginUser> getUsersList() {
-    
-    return usersService.getUserList();
+  public Collection<LoginUser> getUsersList(@RequestBody(required=false) UserListQueryParameters param) {
+    LOGGER.trace("/userslist ..." + param);
+    return usersService.getUserList(param);
   }
   
   @RequestMapping({"/home"}) // Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
@@ -116,7 +118,9 @@ public class HomeController {
     
     
 //    String userString = restTemplate.getForEntity("http://MOVINGDEMO-USERS/client/user/{1}", String.class, getLoginUserId()).getBody();
-    String userString = usersService.getUser(getLoginUserId());
+    //String userString = usersService.getUser(getLoginUserId());
+    String userString = usersService.getUserList(null).toString();
+    
     LOGGER.debug("USER_SERVICE.getUser()={}", userString);
     session.setAttribute("userString", userString);
 

@@ -35,6 +35,7 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.session.web.http.SessionRepositoryFilter;
 import org.springframework.web.filter.RequestContextFilter;
 
@@ -96,7 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           .antMatchers("/index.html", "/**.js", "/**.map", "/**.ico").permitAll()
           .antMatchers("/home.html").permitAll()
           .antMatchers("/angular/**").permitAll()
-          .antMatchers("/userlist").permitAll()
+          .antMatchers("/userslist").permitAll()
           .antMatchers("/login**").permitAll()
           .anyRequest().authenticated()
         .and()
@@ -114,6 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
           .addFilterBefore(companyUserPwdProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
 //          .addFilterBefore(requestContextFilter(), BasicAuthenticationFilter.class);
+          .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
           ;
         
 

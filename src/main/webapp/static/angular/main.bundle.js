@@ -180,11 +180,12 @@ var UserService = (function () {
     function UserService(http) {
         this.http = http;
         this.userUrl = '/user';
-        this.usersListUrl = 'userlist';
+        this.usersListUrl = 'userslist';
+        this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'applicaton/json' });
     }
     UserService.prototype.getUserList = function () {
         console.log("UserService.getUserList()...");
-        return this.http.get(this.usersListUrl).toPromise()
+        return this.http.post(this.usersListUrl, JSON.stringify(''), { headers: this.headers }).toPromise()
             .then(function (response) {
             console.log("response = " + response);
             return response.json();
@@ -203,7 +204,7 @@ var UserService = (function () {
 }());
 UserService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */]) === "function" && _a || Object])
 ], UserService);
 
 var _a;

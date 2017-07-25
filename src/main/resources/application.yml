@@ -39,10 +39,15 @@ security:
       user-authorization-uri: http://localhost:8888/uaa/oauth/authorize
     resource:
       user-info-uri: http://localhost:8888/uaa/me
-      
+
+debug: true      
 logging:
   level:
     org.springframework.security.web.util: debug
+    org.springframework.security: debug
+    org.springframework.web.servlet: trace
+    
+    
     
       
       

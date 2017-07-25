@@ -12,18 +12,39 @@
 
 package com.shijin.learn.movingdemo.adapter;
 
+import java.io.Serializable;
+
 /**
  * @author shijin
  *
  */
-public class LoginUser {
+public class LoginUser implements Serializable {
+  private static final long serialVersionUID = 5690368878446330939L;
   private Long id;
   private String company;
   private String username;
   private String password;
   private String roles;
-
+  private Boolean enabled;
+  private Boolean expired;
   
+  
+  public Boolean getEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(Boolean enabled) {
+    this.enabled = enabled;
+  }
+
+  public Boolean getExpired() {
+    return expired;
+  }
+
+  public void setExpired(Boolean expired) {
+    this.expired = expired;
+  }
+
   public Long getId() {
     return id;
   }
@@ -76,4 +97,17 @@ public class LoginUser {
     this.company = company;
   }
 
+  public String toString() {
+    return 
+      new StringBuffer()
+        .append("LoginUser{")
+        .append("id:").append(id)
+        .append(",company:").append(company)
+        .append(",name:").append(username)
+        .append(",roles:").append(roles)
+        .append(",enabled:").append(this.enabled)
+        .append(",expired:").append(this.expired)
+        .append("}")
+        .toString();
+  }
 }
