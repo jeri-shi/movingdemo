@@ -181,11 +181,11 @@ var UserService = (function () {
         this.http = http;
         this.userUrl = '/user';
         this.usersListUrl = 'userslist';
-        this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'applicaton/json' });
+        this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
     }
     UserService.prototype.getUserList = function () {
         console.log("UserService.getUserList()...");
-        return this.http.post(this.usersListUrl, JSON.stringify(''), { headers: this.headers }).toPromise()
+        return this.http.post(this.usersListUrl, null, { headers: this.headers }).toPromise()
             .then(function (response) {
             console.log("response = " + response);
             return response.json();
