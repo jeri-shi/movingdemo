@@ -43,9 +43,9 @@ security:
 debug: true      
 logging:
   level:
-    org.springframework.security.web.util: debug
+    org.springframework.security.web.util: info
     org.springframework.security: debug
-    org.springframework.web.servlet: trace
+    org.springframework.web.servlet: info
     
     
     

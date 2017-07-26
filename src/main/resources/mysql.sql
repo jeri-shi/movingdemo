@@ -46,6 +46,7 @@ insert into companyusers (company, username, password, enabled) values ('Learn',
 insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin8', '111', true);
 insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin9', '111', true);
 insert into companyusers (company, username, password, enabled) values ('Learn', 'Jin10', '111', true);
+insert into companyusers (company, username, password, enabled) values ('Learn', 'Jeri Shi', '111', true);
 
 select * from companyusers;
 
@@ -67,6 +68,7 @@ insert into companyauthorities (authority, userId) values ('USER', 7);
 insert into companyauthorities (authority, userId) values ('USER', 8);
 insert into companyauthorities (authority, userId) values ('USER', 9);
 insert into companyauthorities (authority, userId) values ('USER', 10);
+insert into companyauthorities (authority, userId) values ('USER', 11);
 
 select * from companyusers u inner join companyauthorities a on u.id = a.userId
 where u.company = 'Learn' and u.username = 'jin';
