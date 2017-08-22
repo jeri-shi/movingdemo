@@ -61,7 +61,19 @@ public class UsersService {
     Collection<LoginUser> collection = response.getBody();
     return collection;
   }
-  
+
+  public Long getUserListCount(UserListQueryParameters queryParameters) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<UserListQueryParameters> request = new HttpEntity<UserListQueryParameters>(queryParameters , headers);
+    ResponseEntity<Long> response =
+        restTemplate.exchange("http://MOVINGDEMO-USERS/client/userslistcount", HttpMethod.POST,
+            request, new ParameterizedTypeReference<Long>() {});
+ 
+    Long count = response.getBody();
+    return count;
+  }
+
   public Collection<LoginUser> getUserListFake() {
     Collection<LoginUser> collection = new ArrayList<>();
     LoginUser user = new LoginUser();

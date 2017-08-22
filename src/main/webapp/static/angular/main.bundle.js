@@ -199,8 +199,18 @@ var UserService = (function () {
         this.logoutUrl = 'logout';
         this.userUrl = '/user';
         this.usersListUrl = 'userslist';
+        this.usersListCountUrl = 'userslistcount';
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
     }
+    UserService.prototype.getUserListCount = function (param) {
+        console.log("UserService.getUserList()...");
+        return this.http.post(this.usersListCountUrl, JSON.stringify(param), { headers: this.headers }).toPromise()
+            .then(function (response) {
+            console.log("response = " + response);
+            return response.json();
+        })
+            .catch(this.handleError);
+    };
     UserService.prototype.getUserList = function (param) {
         console.log("UserService.getUserList()...");
         return this.http.post(this.usersListUrl, JSON.stringify(param), { headers: this.headers }).toPromise()
@@ -276,7 +286,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".table-hover>tbody>tr:hover {\r\n  color: black;\r\n}\r\n", ""]);
+exports.push([module.i, ".table-hover>tbody>tr:hover {\r\n  color: black;\r\n}\r\n\r\n.center {\r\n  text-align: center;\r\n}\r\n", ""]);
 
 // exports
 
@@ -289,7 +299,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/users-list/users-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<div [hidden]=\"!users || users.length <= 0\">\n  <h3>User List</h3>\n  <table class=\"table table-bordered table-hover\">\n    <thead class=\"\"><th></th><th>Id</th><th>Company</th><th>Name</th><th>Roles</th></thead>\n    <tr *ngFor=\"let user of users\"><td></td><td>{{user.id}}</td><td>{{user.company}}</td><td>{{user.username}}</td><td>{{user.roles}}</td></tr>\n    <tfoot><td colspan=\"5\">foot</td></tfoot>\n  </table>\n</div>\n"
+module.exports = "\n<div [hidden]=\"!users || users.length <= 0\">\n  <h3>User List {{this.pagination.total == 0?\"\":\"(\" + this.pagination.total + \")\"}}</h3>\n  <table class=\"table table-bordered table-hover\">\n    <thead class=\"\"><th> </th><th>Id</th><th>Company</th><th>Name</th><th>Roles</th></thead>\n    <tr *ngFor=\"let user of users\"><td></td><td>{{user.id}}</td><td>{{user.company}}</td><td>{{user.username}}</td><td>{{user.roles}}</td></tr>\n    <tfoot>\n      <td colspan=\"5\" class=\"center\">\n        <nav [hidden]=\"this.pagination.total <= 0\">\n            <ul class=\"pagination\">\n              <li [class.disabled]=\"this.pagination.current == 1\"><a href=\"javascript:void(0)\" (click)=\"gotoPage(1)\">First</a></li>\n              <li [class.disabled]=\"this.pagination.current == 1\"><a href=\"javascript:void(0)\" (click)=\"gotoPage(this.pagination.current - 1)\">Previous</a></li>\n              <li *ngFor=\"let index of [1, 2, 3, 4, 5]\" [class.active]=\"index == this.getCurrentPosition()\">\n                <a href=\"javascript:void(0)\" (click)=\"gotoPage(index)\" [hidden]=\"getPageNumber(index) == -1\">{{getPageNumber(index)}}</a>\n              </li>\n              <li [class.disabled]=\"this.pagination.current == this.pagination.totalPage\"><a href=\"javascript:void(0)\"  (click)=\"gotoPage(this.pagination.current + 1)\">Next</a></li>\n              <li [class.disabled]=\"this.pagination.current == this.pagination.totalPage\"><a href=\"javascript:void(0)\"  (click)=\"gotoPage(this.pagination.totalPage)\">Last</a></li>\n            </ul>\n        </nav>\n      </td>\n    </tfoot>\n  </table>\n</div>\n"
 
 /***/ }),
 
@@ -322,18 +332,74 @@ var UsersListComponent = (function () {
         this.param.pageParam = new __WEBPACK_IMPORTED_MODULE_3__Pagination__["a" /* Pagination */]();
         this.param.pageParam.current = 1;
         this.param.pageParam.countPerPage = 10;
+        this.pagination = new __WEBPACK_IMPORTED_MODULE_3__Pagination__["a" /* Pagination */]();
+        this.pagination.current = 1;
+        this.pagination.countPerPage = 10;
+        this.pagination.total = 0;
     }
     UsersListComponent.prototype.ngOnInit = function () {
         console.log("UsersListComponent is init...");
+        //this.users = USERS;
         this.getUserList(this.param);
     };
     UsersListComponent.prototype.getUserList = function (param) {
         var _this = this;
         console.log("UsersListComponent.getUserList()...");
         this.userService.getUserList(param).then(function (users) {
-            console.log("users: " + users);
+            // console.log("users: " + users);
             _this.users = users;
         });
+        this.userService.getUserListCount(param).then(function (count) {
+            _this.pagination.total = count;
+        });
+    };
+    /**
+    * position: -1:Frist, 0:Previous, 1~5: five buttons, 6: Next, 7:Last
+    * return 0: hidden, anyNumber: display the value
+    */
+    UsersListComponent.prototype.getPageNumber = function (position) {
+        var pos;
+        switch (position) {
+            case 1:
+                pos = this.getFirstPageNumber();
+                break;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                pos = this.getPageNumber(position - 1) + 1;
+                if (pos == 0 || pos > this.pagination.totalPage) {
+                    pos = -1;
+                }
+                break;
+        }
+        // console.log('pos(' + position + ')=' + pos);
+        return pos;
+    };
+    UsersListComponent.prototype.gotoPage = function (page) {
+        this.param.pageParam.current = page;
+        this.pagination.current = page;
+        this.getUserList(this.param);
+    };
+    UsersListComponent.prototype.getFirstPageNumber = function () {
+        var totalPage = Math.ceil(this.pagination.total / this.pagination.countPerPage);
+        this.pagination.totalPage = totalPage;
+        console.log('totalPage=' + totalPage);
+        if (totalPage < 5) {
+            return 1;
+        }
+        else if (totalPage - this.pagination.current < 3) {
+            return totalPage - 4;
+        }
+        else if (this.pagination.current < 4) {
+            return 1;
+        }
+        else {
+            return this.pagination.current - 2;
+        }
+    };
+    UsersListComponent.prototype.getCurrentPosition = function () {
+        return this.pagination.current - this.getFirstPageNumber() + 1;
     };
     return UsersListComponent;
 }());

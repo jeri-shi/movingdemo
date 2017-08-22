@@ -83,6 +83,13 @@ public class HomeController {
     LOGGER.trace("/userslist ..." + param);
     return usersService.getUserList(param);
   }
+
+  @RequestMapping(value="/userslistcount", method=RequestMethod.POST) 
+  @ResponseBody
+  public Long getUsersListCount(@RequestBody(required=false) UserListQueryParameters param) {
+    LOGGER.trace("/userslistCount ..." + param);
+    return usersService.getUserListCount(param);
+  }
   
   @RequestMapping({"/home"}) // Tomcat will forward / to /index, or maybe index.html, index.jsp, default.html
   public String helloWorld(Model model, HttpServletRequest request) {
