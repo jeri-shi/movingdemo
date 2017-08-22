@@ -53,7 +53,7 @@ public class UsersService {
   public Collection<LoginUser> getUserList(UserListQueryParameters queryParameters) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
-    HttpEntity<String> request = new HttpEntity<String>(queryParameters==null?"":queryParameters.toString(), headers);
+    HttpEntity<UserListQueryParameters> request = new HttpEntity<UserListQueryParameters>(queryParameters , headers);
     ResponseEntity<Collection<LoginUser>> response =
         restTemplate.exchange("http://MOVINGDEMO-USERS/client/userslist", HttpMethod.POST,
             request, new ParameterizedTypeReference<Collection<LoginUser>>() {});

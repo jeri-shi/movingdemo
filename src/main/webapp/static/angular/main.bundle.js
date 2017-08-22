@@ -72,7 +72,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1>{{title}}</h1>\n<nav>\n  <a routerLink=\"/users\">User</a>\n  <a routerLink=\"/userslist\">UserList</a>\n</nav>\n\n<router-outlet></router-outlet>\n"
+module.exports = "<nav class=\"navbar navbar-inverse\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#demo\">\r\n        <span class=\"glyphicon glyphicon-menu-hamburger\"></span>\r\n      </button>\r\n      <a class=\"navbar-brand\" style=\"padding: 0 0 0 0\" href=\"#\">\r\n        <img class=\"img-responsive\" height=\"64\" width=\"64\" src=\"static/img/moving.png\" alt=\"Moving\"/>\r\n      </a>\r\n    </div>\r\n\r\n    <div class=\"collapse navbar-collapse\" id=\"demo\">\r\n      <ul class=\"nav navbar-nav\">\r\n        <li class=\"active\"><a href=\"#\">Current Tasks</a></li>\r\n        <li><a href=\"#\">Dashboard</a></li>\r\n        <li class=\"dropdown\">\r\n          <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Management <span class=\"caret\"></span></a>\r\n          <ul class=\"dropdown-menu\">\r\n            <li class=\"dropdown-header\">Daily Activities</li>\r\n            <li><a href=\"#\">Champin</a></li>\r\n            <li><a href=\"#\">Coupon</a></li>\r\n            <li><a href=\"#\">Price</a></li>\r\n            <li><a href=\"#\">Orders</a></li>\r\n            <li class=\"divider\"></li>\r\n            <li class=\"dropdown-header\">Objects Management</li>\r\n            <li><a href=\"#\">Cars</a></li>\r\n            <li><a href=\"#\">Bicicyles</a></li>\r\n            <li><a href=\"#\">Chargings</a></li>\r\n            <li><a href=\"#\">Umbrellas</a></li>\r\n            <li class=\"divider\"></li>\r\n            <li class=\"dropdown-header\">User Management</li>\r\n            <li><a routerLink=\"/userslist\">Users</a></li>\r\n            <li class=\"divider\"></li>\r\n            <li class=\"dropdown-header\">Admin Management</li>\r\n            <li><a href=\"#\">Employees</a></li>\r\n            <li><a href=\"#\">Roles</a></li>\r\n            <li><a href=\"#\">Stations</a></li>\r\n          </ul>\r\n        </li>\r\n      </ul>\r\n      <!--form class=\"navbar-form\">\r\n        <div class=\"form-group\">\r\n          <input type=\"text\" class=\"form-control\" placeholder=\"Search\"  />\r\n          <button type=\"submit\" class=\"btn btn-default\">Search</button>\r\n        </div>\r\n      </form-->\r\n      <!-- c:url value=\"${request.contextPath}/logout\" var=\"theAction\"/ -->\r\n      <ul class=\"nav navbar-nav navbar-right\">\r\n        <li>\r\n          <a href=\"#\"><span class=\"glyphicon glyphicon-user\"></span> {{userName}}</a>\r\n        </li>\r\n        <li class=\"navbar-form\">\r\n            <button (click)=\"logout()\" class=\"btn btn-success\"><span class=\"glyphicon glyphicon-log-out\"></span>SignOut</button>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</nav>\n\n<div class=\"workArea\">\n  <router-outlet></router-outlet>\n</div>\n"
 
 /***/ }),
 
@@ -81,6 +81,8 @@ module.exports = "<h1>{{title}}</h1>\n<nav>\n  <a routerLink=\"/users\">User</a>
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__users_user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -88,11 +90,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
 
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(userService, location) {
+        this.userService = userService;
+        this.location = location;
         this.title = 'Moving Demo';
+        this.userName = 'Shijin';
     }
+    AppComponent.prototype.logout = function () {
+        this.userService.logout();
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
@@ -100,9 +113,11 @@ AppComponent = __decorate([
         selector: 'app-root',
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.css")]
-    })
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__users_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__users_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["g" /* Location */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_common__["g" /* Location */]) === "function" && _b || Object])
 ], AppComponent);
 
+var _a, _b;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -117,6 +132,7 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_routing_module__ = __webpack_require__("../../../../../src/app/app-routing.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -124,6 +140,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -146,7 +163,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_5__angular_http__["a" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_3__app_routing_module__["a" /* AppRoutingModule */]
         ],
-        providers: [],
+        providers: [__WEBPACK_IMPORTED_MODULE_6__users_user_service__["a" /* UserService */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -179,13 +196,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var UserService = (function () {
     function UserService(http) {
         this.http = http;
+        this.logoutUrl = 'logout';
         this.userUrl = '/user';
         this.usersListUrl = 'userslist';
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
     }
-    UserService.prototype.getUserList = function () {
+    UserService.prototype.getUserList = function (param) {
         console.log("UserService.getUserList()...");
-        return this.http.post(this.usersListUrl, null, { headers: this.headers }).toPromise()
+        return this.http.post(this.usersListUrl, JSON.stringify(param), { headers: this.headers }).toPromise()
             .then(function (response) {
             console.log("response = " + response);
             return response.json();
@@ -196,6 +214,14 @@ var UserService = (function () {
         //   {id: 2, name:'jeri', roles: 'Admin, User'}
         // ];
     };
+    UserService.prototype.logout = function () {
+        console.log("logout...");
+        this.http.post(this.logoutUrl, null).toPromise()
+            .then(function (response) {
+            console.log("response=" + response);
+        }).catch(this.handleError);
+        console.log("logout...end");
+    };
     UserService.prototype.handleError = function (error) {
         console.error("An error occurred ", error);
         return Promise.reject(error.message || error);
@@ -203,12 +229,42 @@ var UserService = (function () {
     return UserService;
 }());
 UserService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Injectable */])(),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */]) === "function" && _a || Object])
 ], UserService);
 
 var _a;
 //# sourceMappingURL=user.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/users/users-list/Pagination.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Pagination; });
+var Pagination = (function () {
+    function Pagination() {
+    }
+    return Pagination;
+}());
+
+//# sourceMappingURL=Pagination.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/users/users-list/UserListQueryParameters.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserListQueryParameters; });
+var UserListQueryParameters = (function () {
+    function UserListQueryParameters() {
+    }
+    return UserListQueryParameters;
+}());
+
+//# sourceMappingURL=UserListQueryParameters.js.map
 
 /***/ }),
 
@@ -220,7 +276,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".table-hover>tbody>tr:hover {\r\n  color: black;\r\n}\r\n", ""]);
 
 // exports
 
@@ -233,7 +289,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/users-list/users-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h3>\n  users-list works!\n</h3>\n<div [hidden]=\"!users || users.length <= 0\">\n  <table class=\"table table-bordered table-striped table-hover\">\n    <thead class=\"\"><th></th><th>Id</th><th>Company</th><th>Name</th><th>Roles</th></thead>\n    <tr *ngFor=\"let user of users\"><td></td><td>{{user.id}}</td><td>{{user.company}}</td><td>{{user.username}}</td><td>{{user.roles}}</td></tr>\n    <tfoot><td colspan=\"5\">foot</td></tfoot>\n  </table>\n</div>\n"
+module.exports = "\n<div [hidden]=\"!users || users.length <= 0\">\n  <h3>User List</h3>\n  <table class=\"table table-bordered table-hover\">\n    <thead class=\"\"><th></th><th>Id</th><th>Company</th><th>Name</th><th>Roles</th></thead>\n    <tr *ngFor=\"let user of users\"><td></td><td>{{user.id}}</td><td>{{user.company}}</td><td>{{user.username}}</td><td>{{user.roles}}</td></tr>\n    <tfoot><td colspan=\"5\">foot</td></tfoot>\n  </table>\n</div>\n"
 
 /***/ }),
 
@@ -243,6 +299,8 @@ module.exports = "<h3>\n  users-list works!\n</h3>\n<div [hidden]=\"!users || us
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__UserListQueryParameters__ = __webpack_require__("../../../../../src/app/users/users-list/UserListQueryParameters.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Pagination__ = __webpack_require__("../../../../../src/app/users/users-list/Pagination.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersListComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -255,18 +313,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 var UsersListComponent = (function () {
     function UsersListComponent(userService) {
         this.userService = userService;
+        this.param = new __WEBPACK_IMPORTED_MODULE_2__UserListQueryParameters__["a" /* UserListQueryParameters */]();
+        this.param.pageParam = new __WEBPACK_IMPORTED_MODULE_3__Pagination__["a" /* Pagination */]();
+        this.param.pageParam.current = 1;
+        this.param.pageParam.countPerPage = 10;
     }
     UsersListComponent.prototype.ngOnInit = function () {
         console.log("UsersListComponent is init...");
-        this.getUserList();
+        this.getUserList(this.param);
     };
-    UsersListComponent.prototype.getUserList = function () {
+    UsersListComponent.prototype.getUserList = function (param) {
         var _this = this;
         console.log("UsersListComponent.getUserList()...");
-        this.userService.getUserList().then(function (users) {
+        this.userService.getUserList(param).then(function (users) {
             console.log("users: " + users);
             _this.users = users;
         });
@@ -347,7 +411,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/users.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  users works!\n</p>\n"
+module.exports = "<p>\n  Home Page\n</p>\n"
 
 /***/ }),
 
@@ -420,7 +484,7 @@ var UsersModule = (function () {
 UsersModule = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["b" /* NgModule */])({
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_common__["k" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["e" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClientModule */],
             __WEBPACK_IMPORTED_MODULE_3__users_routing_module__["a" /* UsersRoutingModule */]
         ],

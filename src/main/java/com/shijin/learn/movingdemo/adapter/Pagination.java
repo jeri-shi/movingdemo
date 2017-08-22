@@ -43,4 +43,8 @@ public class Pagination  implements Serializable{
   public String getMySql() {
     return " Limit " + getOffset() + ", " + countPerPage;
   }
+  
+  public String toString() {
+    return this.current + "/" + this.countPerPage;
+  }
 }

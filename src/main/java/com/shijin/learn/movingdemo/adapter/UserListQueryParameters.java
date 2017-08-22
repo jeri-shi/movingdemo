@@ -39,6 +39,9 @@ public class UserListQueryParameters implements Serializable{
     this.pageParam = pageParam;
   }
 
-
+  @Override
+  public String toString() {
+    return "" + this.userParam + ", " + this.pageParam;
+  }
 
 }
