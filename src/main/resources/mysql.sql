@@ -25,12 +25,16 @@ insert into authorities values ('Sunny', 'USER');
 
 use hello;
 
+drop table companyauthorities;
+drop table companyusers;
+
+
 create table if not exists companyusers (
 	id int not null AUTO_INCREMENT primary key,
 	company varchar(50) not null,
  	username varchar(50) not null,
 	password varchar(50) not null,
-	enabled boolean not null,
+	enabled boolean default false not null,
     CONSTRAINT  UNIQUE index_company_username (company, username)
 );
 
@@ -69,6 +73,8 @@ insert into companyauthorities (authority, userId) values ('USER', 8);
 insert into companyauthorities (authority, userId) values ('USER', 9);
 insert into companyauthorities (authority, userId) values ('USER', 10);
 insert into companyauthorities (authority, userId) values ('USER', 11);
+insert into companyauthorities (authority, userId) values ('USER', 12);
+insert into companyauthorities (authority, userId) values ('USER', 13);
 
 select * from companyusers u inner join companyauthorities a on u.id = a.userId
 where u.company = 'Learn' and u.username = 'jin';

@@ -73,6 +73,19 @@ public class UsersService {
     Long count = response.getBody();
     return count;
   }
+  
+  public LoginUser addUser(LoginUser user) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<LoginUser> request = new HttpEntity<LoginUser>(user , headers);
+    ResponseEntity<LoginUser> response =
+        restTemplate.exchange("http://MOVINGDEMO-USERS/client/user", HttpMethod.POST,
+            request, new ParameterizedTypeReference<LoginUser>() {});
+ 
+    LoginUser returnUser = response.getBody();
+    return returnUser;
+    
+  }
 
   public Collection<LoginUser> getUserListFake() {
     Collection<LoginUser> collection = new ArrayList<>();

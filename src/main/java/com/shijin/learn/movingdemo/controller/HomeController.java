@@ -77,6 +77,13 @@ public class HomeController {
     return "redirect:index.html";
   }
   
+  @RequestMapping(value="/user", method=RequestMethod.POST)
+  @ResponseBody
+  public LoginUser addUser(@RequestBody LoginUser user) {
+    LOGGER.trace("/user...post " + user);
+    return usersService.addUser(user);
+  }
+  
   @RequestMapping(value="/userslist", method=RequestMethod.POST) 
   @ResponseBody
   public Collection<LoginUser> getUsersList(@RequestBody(required=false) UserListQueryParameters param) {

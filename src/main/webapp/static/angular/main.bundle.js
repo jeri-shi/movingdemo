@@ -172,6 +172,102 @@ AppModule = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/users/adduser/adduser.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".panel {\r\n  background-color: inherit;\r\n}\r\n\r\ninput[type=checkbox] {\r\n  margin-top: 8px;\r\n}\r\n\r\n.alert {\r\n  padding: 0 0 0 10px;\r\n}\r\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/users/adduser/adduser.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n\n          <form class=\"form-horizontal\" commandName=\"animal\" #userForm=\"ngForm\">\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-2 control-label\">{{newUser.id?newUser.id:'N/A'}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <div class=\"col-md-9\">\n                {{this.user.company}}\n                <input id=\"company\" name=\"company\" [(ngModel)]=\"newUser.company\" required\n                class=\"form-control\" placeholder=\"Company Name\" #company=\"ngModel\">\n                <div *ngIf=\"company.invalid && (company.dirty || company.touched)\"\n                  class=\"alert alert-danger\">\n                  <div *ngIf=\"company.errors.required\">\n                    Company is required.\n                  </div>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <div class=\"col-md-9\">\n                <input id=\"name\" name=\"name\" type=\"text\" [(ngModel)]=\"newUser.username\" required\n                  class=\"form-control\" placeholder=\"User Name\" #name=\"ngModel\">\n                  <div *ngIf=\"name.invalid && (name.dirty || name.touched)\"\n                    class=\"alert alert-danger\">\n                    <div *ngIf=\"name.errors.required\">\n                      Username is required.\n                    </div>\n                  </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_user\"\n                      name=\"ROLE_USER\" value=\"USER\" #user=\"ngModel\"> User\n                 </label>\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_admin\"\n                      name=\"ROLE_ADMIN\" value=\"ADMIN\" #admin=\"ngModel\"> Admin\n                 </label>\n                 <div *ngIf=\"((user.dirty || user.touched) || (admin.dirty || admin.touched)) && !admin.value && !user.value \"\n                   class=\"alert alert-danger\">\n                     Roles is required.\n                 </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <div class=\"col-md-offset-3 col-md-9\">\n                <button type=\"submit\" class=\"btn btn-default\"\n                (click)=\"addUser()\" [disabled]=\"userForm.invalid || !admin.value && !user.value \">Save</button>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/users/adduser/adduser.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user__ = __webpack_require__("../../../../../src/app/users/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdduserComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AdduserComponent = (function () {
+    function AdduserComponent(userService) {
+        this.userService = userService;
+        this.role_user = false;
+        this.role_admin = false;
+        this.newUser = new __WEBPACK_IMPORTED_MODULE_1__user__["a" /* User */]();
+    }
+    AdduserComponent.prototype.ngOnInit = function () {
+    };
+    AdduserComponent.prototype.addUser = function () {
+        var _this = this;
+        this.getUserRoles();
+        // var str = 'company=' + this.newUser.company;
+        // str += ', name=' + this.newUser.username;
+        // str += ', roles=' + this.newUser.roles;
+        // str += ', id=' + this.newUser.id;
+        // alert("str=" + str);
+        this.userService.addUser(this.newUser).then(function (user) {
+            _this.newUser = user;
+            console.log("user id: " + user.id);
+        });
+    };
+    AdduserComponent.prototype.getUserRoles = function () {
+        console.log(this.newUser.company);
+        this.newUser.roles = '';
+        if (this.role_user) {
+            this.newUser.roles = 'ROLE_USER';
+        }
+        if (this.role_user && this.role_admin) {
+            this.newUser.roles += ', ROLE_ADMIN';
+        }
+        else if (this.role_admin) {
+            this.newUser.roles += 'ROLE_ADMIN';
+        }
+    };
+    return AdduserComponent;
+}());
+AdduserComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
+        selector: 'app-adduser',
+        template: __webpack_require__("../../../../../src/app/users/adduser/adduser.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/users/adduser/adduser.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__user_service__["a" /* UserService */]) === "function" && _a || Object])
+], AdduserComponent);
+
+var _a;
+//# sourceMappingURL=adduser.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/users/user.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -197,11 +293,20 @@ var UserService = (function () {
     function UserService(http) {
         this.http = http;
         this.logoutUrl = 'logout';
-        this.userUrl = '/user';
         this.usersListUrl = 'userslist';
         this.usersListCountUrl = 'userslistcount';
+        this.userUrl = 'user';
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
     }
+    UserService.prototype.addUser = function (user) {
+        console.log("UserService.addUser()...");
+        return this.http.post(this.userUrl, JSON.stringify(user), { headers: this.headers }).toPromise()
+            .then(function (response) {
+            console.log("response = " + response);
+            return response.json();
+        })
+            .catch(this.handleError);
+    };
     UserService.prototype.getUserListCount = function (param) {
         console.log("UserService.getUserList()...");
         return this.http.post(this.usersListCountUrl, JSON.stringify(param), { headers: this.headers }).toPromise()
@@ -248,6 +353,21 @@ var _a;
 
 /***/ }),
 
+/***/ "../../../../../src/app/users/user.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
+var User = (function () {
+    function User() {
+    }
+    return User;
+}());
+
+//# sourceMappingURL=user.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/users/users-list/Pagination.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -286,7 +406,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".table-hover>tbody>tr:hover {\r\n  color: black;\r\n}\r\n\r\n.center {\r\n  text-align: center;\r\n}\r\n", ""]);
+exports.push([module.i, ".table-hover>tbody>tr:hover {\r\n  color: black;\r\n}\r\n\r\n.center {\r\n  text-align: center;\r\n}\r\n\r\n.btn-adduser {\r\n  margin-top: 20px;\r\n  text-align: right;\r\n}\r\n\r\nh3 > .badge {\r\n  background-color: black;\r\n}\r\n", ""]);
 
 // exports
 
@@ -299,7 +419,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/users-list/users-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<div [hidden]=\"!users || users.length <= 0\">\n  <h3>User List {{this.pagination.total == 0?\"\":\"(\" + this.pagination.total + \")\"}}</h3>\n  <table class=\"table table-bordered table-hover\">\n    <thead class=\"\"><th> </th><th>Id</th><th>Company</th><th>Name</th><th>Roles</th></thead>\n    <tr *ngFor=\"let user of users\"><td></td><td>{{user.id}}</td><td>{{user.company}}</td><td>{{user.username}}</td><td>{{user.roles}}</td></tr>\n    <tfoot>\n      <td colspan=\"5\" class=\"center\">\n        <nav [hidden]=\"this.pagination.total <= 0\">\n            <ul class=\"pagination\">\n              <li [class.disabled]=\"this.pagination.current == 1\"><a href=\"javascript:void(0)\" (click)=\"gotoPage(1)\">First</a></li>\n              <li [class.disabled]=\"this.pagination.current == 1\"><a href=\"javascript:void(0)\" (click)=\"gotoPage(this.pagination.current - 1)\">Previous</a></li>\n              <li *ngFor=\"let index of [1, 2, 3, 4, 5]\" [class.active]=\"index == this.getCurrentPosition()\">\n                <a href=\"javascript:void(0)\" (click)=\"gotoPage(index)\" [hidden]=\"getPageNumber(index) == -1\">{{getPageNumber(index)}}</a>\n              </li>\n              <li [class.disabled]=\"this.pagination.current == this.pagination.totalPage\"><a href=\"javascript:void(0)\"  (click)=\"gotoPage(this.pagination.current + 1)\">Next</a></li>\n              <li [class.disabled]=\"this.pagination.current == this.pagination.totalPage\"><a href=\"javascript:void(0)\"  (click)=\"gotoPage(this.pagination.totalPage)\">Last</a></li>\n            </ul>\n        </nav>\n      </td>\n    </tfoot>\n  </table>\n</div>\n"
+module.exports = "\n<div [hidden]=\"!users || users.length <= 0\">\n  <div class=\"row\">\n    <h3 class=\"col-md-10\">User List <span class=\"badge\">{{this.pagination.total == 0?\"\":this.pagination.total}}</span></h3>\n    <div class=\"col-md-2 btn-adduser\">\n      <button class=\"btn btn-default\" (click)=\"gotoAddUserPage()\"><span class=\"glyphicon glyphicon-plus\"></span> Add new user</button>\n    </div>\n  </div>\n  <table class=\"table table-bordered table-hover\">\n    <tr>\n      <th class=\"center\">Id</th>\n      <th class=\"center\">Company</th>\n      <th class=\"center\">Name</th>\n      <th class=\"center\">Roles</th>\n      <th class=\"center\">Enabled</th>\n      <th class=\"center\">Edit</th>\n      <th class=\"center\">Delete</th>\n    </tr>\n    <tr *ngFor=\"let user of users\">\n      <td>{{user.id}}</td>\n      <td>{{user.company}}</td>\n      <td>{{user.username}}</td>\n      <td>{{user.roles}}</td>\n      <td></td>\n      <td class=\"center\"><span class=\"glyphicon glyphicon-edit\"></span></td>\n      <td class=\"center\"><span class=\"glyphicon glyphicon-remove\"></span></td>\n    </tr>\n  </table>\n  <nav class=\"center\" [hidden]=\"this.pagination.total <= 0\">\n      <ul class=\"pagination\">\n        <li [class.disabled]=\"this.pagination.current == 1\"><a href=\"javascript:void(0)\" (click)=\"gotoPage(1)\"><span class=\"glyphicon glyphicon-fast-backward\"></span></a></li>\n        <li [class.disabled]=\"this.pagination.current == 1\"><a href=\"javascript:void(0)\" (click)=\"gotoPage(this.pagination.current - 1)\"><span class=\"glyphicon glyphicon-backward\"></span></a></li>\n        <li *ngFor=\"let index of [1, 2, 3, 4, 5]\" [class.active]=\"index == this.getCurrentPosition()\">\n          <a href=\"javascript:void(0)\" (click)=\"gotoPage(getPageNumber(index))\" [hidden]=\"getPageNumber(index) == -1\">{{getPageNumber(index)}}</a>\n        </li>\n        <li [class.disabled]=\"this.pagination.current == this.pagination.totalPage\"><a href=\"javascript:void(0)\"  (click)=\"gotoPage(this.pagination.current + 1)\"><span class=\"glyphicon glyphicon-forward\"></span></a></li>\n        <li [class.disabled]=\"this.pagination.current == this.pagination.totalPage\"><a href=\"javascript:void(0)\"  (click)=\"gotoPage(this.pagination.totalPage)\"><span class=\"glyphicon glyphicon-fast-forward\"></span></a></li>\n      </ul>\n  </nav>\n</div>\n"
 
 /***/ }),
 
@@ -311,6 +431,7 @@ module.exports = "\n<div [hidden]=\"!users || users.length <= 0\">\n  <h3>User L
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__UserListQueryParameters__ = __webpack_require__("../../../../../src/app/users/users-list/UserListQueryParameters.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Pagination__ = __webpack_require__("../../../../../src/app/users/users-list/Pagination.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersListComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -325,9 +446,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var UsersListComponent = (function () {
-    function UsersListComponent(userService) {
+    function UsersListComponent(userService, router) {
         this.userService = userService;
+        this.router = router;
         this.param = new __WEBPACK_IMPORTED_MODULE_2__UserListQueryParameters__["a" /* UserListQueryParameters */]();
         this.param.pageParam = new __WEBPACK_IMPORTED_MODULE_3__Pagination__["a" /* Pagination */]();
         this.param.pageParam.current = 1;
@@ -335,7 +458,7 @@ var UsersListComponent = (function () {
         this.pagination = new __WEBPACK_IMPORTED_MODULE_3__Pagination__["a" /* Pagination */]();
         this.pagination.current = 1;
         this.pagination.countPerPage = 10;
-        this.pagination.total = 0;
+        this.pagination.total = 332;
     }
     UsersListComponent.prototype.ngOnInit = function () {
         console.log("UsersListComponent is init...");
@@ -379,12 +502,13 @@ var UsersListComponent = (function () {
     UsersListComponent.prototype.gotoPage = function (page) {
         this.param.pageParam.current = page;
         this.pagination.current = page;
+        console.log("current page = " + page);
         this.getUserList(this.param);
     };
     UsersListComponent.prototype.getFirstPageNumber = function () {
         var totalPage = Math.ceil(this.pagination.total / this.pagination.countPerPage);
         this.pagination.totalPage = totalPage;
-        console.log('totalPage=' + totalPage);
+        //console.log('totalPage=' + totalPage);
         if (totalPage < 5) {
             return 1;
         }
@@ -401,6 +525,10 @@ var UsersListComponent = (function () {
     UsersListComponent.prototype.getCurrentPosition = function () {
         return this.pagination.current - this.getFirstPageNumber() + 1;
     };
+    UsersListComponent.prototype.gotoAddUserPage = function () {
+        var link = ['/adduser'];
+        this.router.navigate(link);
+    };
     return UsersListComponent;
 }());
 UsersListComponent = __decorate([
@@ -409,10 +537,10 @@ UsersListComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/users/users-list/users-list.component.html"),
         styles: [__webpack_require__("../../../../../src/app/users/users-list/users-list.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__user_service__["a" /* UserService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _b || Object])
 ], UsersListComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=users-list.component.js.map
 
 /***/ }),
@@ -425,6 +553,7 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_component__ = __webpack_require__("../../../../../src/app/users/users.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_list_users_list_component__ = __webpack_require__("../../../../../src/app/users/users-list/users-list.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__adduser_adduser_component__ = __webpack_require__("../../../../../src/app/users/adduser/adduser.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersRoutingModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -436,9 +565,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var routes = [
     { path: 'users', component: __WEBPACK_IMPORTED_MODULE_2__users_component__["a" /* UsersComponent */] },
     { path: 'userslist', component: __WEBPACK_IMPORTED_MODULE_3__users_list_users_list_component__["a" /* UsersListComponent */] },
+    { path: 'adduser', component: __WEBPACK_IMPORTED_MODULE_4__adduser_adduser_component__["a" /* AdduserComponent */] },
 ];
 var UsersRoutingModule = (function () {
     function UsersRoutingModule() {
@@ -525,9 +656,11 @@ UsersComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_routing_module__ = __webpack_require__("../../../../../src/app/users/users-routing.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__users_component__ = __webpack_require__("../../../../../src/app/users/users.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_list_users_list_component__ = __webpack_require__("../../../../../src/app/users/users-list/users-list.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_component__ = __webpack_require__("../../../../../src/app/users/users.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_list_users_list_component__ = __webpack_require__("../../../../../src/app/users/users-list/users-list.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__adduser_adduser_component__ = __webpack_require__("../../../../../src/app/users/adduser/adduser.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -535,6 +668,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -551,11 +686,12 @@ UsersModule = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["b" /* NgModule */])({
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["e" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClientModule */],
             __WEBPACK_IMPORTED_MODULE_3__users_routing_module__["a" /* UsersRoutingModule */]
         ],
-        declarations: [__WEBPACK_IMPORTED_MODULE_4__users_component__["a" /* UsersComponent */], __WEBPACK_IMPORTED_MODULE_5__users_list_users_list_component__["a" /* UsersListComponent */]],
-        providers: [__WEBPACK_IMPORTED_MODULE_6__user_service__["a" /* UserService */]]
+        declarations: [__WEBPACK_IMPORTED_MODULE_5__users_component__["a" /* UsersComponent */], __WEBPACK_IMPORTED_MODULE_6__users_list_users_list_component__["a" /* UsersListComponent */], __WEBPACK_IMPORTED_MODULE_7__adduser_adduser_component__["a" /* AdduserComponent */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__user_service__["a" /* UserService */]]
     })
 ], UsersModule);
 
