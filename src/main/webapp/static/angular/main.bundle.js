@@ -155,13 +155,13 @@ var AppModule = (function () {
 AppModule = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["b" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]
+            __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */],
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_2__users_users_module__["a" /* UsersModule */],
             __WEBPACK_IMPORTED_MODULE_5__angular_http__["a" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_3__app_routing_module__["a" /* AppRoutingModule */]
+            __WEBPACK_IMPORTED_MODULE_3__app_routing_module__["a" /* AppRoutingModule */],
         ],
         providers: [__WEBPACK_IMPORTED_MODULE_6__users_user_service__["a" /* UserService */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
@@ -193,7 +193,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/adduser/adduser.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n\n          <form class=\"form-horizontal\" commandName=\"animal\" #userForm=\"ngForm\">\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-2 control-label\">{{newUser.id?newUser.id:'N/A'}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <div class=\"col-md-9\">\n                {{this.user.company}}\n                <input id=\"company\" name=\"company\" [(ngModel)]=\"newUser.company\" required\n                class=\"form-control\" placeholder=\"Company Name\" #company=\"ngModel\">\n                <div *ngIf=\"company.invalid && (company.dirty || company.touched)\"\n                  class=\"alert alert-danger\">\n                  <div *ngIf=\"company.errors.required\">\n                    Company is required.\n                  </div>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <div class=\"col-md-9\">\n                <input id=\"name\" name=\"name\" type=\"text\" [(ngModel)]=\"newUser.username\" required\n                  class=\"form-control\" placeholder=\"User Name\" #name=\"ngModel\">\n                  <div *ngIf=\"name.invalid && (name.dirty || name.touched)\"\n                    class=\"alert alert-danger\">\n                    <div *ngIf=\"name.errors.required\">\n                      Username is required.\n                    </div>\n                  </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_user\"\n                      name=\"ROLE_USER\" value=\"USER\" #user=\"ngModel\"> User\n                 </label>\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_admin\"\n                      name=\"ROLE_ADMIN\" value=\"ADMIN\" #admin=\"ngModel\"> Admin\n                 </label>\n                 <div *ngIf=\"((user.dirty || user.touched) || (admin.dirty || admin.touched)) && !admin.value && !user.value \"\n                   class=\"alert alert-danger\">\n                     Roles is required.\n                 </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <div class=\"col-md-offset-3 col-md-9\">\n                <button type=\"submit\" class=\"btn btn-default\"\n                (click)=\"addUser()\" [disabled]=\"userForm.invalid || !admin.value && !user.value \">Save</button>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n\n          <form class=\"form-horizontal\" commandName=\"animal\" #userForm=\"ngForm\">\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-2 control-label\">{{newUser.id?newUser.id:'N/A'}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <div class=\"col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <input id=\"company\" name=\"company\" [(ngModel)]=\"newUser.company\" required\n                  class=\"form-control\" placeholder=\"Company Name\" #company=\"ngModel\">\n                  <div *ngIf=\"company.invalid && (company.dirty || company.touched)\"\n                    class=\"alert alert-danger\">\n                    <div *ngIf=\"company.errors.required\">\n                      Company is required.\n                    </div>\n                  </div>\n                </div>\n                <label *ngIf=\"newUser.id\" class=\"control-label\">{{newUser.company}}</label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <div class=\"col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <input id=\"name\" name=\"name\" type=\"text\" [(ngModel)]=\"newUser.username\" required\n                    class=\"form-control\" placeholder=\"User Name\" #name=\"ngModel\">\n                    <div *ngIf=\"name.invalid && (name.dirty || name.touched)\"\n                      class=\"alert alert-danger\">\n                      <div *ngIf=\"name.errors.required\">\n                        Username is required.\n                      </div>\n                    </div>\n                </div>\n                <label *ngIf=\"newUser.id\" class=\"control-label\">{{newUser.username}}</label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_user\"\n                      name=\"ROLE_USER\" value=\"USER\" #user=\"ngModel\" [disabled]=\"newUser.id\"> User\n                 </label>\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_admin\"\n                      name=\"ROLE_ADMIN\" value=\"ADMIN\" #admin=\"ngModel\" [disabled]=\"newUser.id\"> Admin\n                 </label>\n                 <div *ngIf=\"((user.dirty || user.touched) || (admin.dirty || admin.touched)) && !admin.value && !user.value \"\n                   class=\"alert alert-danger\">\n                     Roles is required.\n                 </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <div class=\"col-md-offset-3 col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <button type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"addUser()\" [disabled]=\"userForm.invalid || !admin.value && !user.value \">Save</button>\n                </div>\n                <div *ngIf=\"newUser.id\">\n                  <button class=\"btn btn-success\"\n                    (click)=\"gotoUserList()\">Back</button>\n                </div>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -204,6 +204,7 @@ module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <d
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user__ = __webpack_require__("../../../../../src/app/users/user.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdduserComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -217,9 +218,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AdduserComponent = (function () {
-    function AdduserComponent(userService) {
+    function AdduserComponent(userService, router) {
         this.userService = userService;
+        this.router = router;
         this.role_user = false;
         this.role_admin = false;
         this.newUser = new __WEBPACK_IMPORTED_MODULE_1__user__["a" /* User */]();
@@ -228,7 +231,7 @@ var AdduserComponent = (function () {
     };
     AdduserComponent.prototype.addUser = function () {
         var _this = this;
-        this.getUserRoles();
+        this.newUser.roles = this.userService.getUserRoles(this.role_user, this.role_admin);
         // var str = 'company=' + this.newUser.company;
         // str += ', name=' + this.newUser.username;
         // str += ', roles=' + this.newUser.roles;
@@ -239,18 +242,9 @@ var AdduserComponent = (function () {
             console.log("user id: " + user.id);
         });
     };
-    AdduserComponent.prototype.getUserRoles = function () {
-        console.log(this.newUser.company);
-        this.newUser.roles = '';
-        if (this.role_user) {
-            this.newUser.roles = 'ROLE_USER';
-        }
-        if (this.role_user && this.role_admin) {
-            this.newUser.roles += ', ROLE_ADMIN';
-        }
-        else if (this.role_admin) {
-            this.newUser.roles += 'ROLE_ADMIN';
-        }
+    AdduserComponent.prototype.gotoUserList = function () {
+        var link = ['/userslist'];
+        this.router.navigate(link);
     };
     return AdduserComponent;
 }());
@@ -260,11 +254,160 @@ AdduserComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/users/adduser/adduser.component.html"),
         styles: [__webpack_require__("../../../../../src/app/users/adduser/adduser.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__user_service__["a" /* UserService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */]) === "function" && _b || Object])
 ], AdduserComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=adduser.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/users/edituser/edituser.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\r\n.panel {\r\n  background-color: inherit;\r\n}\r\n\r\ninput[type=checkbox] {\r\n  margin-top: 8px;\r\n}\r\n\r\n.alert {\r\n  padding: 0 0 0 10px;\r\n}\r\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/users/edituser/edituser.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n          <form class=\"form-horizontal\" [formGroup]=\"editForm\" novalidate>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-2 control-label\">{{editForm.get('id').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <div class=\"col-md-9\">\n                  <input formControlName=\"company\" class=\"form-control\" placeholder=\"Company Name\">\n                  <div *ngIf=\"editForm.get('company').invalid && (editForm.get('company').dirty || editForm.get('company').touched)\"\n                    class=\"alert alert-danger\">\n                    <div *ngIf=\"editForm.get('company').errors.required\">\n                      Company is required.\n                    </div>\n                  </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <div class=\"col-md-9\">\n                <input formControlName=\"username\" class=\"form-control\" placeholder=\"User Name\">\n                <div *ngIf=\"editForm.get('username').invalid && (editForm.get('username').dirty || editForm.get('username').touched)\"\n                  class=\"alert alert-danger\">\n                  <div *ngIf=\"editForm.get('username').errors.required\">\n                    Username is required.\n                  </div>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_user\"> User\n                </label>\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_admin\"> Admin\n                </label>\n                <div *ngIf=\"((editForm.get('role_user').dirty || editForm.get('role_user').touched)\n                    || (editForm.get('role_admin').dirty || editForm.get('role_admin').touched))\n                    && !editForm.get('role_admin').value && !editForm.get('role_user').value \"\n                  class=\"alert alert-danger\">\n                    Roles is required.\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">\n                <span *ngIf=\"updating\" class=\"glyphicon glyphicon-save\"></span>\n                <span *ngIf=\"updated && !editForm.dirty\" class=\"glyphicon glyphicon-ok\"></span>\n              </label>\n              <div class=\"col-md-9\">\n                  <button type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"updateUser()\" [disabled]=\"editForm.invalid || !editForm.get('role_user').value && !editForm.get('role_admin').value\">Update</button>\n                  <button class=\"btn btn-success\"\n                    (click)=\"gotoUserList()\">Back</button>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/users/edituser/edituser.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_switchMap__ = __webpack_require__("../../../../rxjs/add/operator/switchMap.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_switchMap__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EdituserComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var EdituserComponent = (function () {
+    function EdituserComponent(userService, route, router, formbuilder) {
+        this.userService = userService;
+        this.route = route;
+        this.router = router;
+        this.formbuilder = formbuilder;
+        this.createForm();
+        this.updated = false;
+    }
+    EdituserComponent.prototype.ngOnInit = function () {
+        // this.editUser = new User();
+        // this.editUser.company="Hard";
+        // this.editUser.username = "Shijin";
+        // this.editUser.id=100;
+        // this.editUser.roles = "ROLE_USER, ROLE_ADMIN";
+        // this.setCheckbox();
+        // this.fillInForm();
+        var _this = this;
+        this.route.paramMap.switchMap(function (params) { return _this.userService.getUser(+params.get('id')); }).subscribe(function (user1) {
+            _this.editUser = user1;
+            console.log(user1);
+            console.log(user1.username);
+            _this.fillInForm();
+        });
+    };
+    EdituserComponent.prototype.createForm = function () {
+        this.editForm = this.formbuilder.group({
+            id: '',
+            company: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["d" /* Validators */].required],
+            username: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["d" /* Validators */].required],
+            role_user: [false],
+            role_admin: [false]
+        });
+    };
+    EdituserComponent.prototype.fillInForm = function () {
+        var roles = this.editUser.roles;
+        if (roles == null)
+            roles = '';
+        this.editForm.setValue({
+            id: this.editUser.id,
+            company: this.editUser.company,
+            username: this.editUser.username,
+            role_user: roles.search("ROLE_USER") != -1,
+            role_admin: roles.search("ROLE_ADMIN") != -1
+        });
+    };
+    EdituserComponent.prototype.fillInUser = function () {
+        this.editUser.company = this.editForm.get("company").value;
+        this.editUser.username = this.editForm.get("username").value;
+        this.editUser.roles = this.userService.getUserRoles(this.editForm.get("role_user").value, this.editForm.get("role_admin").value);
+    };
+    EdituserComponent.prototype.updateUser = function () {
+        var _this = this;
+        this.updating = true;
+        this.updated = false;
+        this.fillInUser();
+        this.userService.updateUser(this.editUser).then(function (user) {
+            _this.editUser = user;
+            console.log("user id: " + user.id);
+            _this.updating = false;
+            _this.updated = true;
+            _this.editForm.reset();
+            _this.fillInForm();
+        });
+    };
+    EdituserComponent.prototype.gotoUserList = function () {
+        var link = ['/userslist'];
+        this.router.navigate(link);
+    };
+    return EdituserComponent;
+}());
+EdituserComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
+        selector: 'app-edituser',
+        template: __webpack_require__("../../../../../src/app/users/edituser/edituser.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/users/edituser/edituser.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* FormBuilder */]) === "function" && _d || Object])
+], EdituserComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=edituser.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/users/mockUsers.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return USERS; });
+var USERS = [
+    { id: 10, company: 'Learn', roles: 'User, Admin', username: 'Shi Jin' },
+    { id: 11, company: 'Learn', roles: 'User', username: 'Mr. Nice' },
+    { id: 20, company: 'Learn', roles: 'User', username: 'Tornado' }
+];
+//# sourceMappingURL=mockUsers.js.map
 
 /***/ }),
 
@@ -296,11 +439,35 @@ var UserService = (function () {
         this.usersListUrl = 'userslist';
         this.usersListCountUrl = 'userslistcount';
         this.userUrl = 'user';
+        this.editUserUrl = 'u';
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
     }
+    UserService.prototype.getUser = function (id) {
+        console.log("UserService.getUser()...");
+        return this.http.get(this.userUrl + "/" + id).toPromise()
+            .then(function (response) { return response.json(); }).catch(this.handleError);
+    };
     UserService.prototype.addUser = function (user) {
         console.log("UserService.addUser()...");
         return this.http.post(this.userUrl, JSON.stringify(user), { headers: this.headers }).toPromise()
+            .then(function (response) {
+            console.log("response = " + response);
+            return response.json();
+        })
+            .catch(this.handleError);
+    };
+    UserService.prototype.updateUser = function (user) {
+        console.log("UserService.addUser()...");
+        return this.http.put(this.userUrl + "/" + user.id, JSON.stringify(user), { headers: this.headers }).toPromise()
+            .then(function (response) {
+            console.log("response = " + response);
+            return response.json();
+        })
+            .catch(this.handleError);
+    };
+    UserService.prototype.deleteUser = function (id) {
+        console.log("UserService.addUser()...");
+        return this.http.delete(this.userUrl + "/" + id, { headers: this.headers }).toPromise()
             .then(function (response) {
             console.log("response = " + response);
             return response.json();
@@ -341,6 +508,19 @@ var UserService = (function () {
         console.error("An error occurred ", error);
         return Promise.reject(error.message || error);
     };
+    UserService.prototype.getUserRoles = function (role_user, role_admin) {
+        var roles = '';
+        if (role_user) {
+            roles = 'ROLE_USER';
+        }
+        if (role_user && role_admin) {
+            roles += ', ROLE_ADMIN';
+        }
+        else if (role_admin) {
+            roles += 'ROLE_ADMIN';
+        }
+        return roles;
+    };
     return UserService;
 }());
 UserService = __decorate([
@@ -365,6 +545,119 @@ var User = (function () {
 }());
 
 //# sourceMappingURL=user.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/users/userdetail/userdetail.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\r\n.panel {\r\n  background-color: inherit;\r\n}\r\n\r\ninput[type=checkbox] {\r\n  margin-top: 8px;\r\n}\r\n\r\n.alert {\r\n  padding: 0 0 0 10px;\r\n}\r\n\r\n.col-md-9  {\r\n  text-align: left;\r\n}\r\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/users/userdetail/userdetail.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n          <form class=\"form-horizontal\" [formGroup]=\"userForm\" novalidate>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-9 control-label\">{{userForm.get('id').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <label class=\"col-md-9 control-label\">{{userForm.get('company').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <label class=\"col-md-9 control-label\">{{userForm.get('username').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_user\" disabled> User\n                </label>\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_admin\" disabled> Admin\n                </label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">\n                <span *ngIf=\"updating\" class=\"glyphicon glyphicon-save\"></span>\n                <span *ngIf=\"updated\" class=\"glyphicon glyphicon-ok\"></span>\n              </label>\n              <div class=\"col-md-9\">\n                  <button *ngIf=\"isDelete\" type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"deleteUser()\" [disabled]=\"updated\">Delete</button>\n                  <button class=\"btn btn-success\" (click)=\"gotoUserList()\">Back</button>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/users/userdetail/userdetail.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserdetailComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var UserdetailComponent = (function () {
+    function UserdetailComponent(route, router, fb, userService) {
+        this.route = route;
+        this.router = router;
+        this.fb = fb;
+        this.userService = userService;
+        this.createForm();
+        this.isDelete = this.router.url.search("deleteuser") != -1;
+    }
+    UserdetailComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.paramMap.switchMap(function (params) { return _this.userService.getUser(+params.get('id')); }).subscribe(function (user) {
+            _this.user = user;
+            _this.fillInForm();
+        });
+    };
+    UserdetailComponent.prototype.createForm = function () {
+        this.userForm = this.fb.group({
+            id: '',
+            company: '',
+            username: '',
+            role_user: false,
+            role_admin: false
+        });
+    };
+    UserdetailComponent.prototype.fillInForm = function () {
+        var roles = this.user.roles;
+        if (roles == null)
+            roles = '';
+        this.userForm.setValue({
+            id: this.user.id,
+            company: this.user.company,
+            username: this.user.username,
+            role_user: roles.search("ROLE_USER") != -1,
+            role_admin: roles.search("ROLE_ADMIN") != -1
+        });
+    };
+    UserdetailComponent.prototype.gotoUserList = function () {
+        var link = ['/userslist'];
+        this.router.navigate(link);
+    };
+    UserdetailComponent.prototype.deleteUser = function () {
+        var _this = this;
+        this.updating = true;
+        this.userService.deleteUser(this.user.id).then(function (response) {
+            console.log("response=" + response);
+            _this.updating = false;
+            _this.updated = true;
+        });
+    };
+    return UserdetailComponent;
+}());
+UserdetailComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
+        selector: 'app-userdetail',
+        template: __webpack_require__("../../../../../src/app/users/userdetail/userdetail.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/users/userdetail/userdetail.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__user_service__["a" /* UserService */]) === "function" && _d || Object])
+], UserdetailComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=userdetail.component.js.map
 
 /***/ }),
 
@@ -406,7 +699,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".table-hover>tbody>tr:hover {\r\n  color: black;\r\n}\r\n\r\n.center {\r\n  text-align: center;\r\n}\r\n\r\n.btn-adduser {\r\n  margin-top: 20px;\r\n  text-align: right;\r\n}\r\n\r\nh3 > .badge {\r\n  background-color: black;\r\n}\r\n", ""]);
+exports.push([module.i, "td>a:link, td>a:visited {\r\n  color: wheat;\r\n}\r\n\r\ntd a:hover .glyphicon-edit{\r\n  color: MediumSeaGreen;\r\n  font-weight: bold;\r\n}\r\n\r\ntd a:hover .glyphicon-remove {\r\n  color: Chocolate;\r\n  font-weight: bold;\r\n}\r\n\r\n.table-hover>tbody>tr:hover {\r\n  color: GoldenRod    ;\r\n  background-color: DarkOliveGreen;\r\n  \r\n}\r\n\r\n.center {\r\n  text-align: center;\r\n}\r\n\r\n.btn-adduser {\r\n  margin-top: 20px;\r\n  text-align: right;\r\n}\r\n\r\nh3 > .badge {\r\n  background-color: black;\r\n}\r\n", ""]);
 
 // exports
 
@@ -419,7 +712,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/users-list/users-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<div [hidden]=\"!users || users.length <= 0\">\n  <div class=\"row\">\n    <h3 class=\"col-md-10\">User List <span class=\"badge\">{{this.pagination.total == 0?\"\":this.pagination.total}}</span></h3>\n    <div class=\"col-md-2 btn-adduser\">\n      <button class=\"btn btn-default\" (click)=\"gotoAddUserPage()\"><span class=\"glyphicon glyphicon-plus\"></span> Add new user</button>\n    </div>\n  </div>\n  <table class=\"table table-bordered table-hover\">\n    <tr>\n      <th class=\"center\">Id</th>\n      <th class=\"center\">Company</th>\n      <th class=\"center\">Name</th>\n      <th class=\"center\">Roles</th>\n      <th class=\"center\">Enabled</th>\n      <th class=\"center\">Edit</th>\n      <th class=\"center\">Delete</th>\n    </tr>\n    <tr *ngFor=\"let user of users\">\n      <td>{{user.id}}</td>\n      <td>{{user.company}}</td>\n      <td>{{user.username}}</td>\n      <td>{{user.roles}}</td>\n      <td></td>\n      <td class=\"center\"><span class=\"glyphicon glyphicon-edit\"></span></td>\n      <td class=\"center\"><span class=\"glyphicon glyphicon-remove\"></span></td>\n    </tr>\n  </table>\n  <nav class=\"center\" [hidden]=\"this.pagination.total <= 0\">\n      <ul class=\"pagination\">\n        <li [class.disabled]=\"this.pagination.current == 1\"><a href=\"javascript:void(0)\" (click)=\"gotoPage(1)\"><span class=\"glyphicon glyphicon-fast-backward\"></span></a></li>\n        <li [class.disabled]=\"this.pagination.current == 1\"><a href=\"javascript:void(0)\" (click)=\"gotoPage(this.pagination.current - 1)\"><span class=\"glyphicon glyphicon-backward\"></span></a></li>\n        <li *ngFor=\"let index of [1, 2, 3, 4, 5]\" [class.active]=\"index == this.getCurrentPosition()\">\n          <a href=\"javascript:void(0)\" (click)=\"gotoPage(getPageNumber(index))\" [hidden]=\"getPageNumber(index) == -1\">{{getPageNumber(index)}}</a>\n        </li>\n        <li [class.disabled]=\"this.pagination.current == this.pagination.totalPage\"><a href=\"javascript:void(0)\"  (click)=\"gotoPage(this.pagination.current + 1)\"><span class=\"glyphicon glyphicon-forward\"></span></a></li>\n        <li [class.disabled]=\"this.pagination.current == this.pagination.totalPage\"><a href=\"javascript:void(0)\"  (click)=\"gotoPage(this.pagination.totalPage)\"><span class=\"glyphicon glyphicon-fast-forward\"></span></a></li>\n      </ul>\n  </nav>\n</div>\n"
+module.exports = "\n<div [hidden]=\"!users || users.length <= 0\">\n  <div class=\"row\">\n    <h3 class=\"col-md-10\">User List <span class=\"badge\">{{this.pagination.total == 0?\"\":this.pagination.total}}</span></h3>\n    <div class=\"col-md-2 btn-adduser\">\n      <button class=\"btn btn-default\" (click)=\"gotoAddUserPage()\"><span class=\"glyphicon glyphicon-plus\"></span> Add new user</button>\n    </div>\n  </div>\n  <table class=\"table table-bordered table-hover\">\n    <tr>\n      <th class=\"center\">Id</th>\n      <th class=\"center\">Company</th>\n      <th class=\"center\">Name</th>\n      <th class=\"center\">Roles</th>\n      <th class=\"center\">Enabled</th>\n      <th class=\"center\">Edit</th>\n      <th class=\"center\">Delete</th>\n    </tr>\n    <tr *ngFor=\"let user of users\">\n      <td>{{user.id}}</td>\n      <td>{{user.company}}</td>\n      <td><a [routerLink]=\"['/userdetail', user.id]\">{{user.username}}</a></td>\n      <td>{{user.roles}}</td>\n      <td></td>\n      <td class=\"center\">\n        <a [routerLink]=\"['/edituser', user.id]\">\n          <span class=\"glyphicon glyphicon-edit\"></span>\n        </a></td>\n      <td class=\"center\">\n        <a [routerLink]=\"['/deleteuser', user.id]\">\n          <span class=\"glyphicon glyphicon-remove\"></span>\n        </a></td>\n    </tr>\n  </table>\n  <nav class=\"center\" [hidden]=\"this.pagination.total <= 0\">\n      <ul class=\"pagination\">\n        <li [class.disabled]=\"this.pagination.current == 1\"><a href=\"javascript:void(0)\" (click)=\"gotoPage(1)\"><span class=\"glyphicon glyphicon-fast-backward\"></span></a></li>\n        <li [class.disabled]=\"this.pagination.current == 1\"><a href=\"javascript:void(0)\" (click)=\"gotoPage(this.pagination.current - 1)\"><span class=\"glyphicon glyphicon-backward\"></span></a></li>\n        <li *ngFor=\"let index of [1, 2, 3, 4, 5]\" [class.active]=\"index == this.getCurrentPosition()\">\n          <a href=\"javascript:void(0)\" (click)=\"gotoPage(getPageNumber(index))\" [hidden]=\"getPageNumber(index) == -1\">{{getPageNumber(index)}}</a>\n        </li>\n        <li [class.disabled]=\"this.pagination.current == this.pagination.totalPage\"><a href=\"javascript:void(0)\"  (click)=\"gotoPage(this.pagination.current + 1)\"><span class=\"glyphicon glyphicon-forward\"></span></a></li>\n        <li [class.disabled]=\"this.pagination.current == this.pagination.totalPage\"><a href=\"javascript:void(0)\"  (click)=\"gotoPage(this.pagination.totalPage)\"><span class=\"glyphicon glyphicon-fast-forward\"></span></a></li>\n      </ul>\n  </nav>\n</div>\n"
 
 /***/ }),
 
@@ -431,7 +724,8 @@ module.exports = "\n<div [hidden]=\"!users || users.length <= 0\">\n  <div class
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__UserListQueryParameters__ = __webpack_require__("../../../../../src/app/users/users-list/UserListQueryParameters.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Pagination__ = __webpack_require__("../../../../../src/app/users/users-list/Pagination.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mockUsers__ = __webpack_require__("../../../../../src/app/users/mockUsers.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersListComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -442,6 +736,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -462,7 +757,7 @@ var UsersListComponent = (function () {
     }
     UsersListComponent.prototype.ngOnInit = function () {
         console.log("UsersListComponent is init...");
-        //this.users = USERS;
+        this.users = __WEBPACK_IMPORTED_MODULE_4__mockUsers__["a" /* USERS */];
         this.getUserList(this.param);
     };
     UsersListComponent.prototype.getUserList = function (param) {
@@ -537,7 +832,7 @@ UsersListComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/users/users-list/users-list.component.html"),
         styles: [__webpack_require__("../../../../../src/app/users/users-list/users-list.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_router__["c" /* Router */]) === "function" && _b || Object])
 ], UsersListComponent);
 
 var _a, _b;
@@ -554,6 +849,8 @@ var _a, _b;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_component__ = __webpack_require__("../../../../../src/app/users/users.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_list_users_list_component__ = __webpack_require__("../../../../../src/app/users/users-list/users-list.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__adduser_adduser_component__ = __webpack_require__("../../../../../src/app/users/adduser/adduser.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__edituser_edituser_component__ = __webpack_require__("../../../../../src/app/users/edituser/edituser.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__userdetail_userdetail_component__ = __webpack_require__("../../../../../src/app/users/userdetail/userdetail.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersRoutingModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -566,10 +863,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
 var routes = [
     { path: 'users', component: __WEBPACK_IMPORTED_MODULE_2__users_component__["a" /* UsersComponent */] },
     { path: 'userslist', component: __WEBPACK_IMPORTED_MODULE_3__users_list_users_list_component__["a" /* UsersListComponent */] },
     { path: 'adduser', component: __WEBPACK_IMPORTED_MODULE_4__adduser_adduser_component__["a" /* AdduserComponent */] },
+    { path: 'edituser/:id', component: __WEBPACK_IMPORTED_MODULE_5__edituser_edituser_component__["a" /* EdituserComponent */] },
+    { path: 'userdetail/:id', component: __WEBPACK_IMPORTED_MODULE_6__userdetail_userdetail_component__["a" /* UserdetailComponent */] },
+    { path: 'deleteuser/:id', component: __WEBPACK_IMPORTED_MODULE_6__userdetail_userdetail_component__["a" /* UserdetailComponent */] },
 ];
 var UsersRoutingModule = (function () {
     function UsersRoutingModule() {
@@ -660,7 +962,9 @@ UsersComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_component__ = __webpack_require__("../../../../../src/app/users/users.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_list_users_list_component__ = __webpack_require__("../../../../../src/app/users/users-list/users-list.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__adduser_adduser_component__ = __webpack_require__("../../../../../src/app/users/adduser/adduser.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__edituser_edituser_component__ = __webpack_require__("../../../../../src/app/users/edituser/edituser.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__userdetail_userdetail_component__ = __webpack_require__("../../../../../src/app/users/userdetail/userdetail.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -668,6 +972,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
 
 
 
@@ -688,10 +995,11 @@ UsersModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["e" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClientModule */],
-            __WEBPACK_IMPORTED_MODULE_3__users_routing_module__["a" /* UsersRoutingModule */]
+            __WEBPACK_IMPORTED_MODULE_3__users_routing_module__["a" /* UsersRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* ReactiveFormsModule */],
         ],
-        declarations: [__WEBPACK_IMPORTED_MODULE_5__users_component__["a" /* UsersComponent */], __WEBPACK_IMPORTED_MODULE_6__users_list_users_list_component__["a" /* UsersListComponent */], __WEBPACK_IMPORTED_MODULE_7__adduser_adduser_component__["a" /* AdduserComponent */]],
-        providers: [__WEBPACK_IMPORTED_MODULE_8__user_service__["a" /* UserService */]]
+        declarations: [__WEBPACK_IMPORTED_MODULE_5__users_component__["a" /* UsersComponent */], __WEBPACK_IMPORTED_MODULE_6__users_list_users_list_component__["a" /* UsersListComponent */], __WEBPACK_IMPORTED_MODULE_7__adduser_adduser_component__["a" /* AdduserComponent */], __WEBPACK_IMPORTED_MODULE_8__edituser_edituser_component__["a" /* EdituserComponent */], __WEBPACK_IMPORTED_MODULE_10__userdetail_userdetail_component__["a" /* UserdetailComponent */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_9__user_service__["a" /* UserService */]]
     })
 ], UsersModule);
 

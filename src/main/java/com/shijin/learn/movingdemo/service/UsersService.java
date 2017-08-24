@@ -37,12 +37,36 @@ public class UsersService {
 //      commandProperties = {
 //          @HystrixProperty(name="execution.isolation.strategy", value="SEMAPHORE")
 //        })
-  public String getUser(Integer id) {
-    String userString = restTemplate
-        .getForEntity("http://MOVINGDEMO-USERS/client/user/{1}", String.class, id)
+  public LoginUser getUser(long id) {
+    LoginUser user = restTemplate
+        .getForEntity("http://MOVINGDEMO-USERS/client/user/{1}", LoginUser.class, id)
         .getBody();
-    LOGGER.debug("USER_SERVICE.getUser()={}", userString);
-    return userString;
+    LOGGER.debug("USER_SERVICE.getUser()={}", user);
+    return user;
+  }
+  
+  public LoginUser updateUser(LoginUser user) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<LoginUser> request = new HttpEntity<LoginUser>(user , headers);
+    ResponseEntity<LoginUser> response =
+        restTemplate.exchange("http://MOVINGDEMO-USERS/client/user/{1}", HttpMethod.PUT,
+            request, new ParameterizedTypeReference<LoginUser>() {}, user.getId());
+    
+    LoginUser returnUser = response.getBody();
+    return returnUser;
+  }
+ 
+  public Integer deleteUser(long id) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+
+    ResponseEntity<Integer> response =
+        restTemplate.exchange("http://MOVINGDEMO-USERS/client/user/{1}", HttpMethod.DELETE,
+            null, new ParameterizedTypeReference<Integer>() {}, id);
+    
+    Integer returnUser = response.getBody();
+    return returnUser;
   }
   
   @SuppressWarnings("unused")
@@ -86,7 +110,7 @@ public class UsersService {
     return returnUser;
     
   }
-
+ 
   public Collection<LoginUser> getUserListFake() {
     Collection<LoginUser> collection = new ArrayList<>();
     LoginUser user = new LoginUser();

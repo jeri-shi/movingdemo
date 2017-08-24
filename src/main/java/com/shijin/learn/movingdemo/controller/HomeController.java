@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,6 +36,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -77,11 +79,34 @@ public class HomeController {
     return "redirect:index.html";
   }
   
+  @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+  @ResponseBody
+  public LoginUser getUser(@PathVariable long id) throws Exception{
+    LOGGER.trace("/user...get " + id);
+    return usersService.getUser(id);
+  }
+  
   @RequestMapping(value="/user", method=RequestMethod.POST)
   @ResponseBody
   public LoginUser addUser(@RequestBody LoginUser user) {
     LOGGER.trace("/user...post " + user);
     return usersService.addUser(user);
+  }
+  
+  @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
+  @ResponseBody
+  public LoginUser updateUser(@PathVariable int id, @RequestBody LoginUser user) {
+    LOGGER.debug("update a user:{}", user);
+    return usersService.updateUser(user);
+  }
+  
+  @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+  @ResponseBody
+  public Integer deleteUser(@PathVariable long id) {
+    LOGGER.debug("delete a user:{}", id);
+
+    Integer count = usersService.deleteUser(id);
+    return count;
   }
   
   @RequestMapping(value="/userslist", method=RequestMethod.POST) 
