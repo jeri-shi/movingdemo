@@ -165,7 +165,7 @@ public class HomeController {
 
     LOGGER.debug("Login with " + session.getAttribute("sessionUserName") + ", session=" + session.getId()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-    return "home"; //$NON-NLS-1$
+    return "redirect:index.html"; //$NON-NLS-1$
   }
 
   @GetMapping("/login")

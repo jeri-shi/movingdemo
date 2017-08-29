@@ -193,7 +193,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/adduser/adduser.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n\n          <form class=\"form-horizontal\" commandName=\"animal\" #userForm=\"ngForm\">\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-2 control-label\">{{newUser.id?newUser.id:'N/A'}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <div class=\"col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <input id=\"company\" name=\"company\" [(ngModel)]=\"newUser.company\" required\n                  class=\"form-control\" placeholder=\"Company Name\" #company=\"ngModel\">\n                  <div *ngIf=\"company.invalid && (company.dirty || company.touched)\"\n                    class=\"alert alert-danger\">\n                    <div *ngIf=\"company.errors.required\">\n                      Company is required.\n                    </div>\n                  </div>\n                </div>\n                <label *ngIf=\"newUser.id\" class=\"control-label\">{{newUser.company}}</label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <div class=\"col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <input id=\"name\" name=\"name\" type=\"text\" [(ngModel)]=\"newUser.username\" required\n                    class=\"form-control\" placeholder=\"User Name\" #name=\"ngModel\">\n                    <div *ngIf=\"name.invalid && (name.dirty || name.touched)\"\n                      class=\"alert alert-danger\">\n                      <div *ngIf=\"name.errors.required\">\n                        Username is required.\n                      </div>\n                    </div>\n                </div>\n                <label *ngIf=\"newUser.id\" class=\"control-label\">{{newUser.username}}</label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_user\"\n                      name=\"ROLE_USER\" value=\"USER\" #user=\"ngModel\" [disabled]=\"newUser.id\"> User\n                 </label>\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_admin\"\n                      name=\"ROLE_ADMIN\" value=\"ADMIN\" #admin=\"ngModel\" [disabled]=\"newUser.id\"> Admin\n                 </label>\n                 <div *ngIf=\"((user.dirty || user.touched) || (admin.dirty || admin.touched)) && !admin.value && !user.value \"\n                   class=\"alert alert-danger\">\n                     Roles is required.\n                 </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <div class=\"col-md-offset-3 col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <button type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"addUser()\" [disabled]=\"userForm.invalid || !admin.value && !user.value \">Save</button>\n                </div>\n                <div *ngIf=\"newUser.id\">\n                  <button class=\"btn btn-success\"\n                    (click)=\"gotoUserList()\">Back</button>\n                </div>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n\n          <form class=\"form-horizontal\" commandName=\"animal\" #userForm=\"ngForm\">\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-2 control-label\">{{newUser.id?newUser.id:'N/A'}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <div class=\"col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <input id=\"company\" name=\"company\" [(ngModel)]=\"newUser.company\" required\n                  class=\"form-control\" placeholder=\"Company Name\" #company=\"ngModel\">\n                  <div *ngIf=\"company.invalid && (company.dirty || company.touched)\"\n                    class=\"alert alert-danger\">\n                    <div *ngIf=\"company.errors.required\">\n                      Company is required.\n                    </div>\n                  </div>\n                </div>\n                <label *ngIf=\"newUser.id\" class=\"control-label\">{{newUser.company}}</label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <div class=\"col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <input id=\"name\" name=\"name\" type=\"text\" [(ngModel)]=\"newUser.username\" required\n                    class=\"form-control\" placeholder=\"User Name\" #name=\"ngModel\">\n                    <div *ngIf=\"name.invalid && (name.dirty || name.touched)\"\n                      class=\"alert alert-danger\">\n                      <div *ngIf=\"name.errors.required\">\n                        Username is required.\n                      </div>\n                    </div>\n                </div>\n                <label *ngIf=\"newUser.id\" class=\"control-label\">{{newUser.username}}</label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_user\"\n                      name=\"ROLE_USER\" value=\"USER\" #user=\"ngModel\" [disabled]=\"newUser.id\"> User\n                 </label>\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_admin\"\n                      name=\"ROLE_ADMIN\" value=\"ADMIN\" #admin=\"ngModel\" [disabled]=\"newUser.id\"> Admin\n                 </label>\n                 <div *ngIf=\"((user.dirty || user.touched) || (admin.dirty || admin.touched)) && !admin.value && !user.value \"\n                   class=\"alert alert-danger\">\n                     Roles is required.\n                 </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <div class=\"col-md-offset-3 col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <button type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"addUser()\" [disabled]=\"userForm.invalid || !admin.value && !user.value \">Save</button>\n                </div>\n                <div *ngIf=\"newUser.id\">\n                  <button class=\"btn btn-success\"\n                    (click)=\"gotoUserList()\">Back</button>\n                </div>\n              </div>\n            </div>\n            <div class=\"alert alert-warning\" *ngIf=\"this.serverError\">{{this.serverError}}</div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -240,6 +240,10 @@ var AdduserComponent = (function () {
         this.userService.addUser(this.newUser).then(function (user) {
             _this.newUser = user;
             console.log("user id: " + user.id);
+            _this.serverError = undefined;
+        }, function (error) {
+            console.log(error);
+            _this.serverError = error;
         });
     };
     AdduserComponent.prototype.gotoUserList = function () {
@@ -283,7 +287,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/edituser/edituser.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n          <form class=\"form-horizontal\" [formGroup]=\"editForm\" novalidate>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-2 control-label\">{{editForm.get('id').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <div class=\"col-md-9\">\n                  <input formControlName=\"company\" class=\"form-control\" placeholder=\"Company Name\">\n                  <div *ngIf=\"editForm.get('company').invalid && (editForm.get('company').dirty || editForm.get('company').touched)\"\n                    class=\"alert alert-danger\">\n                    <div *ngIf=\"editForm.get('company').errors.required\">\n                      Company is required.\n                    </div>\n                  </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <div class=\"col-md-9\">\n                <input formControlName=\"username\" class=\"form-control\" placeholder=\"User Name\">\n                <div *ngIf=\"editForm.get('username').invalid && (editForm.get('username').dirty || editForm.get('username').touched)\"\n                  class=\"alert alert-danger\">\n                  <div *ngIf=\"editForm.get('username').errors.required\">\n                    Username is required.\n                  </div>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_user\"> User\n                </label>\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_admin\"> Admin\n                </label>\n                <div *ngIf=\"((editForm.get('role_user').dirty || editForm.get('role_user').touched)\n                    || (editForm.get('role_admin').dirty || editForm.get('role_admin').touched))\n                    && !editForm.get('role_admin').value && !editForm.get('role_user').value \"\n                  class=\"alert alert-danger\">\n                    Roles is required.\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">\n                <span *ngIf=\"updating\" class=\"glyphicon glyphicon-save\"></span>\n                <span *ngIf=\"updated && !editForm.dirty\" class=\"glyphicon glyphicon-ok\"></span>\n              </label>\n              <div class=\"col-md-9\">\n                  <button type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"updateUser()\" [disabled]=\"editForm.invalid || !editForm.get('role_user').value && !editForm.get('role_admin').value\">Update</button>\n                  <button class=\"btn btn-success\"\n                    (click)=\"gotoUserList()\">Back</button>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n          <form class=\"form-horizontal\" [formGroup]=\"editForm\" novalidate>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-2 control-label\">{{editForm.get('id').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <div class=\"col-md-9\">\n                  <input formControlName=\"company\" class=\"form-control\" placeholder=\"Company Name\">\n                  <div *ngIf=\"editForm.get('company').invalid && (editForm.get('company').dirty || editForm.get('company').touched)\"\n                    class=\"alert alert-danger\">\n                    <div *ngIf=\"editForm.get('company').errors.required\">\n                      Company is required.\n                    </div>\n                  </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <div class=\"col-md-9\">\n                <input formControlName=\"username\" class=\"form-control\" placeholder=\"User Name\">\n                <div *ngIf=\"editForm.get('username').invalid && (editForm.get('username').dirty || editForm.get('username').touched)\"\n                  class=\"alert alert-danger\">\n                  <div *ngIf=\"editForm.get('username').errors.required\">\n                    Username is required.\n                  </div>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_user\"> User\n                </label>\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_admin\"> Admin\n                </label>\n                <div *ngIf=\"((editForm.get('role_user').dirty || editForm.get('role_user').touched)\n                    || (editForm.get('role_admin').dirty || editForm.get('role_admin').touched))\n                    && !editForm.get('role_admin').value && !editForm.get('role_user').value \"\n                  class=\"alert alert-danger\">\n                    Roles is required.\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">\n                <span *ngIf=\"updating\" class=\"glyphicon glyphicon-save\"></span>\n                <span *ngIf=\"updated && !editForm.dirty\" class=\"glyphicon glyphicon-ok\"></span>\n              </label>\n              <div class=\"col-md-9\">\n                  <button type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"updateUser()\" [disabled]=\"editForm.invalid || !editForm.get('role_user').value && !editForm.get('role_admin').value\">Update</button>\n                  <button class=\"btn btn-success\"\n                    (click)=\"gotoUserList()\">Back</button>\n              </div>\n            </div>\n            <div *ngIf=\"this.serverError\" class=\"alert alert-warning\">{{this.serverError}}</div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -374,7 +378,11 @@ var EdituserComponent = (function () {
             _this.updating = false;
             _this.updated = true;
             _this.editForm.reset();
+            _this.serverError = undefined;
             _this.fillInForm();
+        }, function (error) {
+            console.log("get error message:" + error);
+            _this.serverError = error;
         });
     };
     EdituserComponent.prototype.gotoUserList = function () {
@@ -394,20 +402,6 @@ EdituserComponent = __decorate([
 
 var _a, _b, _c, _d;
 //# sourceMappingURL=edituser.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/users/mockUsers.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return USERS; });
-var USERS = [
-    { id: 10, company: 'Learn', roles: 'User, Admin', username: 'Shi Jin' },
-    { id: 11, company: 'Learn', roles: 'User', username: 'Mr. Nice' },
-    { id: 20, company: 'Learn', roles: 'User', username: 'Tornado' }
-];
-//# sourceMappingURL=mockUsers.js.map
 
 /***/ }),
 
@@ -502,11 +496,13 @@ var UserService = (function () {
             .then(function (response) {
             console.log("response=" + response);
         }).catch(this.handleError);
+        window.location.href = "http://localhost:5555/uaa/login";
         console.log("logout...end");
     };
     UserService.prototype.handleError = function (error) {
         console.error("An error occurred ", error);
-        return Promise.reject(error.message || error);
+        console.error("error message = ", error._body);
+        return Promise.reject(error._body);
     };
     UserService.prototype.getUserRoles = function (role_user, role_admin) {
         var roles = '';
@@ -643,6 +639,10 @@ var UserdetailComponent = (function () {
             console.log("response=" + response);
             _this.updating = false;
             _this.updated = true;
+            _this.serverError = undefined;
+        }, function (error) {
+            console.log(error);
+            _this.serverError = error;
         });
     };
     return UserdetailComponent;
@@ -724,8 +724,7 @@ module.exports = "\n<div [hidden]=\"!users || users.length <= 0\">\n  <div class
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_service__ = __webpack_require__("../../../../../src/app/users/user.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__UserListQueryParameters__ = __webpack_require__("../../../../../src/app/users/users-list/UserListQueryParameters.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Pagination__ = __webpack_require__("../../../../../src/app/users/users-list/Pagination.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mockUsers__ = __webpack_require__("../../../../../src/app/users/mockUsers.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersListComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -736,7 +735,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -757,7 +755,7 @@ var UsersListComponent = (function () {
     }
     UsersListComponent.prototype.ngOnInit = function () {
         console.log("UsersListComponent is init...");
-        this.users = __WEBPACK_IMPORTED_MODULE_4__mockUsers__["a" /* USERS */];
+        //this.users = USERS;
         this.getUserList(this.param);
     };
     UsersListComponent.prototype.getUserList = function (param) {
@@ -832,7 +830,7 @@ UsersListComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/users/users-list/users-list.component.html"),
         styles: [__webpack_require__("../../../../../src/app/users/users-list/users-list.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_router__["c" /* Router */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["c" /* Router */]) === "function" && _b || Object])
 ], UsersListComponent);
 
 var _a, _b;
