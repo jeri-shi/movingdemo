@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -37,6 +36,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,6 +44,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.shijin.learn.movingdemo.adapter.LoginUser;
@@ -79,6 +80,14 @@ public class HomeController {
     return "redirect:index.html";
   }
   
+  @PostMapping("/user/{id}/upload")
+  @ResponseBody
+  public String handleFileUpload(@PathVariable("id") long id, @RequestParam("file") MultipartFile file) {
+    LOGGER.debug("id = {}, multiFile = {}", id,  file);
+    String imagePath = usersService.store(id, file);
+    return imagePath;
+  }
+
   @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
   @ResponseBody
   public LoginUser getUser(@PathVariable long id) throws Exception{
@@ -89,7 +98,7 @@ public class HomeController {
   @RequestMapping(value="/user", method=RequestMethod.POST)
   @ResponseBody
   public LoginUser addUser(@RequestBody LoginUser user) {
-    LOGGER.trace("/user...post " + user);
+    LOGGER.trace("/user...post  " + user);
     return usersService.addUser(user);
   }
   

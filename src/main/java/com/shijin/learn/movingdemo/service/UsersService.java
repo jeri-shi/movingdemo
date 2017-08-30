@@ -3,6 +3,7 @@
  */
 package com.shijin.learn.movingdemo.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -10,13 +11,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.shijin.learn.movingdemo.adapter.LoginUser;
 import com.shijin.learn.movingdemo.adapter.UserListQueryParameters;
@@ -111,6 +115,40 @@ public class UsersService {
     
   }
  
+  public String store(long id, MultipartFile imageFile) {
+    LOGGER.debug("id = {}, multiFile = {}", id,  imageFile);
+    
+    //prepare request for file upload
+    LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+    map.add("filename", imageFile.getName());
+    ByteArrayResource resource = null;
+    try {
+      resource = new ByteArrayResource(imageFile.getBytes()) {
+        @Override
+        public String getFilename() {
+          return imageFile.getName();
+        }
+      };
+      map.add("file", resource);
+    } catch (IOException e) {
+      LOGGER.error("error: {}", e.getMessage());
+    }
+    
+    HttpHeaders headers = new HttpHeaders();
+    //headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+    
+    HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = 
+        new HttpEntity<LinkedMultiValueMap<String,Object>>(map, headers);
+    
+    LOGGER.debug("Prepare request = {}", requestEntity);
+    ResponseEntity<String> response = 
+        restTemplate.exchange("http://MOVINGDEMO-USERS/client/user/{id}/upload", HttpMethod.POST, requestEntity, String.class, id);
+
+    LOGGER.debug("response={}", response.getBody());
+    
+    return response.getBody();
+  }
+  
   public Collection<LoginUser> getUserListFake() {
     Collection<LoginUser> collection = new ArrayList<>();
     LoginUser user = new LoginUser();
