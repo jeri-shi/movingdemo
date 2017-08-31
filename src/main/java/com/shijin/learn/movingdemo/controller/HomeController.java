@@ -25,6 +25,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.core.io.Resource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
@@ -80,7 +81,14 @@ public class HomeController {
     return "redirect:index.html";
   }
   
-  @PostMapping("/user/{id}/upload")
+  @GetMapping("/user/{id}/photo")
+  @ResponseBody
+  public Resource getUserPhoto(@PathVariable("id") long id) {
+    LOGGER.debug("/user/{1}/photo, id = {1}", id);
+    return usersService.getUserPhoto(id);
+  }
+  
+  @PostMapping("/user/{id}/photo")
   @ResponseBody
   public String handleFileUpload(@PathVariable("id") long id, @RequestParam("file") MultipartFile file) {
     LOGGER.debug("id = {}, multiFile = {}", id,  file);

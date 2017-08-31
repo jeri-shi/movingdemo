@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -115,6 +116,11 @@ public class UsersService {
     
   }
  
+  public Resource getUserPhoto(long id) {
+    Resource image = restTemplate.getForObject("http://MOVINGDEMO-USERS/client/user/{id}/photo", Resource.class, id);
+    return image;
+  }
+  
   public String store(long id, MultipartFile imageFile) {
     LOGGER.debug("id = {}, multiFile = {}", id,  imageFile);
     
@@ -142,7 +148,7 @@ public class UsersService {
     
     LOGGER.debug("Prepare request = {}", requestEntity);
     ResponseEntity<String> response = 
-        restTemplate.exchange("http://MOVINGDEMO-USERS/client/user/{id}/upload", HttpMethod.POST, requestEntity, String.class, id);
+        restTemplate.exchange("http://MOVINGDEMO-USERS/client/user/{id}/photo", HttpMethod.POST, requestEntity, String.class, id);
 
     LOGGER.debug("response={}", response.getBody());
     
