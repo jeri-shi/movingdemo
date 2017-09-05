@@ -10,6 +10,7 @@ import java.util.Collection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -116,7 +117,11 @@ public class UsersService {
     
   }
  
+  @Cacheable(value = "photos", key="'photo_'+#id")
   public Resource getUserPhoto(long id) {
+    //get image from cache, if not get it from users micro-service.
+    
+    //put image into redis cache, set exprie time to 20 seconds
     Resource image = restTemplate.getForObject("http://MOVINGDEMO-USERS/client/user/{id}/photo", Resource.class, id);
     return image;
   }

@@ -27,7 +27,7 @@ public class SessionCreatedListener implements ApplicationListener<HttpSessionCr
   @Override
   public void onApplicationEvent(HttpSessionCreatedEvent event) {
     LOGGER.info("new Session [" + event.getSession().getId() + "] is created...");
-
+    LOGGER.info("new Session's source {}", event.getSource());
     // set session invalid time to 50 seconds
     event.getSession().setMaxInactiveInterval(600);
 

@@ -168,14 +168,16 @@ public class HomeController {
     
     LOGGER.debug("session Locale:" + session.getAttribute("org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE"));
     LOGGER.debug("request Locale:" + request.getLocale());
-    LOGGER.debug("localeResolver:" + localResolver.resolveLocale(request));
+    LOGGER.debug("localeResolver: " + localResolver.resolveLocale(request));
     session.setAttribute("radio", message.getMessage("HomeController.radio", null, localResolver.resolveLocale(request))); //$NON-NLS-2$
     session.setAttribute("sessionUserName", getLoginUserName()); //$NON-NLS-1$
     
     
 //    String userString = restTemplate.getForEntity("http://MOVINGDEMO-USERS/client/user/{1}", String.class, getLoginUserId()).getBody();
-    //String userString = usersService.getUser(getLoginUserId());
-    String userString = usersService.getUserList(null).toString();
+    String userString = usersService.getUser(getLoginUserId()).toString();
+    
+//    usersService.getUser(getLoginUserId())
+//    String userString = usersService.getUserList(null).toString();
     
     LOGGER.debug("USER_SERVICE.getUser()={}", userString);
     session.setAttribute("userString", userString);

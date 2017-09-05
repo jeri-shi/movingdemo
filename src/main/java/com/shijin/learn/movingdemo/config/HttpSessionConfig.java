@@ -15,9 +15,16 @@
 
 package com.shijin.learn.movingdemo.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
@@ -27,11 +34,40 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  */
 @Configuration
 @EnableRedisHttpSession
+@EnableCaching
 public class HttpSessionConfig {
 
+//  @Bean
+//  public LettuceConnectionFactory connectionFactory() {
+//    return new LettuceConnectionFactory();
+//  }
+  
   @Bean
-  public LettuceConnectionFactory connectionFactory() {
-    return new LettuceConnectionFactory();
+  public JedisConnectionFactory connectionFactor() {
+    return new JedisConnectionFactory();
+  }
+  
+  @Bean
+  public 
+  RedisSerializer<?> getRedisSerializer() {
+    RedisSerializer<?> serializer = new ResourceSerializer();
+    return serializer;
+  }
+  
+  @Bean("imageRedisTemplate")
+  public RedisTemplate<String, ?> getImageRedisTemplate(JedisConnectionFactory connectionFactory, RedisSerializer<?> serializer) {
+    RedisTemplate<String, ?> template = new RedisTemplate<>();
+    template.setConnectionFactory(connectionFactory);
+    template.setKeySerializer(new StringRedisSerializer());
+    template.setValueSerializer(serializer);
+    return template;
+  }
+  
+  @Bean
+  public RedisCacheManager getRdisCacheManager(@Qualifier("imageRedisTemplate") RedisTemplate<String, ?> imageRedisTemplate) {
+    RedisCacheManager manager = new RedisCacheManager(imageRedisTemplate);
+    //manager.setUsePrefix(true);
+    return manager;
   }
   
   /**

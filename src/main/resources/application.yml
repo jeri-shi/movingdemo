@@ -40,12 +40,18 @@ security:
     resource:
       user-info-uri: http://localhost:8888/uaa/me
 
-debug: true      
+debug: false      
 logging:
   level:
     org.springframework.security.web.util: info
-    org.springframework.security: debug
+    org.springframework.security: info
     org.springframework.web.servlet: info
+    org.springframework.cache: info
+    com.lambdaworks.redis: info
+    com.lambdaworks.redis.protocol: info
+    com.lambdaworks.redis.RedisChannelHandler: info
+    org.springframework.security.oauth2.client.filter: debug
+    
     
     
     
