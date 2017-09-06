@@ -193,7 +193,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/adduser/adduser.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n\n          <form class=\"form-horizontal\" commandName=\"animal\" #userForm=\"ngForm\">\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-2 control-label\">{{newUser.id?newUser.id:'N/A'}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <div class=\"col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <input id=\"company\" name=\"company\" [(ngModel)]=\"newUser.company\" required\n                  class=\"form-control\" placeholder=\"Company Name\" #company=\"ngModel\">\n                  <div *ngIf=\"company.invalid && (company.dirty || company.touched)\"\n                    class=\"alert alert-danger\">\n                    <div *ngIf=\"company.errors.required\">\n                      Company is required.\n                    </div>\n                  </div>\n                </div>\n                <label *ngIf=\"newUser.id\" class=\"control-label\">{{newUser.company}}</label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <div class=\"col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <input id=\"name\" name=\"name\" type=\"text\" [(ngModel)]=\"newUser.username\" required\n                    class=\"form-control\" placeholder=\"User Name\" #name=\"ngModel\">\n                    <div *ngIf=\"name.invalid && (name.dirty || name.touched)\"\n                      class=\"alert alert-danger\">\n                      <div *ngIf=\"name.errors.required\">\n                        Username is required.\n                      </div>\n                    </div>\n                </div>\n                <label *ngIf=\"newUser.id\" class=\"control-label\">{{newUser.username}}</label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_user\"\n                      name=\"ROLE_USER\" value=\"USER\" #user=\"ngModel\" [disabled]=\"newUser.id\"> User\n                 </label>\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_admin\"\n                      name=\"ROLE_ADMIN\" value=\"ADMIN\" #admin=\"ngModel\" [disabled]=\"newUser.id\"> Admin\n                 </label>\n                 <div *ngIf=\"((user.dirty || user.touched) || (admin.dirty || admin.touched)) && !admin.value && !user.value \"\n                   class=\"alert alert-danger\">\n                     Roles is required.\n                 </div>\n              </div>\n            </div>\n\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Picture:</label>\n              <div class=\"col-md-6\">\n                <input type=\"file\" class=\"form-control-file\" #fileInput placeholder=\"Upload file\" accept=\".png,.jpg,.bmp\">\n              </div>\n            </div>\n\n            <div class=\"form-group\">\n              <div class=\"col-md-offset-3 col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <button type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"addUser()\" [disabled]=\"userForm.invalid || !admin.value && !user.value \">Save</button>\n                </div>\n                <div *ngIf=\"newUser.id || this.serverError\">\n                  <button class=\"btn btn-success\"\n                    (click)=\"gotoUserList()\">Back</button>\n                </div>\n              </div>\n            </div>\n            <div class=\"alert alert-warning\" *ngIf=\"this.serverError\">{{this.serverError}}</div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-3\">\n      <img *ngIf=\"this.showPhoto\" src=\"user/{{newUser.id}}/photo\" width=100 height=100/>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n\n          <form class=\"form-horizontal\" commandName=\"animal\" #userForm=\"ngForm\">\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-2 control-label\">{{newUser.id?newUser.id:'N/A'}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <div class=\"col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <input id=\"company\" name=\"company\" [(ngModel)]=\"newUser.company\" required\n                  class=\"form-control\" placeholder=\"Company Name\" #company=\"ngModel\">\n                  <div *ngIf=\"company.invalid && (company.dirty || company.touched)\"\n                    class=\"alert alert-danger\">\n                    <div *ngIf=\"company.errors.required\">\n                      Company is required.\n                    </div>\n                  </div>\n                </div>\n                <label *ngIf=\"newUser.id\" class=\"control-label\">{{newUser.company}}</label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <div class=\"col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <input id=\"name\" name=\"name\" type=\"text\" [(ngModel)]=\"newUser.username\" required\n                    class=\"form-control\" placeholder=\"User Name\" #name=\"ngModel\">\n                    <div *ngIf=\"name.invalid && (name.dirty || name.touched)\"\n                      class=\"alert alert-danger\">\n                      <div *ngIf=\"name.errors.required\">\n                        Username is required.\n                      </div>\n                    </div>\n                </div>\n                <label *ngIf=\"newUser.id\" class=\"control-label\">{{newUser.username}}</label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_user\"\n                      name=\"ROLE_USER\" value=\"USER\" #user=\"ngModel\" [disabled]=\"newUser.id\"> User\n                 </label>\n                 <label class=\"checkbox-inline\">\n                   <input type=\"checkbox\" [(ngModel)]=\"this.role_admin\"\n                      name=\"ROLE_ADMIN\" value=\"ADMIN\" #admin=\"ngModel\" [disabled]=\"newUser.id\"> Admin\n                 </label>\n                 <div *ngIf=\"((user.dirty || user.touched) || (admin.dirty || admin.touched)) && !admin.value && !user.value \"\n                   class=\"alert alert-danger\">\n                     Roles is required.\n                 </div>\n              </div>\n            </div>\n\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Picture:</label>\n              <div class=\"col-md-6\">\n                <input type=\"file\" class=\"form-control-file\" #fileInput placeholder=\"Upload file\" accept=\".png,.jpg,.bmp\">\n              </div>\n            </div>\n\n            <div class=\"form-group\">\n              <div class=\"col-md-offset-3 col-md-9\">\n                <div *ngIf=\"!newUser.id\">\n                  <button type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"addUser()\" [disabled]=\"userForm.invalid || !admin.value && !user.value \">Save</button>\n                  <button class=\"btn btn-success\"\n                    (click)=\"gotoUserList()\">Back</button>\n                </div>\n              </div>\n            </div>\n            <div class=\"alert alert-warning\" *ngIf=\"this.serverError\">{{this.serverError}}</div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-3\">\n      <img *ngIf=\"this.showPhoto\" src=\"user/{{newUser.id}}/photo\" width=100 height=100/>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -291,7 +291,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "\r\n.panel {\r\n  background-color: inherit;\r\n}\r\n\r\ninput[type=checkbox] {\r\n  margin-top: 8px;\r\n}\r\n\r\n.alert {\r\n  padding: 0 0 0 10px;\r\n}\r\n", ""]);
+exports.push([module.i, "\r\n.panel {\r\n  background-color: inherit;\r\n}\r\n\r\ninput[type=checkbox] {\r\n  margin-top: 8px;\r\n}\r\n\r\n.alert {\r\n  padding: 0 0 0 10px;\r\n}\r\n\r\n.form-control-file{\r\n  padding-top: 7px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -304,7 +304,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/edituser/edituser.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n          <form class=\"form-horizontal\" [formGroup]=\"editForm\" novalidate>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-2 control-label\">{{editForm.get('id').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <div class=\"col-md-9\">\n                  <input formControlName=\"company\" class=\"form-control\" placeholder=\"Company Name\">\n                  <div *ngIf=\"editForm.get('company').invalid && (editForm.get('company').dirty || editForm.get('company').touched)\"\n                    class=\"alert alert-danger\">\n                    <div *ngIf=\"editForm.get('company').errors.required\">\n                      Company is required.\n                    </div>\n                  </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <div class=\"col-md-9\">\n                <input formControlName=\"username\" class=\"form-control\" placeholder=\"User Name\">\n                <div *ngIf=\"editForm.get('username').invalid && (editForm.get('username').dirty || editForm.get('username').touched)\"\n                  class=\"alert alert-danger\">\n                  <div *ngIf=\"editForm.get('username').errors.required\">\n                    Username is required.\n                  </div>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_user\"> User\n                </label>\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_admin\"> Admin\n                </label>\n                <div *ngIf=\"((editForm.get('role_user').dirty || editForm.get('role_user').touched)\n                    || (editForm.get('role_admin').dirty || editForm.get('role_admin').touched))\n                    && !editForm.get('role_admin').value && !editForm.get('role_user').value \"\n                  class=\"alert alert-danger\">\n                    Roles is required.\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">\n                <span *ngIf=\"updating\" class=\"glyphicon glyphicon-save\"></span>\n                <span *ngIf=\"updated && !editForm.dirty\" class=\"glyphicon glyphicon-ok\"></span>\n              </label>\n              <div class=\"col-md-9\">\n                  <button type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"updateUser()\" [disabled]=\"editForm.invalid || !editForm.get('role_user').value && !editForm.get('role_admin').value\">Update</button>\n                  <button class=\"btn btn-success\"\n                    (click)=\"gotoUserList()\">Back</button>\n              </div>\n            </div>\n            <div *ngIf=\"this.serverError\" class=\"alert alert-warning\">{{this.serverError}}</div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-3\">\n      <img src=\"user/{{editForm.get('id').value}}/photo\" width=100 height=100/>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n          <form class=\"form-horizontal\" [formGroup]=\"editForm\" novalidate>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-2 control-label\">{{editForm.get('id').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <div class=\"col-md-9\">\n                  <input formControlName=\"company\" class=\"form-control\" placeholder=\"Company Name\">\n                  <div *ngIf=\"editForm.get('company').invalid && (editForm.get('company').dirty || editForm.get('company').touched)\"\n                    class=\"alert alert-danger\">\n                    <div *ngIf=\"editForm.get('company').errors.required\">\n                      Company is required.\n                    </div>\n                  </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <div class=\"col-md-9\">\n                <input formControlName=\"username\" class=\"form-control\" placeholder=\"User Name\">\n                <div *ngIf=\"editForm.get('username').invalid && (editForm.get('username').dirty || editForm.get('username').touched)\"\n                  class=\"alert alert-danger\">\n                  <div *ngIf=\"editForm.get('username').errors.required\">\n                    Username is required.\n                  </div>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_user\"> User\n                </label>\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_admin\"> Admin\n                </label>\n                <div *ngIf=\"((editForm.get('role_user').dirty || editForm.get('role_user').touched)\n                    || (editForm.get('role_admin').dirty || editForm.get('role_admin').touched))\n                    && !editForm.get('role_admin').value && !editForm.get('role_user').value \"\n                  class=\"alert alert-danger\">\n                    Roles is required.\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Picture:</label>\n              <div class=\"col-md-6\">\n                <input type=\"file\" class=\"form-control-file\" #fileInput placeholder=\"Upload file\" accept=\".png,.jpg,.bmp\">\n              </div>\n            </div>\n\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">\n                <span *ngIf=\"updating\" class=\"glyphicon glyphicon-save\"></span>\n                <span *ngIf=\"updated && !editForm.dirty\" class=\"glyphicon glyphicon-ok\"></span>\n              </label>\n              <div class=\"col-md-9\">\n                  <button type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"updateUser()\" [disabled]=\"editForm.invalid || !editForm.get('role_user').value && !editForm.get('role_admin').value\">Update</button>\n                  <button class=\"btn btn-success\"\n                    (click)=\"gotoUserList()\">Back</button>\n              </div>\n            </div>\n            <div *ngIf=\"this.serverError\" class=\"alert alert-warning\">{{this.serverError}}</div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-3\">\n      <img *ngIf=\"!this.showPhoto\" src=\"user/{{editForm.get('id').value}}/photo\" width=100 height=100/>\n      <img *ngIf=\"this.showPhoto\" src=\"user/{{editForm.get('id').value}}/photo\" width=100 height=100/>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -339,7 +339,6 @@ var EdituserComponent = (function () {
         this.route = route;
         this.router = router;
         this.formbuilder = formbuilder;
-        this.createForm();
         this.updated = false;
     }
     EdituserComponent.prototype.ngOnInit = function () {
@@ -351,6 +350,7 @@ var EdituserComponent = (function () {
         // this.setCheckbox();
         // this.fillInForm();
         var _this = this;
+        this.createForm(this.route.snapshot.paramMap.get('id'));
         this.route.paramMap.switchMap(function (params) { return _this.userService.getUser(+params.get('id')); }).subscribe(function (user1) {
             _this.editUser = user1;
             console.log(user1);
@@ -358,9 +358,9 @@ var EdituserComponent = (function () {
             _this.fillInForm();
         });
     };
-    EdituserComponent.prototype.createForm = function () {
+    EdituserComponent.prototype.createForm = function (id) {
         this.editForm = this.formbuilder.group({
-            id: '',
+            id: id,
             company: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["d" /* Validators */].required],
             username: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["d" /* Validators */].required],
             role_user: [false],
@@ -397,6 +397,19 @@ var EdituserComponent = (function () {
             _this.editForm.reset();
             _this.serverError = undefined;
             _this.fillInForm();
+            //if photo file is specified, then upload it to replace server's photo
+            var fileBrower = _this.fileInput.nativeElement;
+            if (fileBrower.files && fileBrower.files[0]) {
+                var formData = new FormData();
+                formData.append("file", fileBrower.files[0]);
+                _this.userService.uploadImage(user.id, formData).then(function (response) {
+                    console.log(response);
+                    //after upload image, display it
+                    _this.showPhoto = true;
+                }, function (error) {
+                    _this.serverError = error;
+                });
+            }
         }, function (error) {
             console.log("get error message:" + error);
             _this.serverError = error;
@@ -408,6 +421,10 @@ var EdituserComponent = (function () {
     };
     return EdituserComponent;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewChild */])('fileInput'),
+    __metadata("design:type", Object)
+], EdituserComponent.prototype, "fileInput", void 0);
 EdituserComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
         selector: 'app-edituser',
@@ -450,7 +467,7 @@ var UserService = (function () {
         this.usersListUrl = 'userslist';
         this.usersListCountUrl = 'userslistcount';
         this.userUrl = 'user';
-        this.editUserUrl = 'u';
+        this.currentPage = 1;
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
     }
     UserService.prototype.getUser = function (id) {
@@ -498,6 +515,12 @@ var UserService = (function () {
             return response.json();
         })
             .catch(this.handleError);
+    };
+    UserService.prototype.setCurrentPage = function (page) {
+        this.currentPage = page;
+    };
+    UserService.prototype.getCurrentPage = function () {
+        return this.currentPage;
     };
     UserService.prototype.getUserListCount = function (param) {
         console.log("UserService.getUserList()..." + param);
@@ -596,7 +619,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/users/userdetail/userdetail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n          <form class=\"form-horizontal\" [formGroup]=\"userForm\" novalidate>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-9 control-label\">{{userForm.get('id').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <label class=\"col-md-9 control-label\">{{userForm.get('company').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <label class=\"col-md-9 control-label\">{{userForm.get('username').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_user\" disabled> User\n                </label>\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_admin\" disabled> Admin\n                </label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">\n                <span *ngIf=\"updating\" class=\"glyphicon glyphicon-save\"></span>\n                <span *ngIf=\"updated\" class=\"glyphicon glyphicon-ok\"></span>\n              </label>\n              <div class=\"col-md-9\">\n                  <button *ngIf=\"isDelete\" type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"deleteUser()\" [disabled]=\"updated\">Delete</button>\n                  <button class=\"btn btn-success\" (click)=\"gotoUserList()\">Back</button>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-3\">\n      <img src=\"user/{{userForm.get('id').value}}/photo\" width=100 height=100/>\n    </div>\n</div>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-sm-offset-4 col-sm-4\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-body\">\n          <form class=\"form-horizontal\" [formGroup]=\"userForm\" novalidate>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Id:</label>\n              <label class=\"col-md-9 control-label\">{{userForm.get('id').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Company:</label>\n              <label class=\"col-md-9 control-label\">{{userForm.get('company').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Name:</label>\n              <label class=\"col-md-9 control-label\">{{userForm.get('username').value}}</label>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">Roles:</label>\n              <div class=\"col-md-9\">\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_user\"> User\n                </label>\n                <label class=\"checkbox-inline\">\n                  <input type=\"checkbox\" formControlName=\"role_admin\"> Admin\n                </label>\n              </div>\n            </div>\n            <div class=\"form-group\">\n              <label class=\"col-md-3 control-label\">\n                <span *ngIf=\"updating\" class=\"glyphicon glyphicon-save\"></span>\n                <span *ngIf=\"updated\" class=\"glyphicon glyphicon-ok\"></span>\n              </label>\n              <div class=\"col-md-9\">\n                  <button *ngIf=\"isDelete\" type=\"submit\" class=\"btn btn-default\"\n                    (click)=\"deleteUser()\" [disabled]=\"updated\">Delete</button>\n                  <button class=\"btn btn-success\" (click)=\"gotoUserList()\">Back</button>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-3\">\n      <img *ngIf=\"userForm.get('id').value\" src=\"user/{{userForm.get('id').value}}/photo\" width=100 height=100/>\n    </div>\n</div>\n</div>\n"
 
 /***/ }),
 
@@ -628,23 +651,23 @@ var UserdetailComponent = (function () {
         this.router = router;
         this.fb = fb;
         this.userService = userService;
-        this.createForm();
         this.isDelete = this.router.url.search("deleteuser") != -1;
     }
     UserdetailComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.createForm(this.route.snapshot.paramMap.get('id'));
         this.route.paramMap.switchMap(function (params) { return _this.userService.getUser(+params.get('id')); }).subscribe(function (user) {
             _this.user = user;
             _this.fillInForm();
         });
     };
-    UserdetailComponent.prototype.createForm = function () {
+    UserdetailComponent.prototype.createForm = function (id) {
         this.userForm = this.fb.group({
-            id: '',
+            id: id,
             company: '',
             username: '',
-            role_user: false,
-            role_admin: false
+            role_user: [{ value: false, disabled: true }],
+            role_admin: [{ value: false, disabled: true }]
         });
     };
     UserdetailComponent.prototype.fillInForm = function () {
@@ -785,7 +808,7 @@ var UsersListComponent = (function () {
         //this.users = USERS;
         this.param = new __WEBPACK_IMPORTED_MODULE_2__UserListQueryParameters__["a" /* UserListQueryParameters */]();
         this.param.pageParam = new __WEBPACK_IMPORTED_MODULE_3__Pagination__["a" /* Pagination */]();
-        this.param.pageParam.current = 1;
+        this.param.pageParam.current = this.userService.getCurrentPage();
         this.param.pageParam.countPerPage = 10;
         this.getUserList(this.param);
     };
@@ -827,6 +850,7 @@ var UsersListComponent = (function () {
     UsersListComponent.prototype.gotoPage = function (page) {
         console.log("current page = " + page);
         this.param.pageParam.current = page;
+        this.userService.setCurrentPage(page);
         this.getUserList(this.param);
     };
     UsersListComponent.prototype.getFirstPageNumber = function () {

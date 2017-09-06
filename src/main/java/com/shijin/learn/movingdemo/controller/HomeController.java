@@ -84,7 +84,7 @@ public class HomeController {
   @GetMapping("/user/{id}/photo")
   @ResponseBody
   public Resource getUserPhoto(@PathVariable("id") long id) {
-    LOGGER.debug("/user/{1}/photo, id = {1}", id);
+    LOGGER.debug("/user/{" + id + "}/photo...");
     return usersService.getUserPhoto(id);
   }
   

@@ -12,11 +12,14 @@ public class ResourceSerializer implements RedisSerializer<Object> {
   
   @Override
   public byte[] serialize(Object t) throws SerializationException {
-    LOGGER.debug("serialize... {}", t);
-    Assert.notNull(t, "The class must not be null");
+    LOGGER.debug("serialize..." + t.getClass().getName() + " {}", t);
+    
+    Assert.notNull(t, "The class " + t.getClass().getName() + " must not be null");
+    
     if (t instanceof ByteArrayResource) {
       return ((ByteArrayResource)t).getByteArray();
     } else {
+      LOGGER.debug("serialize is failed, return null");
       return null;
     }
     
@@ -25,7 +28,8 @@ public class ResourceSerializer implements RedisSerializer<Object> {
   @Override
   public Object deserialize(byte[] bytes) throws SerializationException {
     LOGGER.debug("deserialize... length={}", bytes!=null?bytes.length:0);
-    return new ByteArrayResource(bytes);
+    
+    return bytes == null? null: new ByteArrayResource(bytes);
   }
 
   

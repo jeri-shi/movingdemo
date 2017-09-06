@@ -14,6 +14,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -36,6 +40,9 @@ public class UsersService {
   private static final Logger LOGGER = LogManager.getLogger(UsersService.class);
   @Autowired
   private RestTemplate restTemplate;
+  
+  @Autowired
+  private RedisTemplate<String, Resource> imageRedisTemplate;
 
 //  @SessionScope
 //  @RequestScope
@@ -72,6 +79,22 @@ public class UsersService {
             null, new ParameterizedTypeReference<Integer>() {}, id);
     
     Integer returnUser = response.getBody();
+    
+    //if delete user successfully, then clear the cache
+    if (returnUser == 1) {
+      imageRedisTemplate.execute(new RedisCallback<Object>() {
+
+        @Override
+        public Object doInRedis(RedisConnection connection) throws DataAccessException {
+          byte[] key = ("photo_" + id).getBytes();
+          connection.del(key);
+          connection.zRem("photos~keys".getBytes(), key);
+          LOGGER.debug("clear cache for " + key);
+          return null;
+        }
+      }, true, true);
+      
+    }
     return returnUser;
   }
   
@@ -154,8 +177,14 @@ public class UsersService {
     LOGGER.debug("Prepare request = {}", requestEntity);
     ResponseEntity<String> response = 
         restTemplate.exchange("http://MOVINGDEMO-USERS/client/user/{id}/photo", HttpMethod.POST, requestEntity, String.class, id);
+    String photoName = response.getBody();
+    LOGGER.debug("response={}", photoName);
 
-    LOGGER.debug("response={}", response.getBody());
+    //if response.getBody is start with "photo" then update cache
+    if (photoName != null && photoName.startsWith("head")) {
+      imageRedisTemplate.boundValueOps("photo_" + id).set(resource);
+      LOGGER.debug("update cache for photo_" + id);
+    }
     
     return response.getBody();
   }

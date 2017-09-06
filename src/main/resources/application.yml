@@ -50,7 +50,10 @@ logging:
     com.lambdaworks.redis: info
     com.lambdaworks.redis.protocol: info
     com.lambdaworks.redis.RedisChannelHandler: info
-    org.springframework.security.oauth2.client.filter: debug
+    org.springframework.security.oauth2.client.filter: info
+    org.springframework.http.client: info
+    org.springframework.security.oauth2.client: info
+    org.springframework.session: info
     
     
     

@@ -21,7 +21,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -56,7 +55,7 @@ public class HttpSessionConfig {
   
   @Bean("imageRedisTemplate")
   public RedisTemplate<String, ?> getImageRedisTemplate(JedisConnectionFactory connectionFactory, RedisSerializer<?> serializer) {
-    RedisTemplate<String, ?> template = new RedisTemplate<>();
+    RedisTemplate<String, ?> template = new RedisTemplate<String, byte[]>();
     template.setConnectionFactory(connectionFactory);
     template.setKeySerializer(new StringRedisSerializer());
     template.setValueSerializer(serializer);
